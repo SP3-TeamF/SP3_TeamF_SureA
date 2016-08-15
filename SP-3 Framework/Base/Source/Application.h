@@ -3,6 +3,7 @@
 
 #include "timer.h"
 #include "Scenebase.h"
+#include "test.h"
 #include "SceneMapEditor.h"
 
 class Application

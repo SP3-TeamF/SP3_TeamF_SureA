@@ -117,6 +117,9 @@ void Scenebase::Init()
 	meshList[GEO_TILESHEET] = MeshBuilder::GenerateTileMesh("TileSheet", 21, 23);
 	meshList[GEO_TILESHEET]->textureID = LoadTGA("Image//TileSheet1.tga");
 
+	meshList[GEO_TEST] = MeshBuilder::Generate2DMesh("ds", Color(1,1,1),0,0,10,10);
+	meshList[GEO_TEST]->textureArray[0] = LoadTGA("Image//test.tga");
+	
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;
 	perspective.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
@@ -142,6 +145,8 @@ void Scenebase::Update(double dt)
     fps = (float)(1.f / dt);
 
 	camera.Update(dt);
+
+
 }
 
 //Render Functions
@@ -162,6 +167,8 @@ void Scenebase::Render()
 		);
 	// Model matrix : an identity matrix (model will be at the origin)
 	modelStack.LoadIdentity();
+
+	
 }
 
 void Scenebase::RenderMesh(Mesh *mesh, bool enableLight)

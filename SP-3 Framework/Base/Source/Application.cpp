@@ -149,7 +149,7 @@ void Application::Init()
 void Application::Run()
 {
 	//Main Loop
-	scene = new SceneMapEditor();
+	scene = new test();
 
 	scene->Init();
 

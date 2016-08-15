@@ -34,7 +34,12 @@ void test::Update(double dt)
 	{
 		player->Add_cMoveVel(Vector3(-1, 0, 0));
 	}
+
+	player->Add_cJumpVel(controls.GetControllerDirection(CONTROLLER_1, L_JOYSTICK));
+
+	cout << player->Get_cPosition() << endl;
 	player->Update(dt);
+
 
 }
 

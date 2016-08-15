@@ -95,77 +95,13 @@ void Player::ConstrainPlayer()
 
 void Player::UpdateMovement(double dt)
 {
-    Vector3 updatedPos = c_Position + (c_JumpVel + (c_MoveVel * c_MoveSpeed)) * dt;
-    updatedPos.x += GlobalData.world_X_offset;
-    updatedPos.y += m_TileMap->GetTileSize() * 0.5;
-
-    float armOffsetX = m_TileMap->GetTileSize() * 0.35;
-    float legOffsetX = m_TileMap->GetTileSize() * 0.1;
-
-    float limbOffsetY = m_TileMap->GetTileSize();
-    float extraOffsetY = m_TileMap->GetTileSize() * 0.9;
-
-    int playerHead = m_TileMap->GetTileType(updatedPos.x, updatedPos.y);
-
-    int leftHand = m_TileMap->GetTileType(updatedPos.x - armOffsetX, updatedPos.y);
-	int rightHand = m_TileMap->GetTileType(updatedPos.x + armOffsetX, updatedPos.y);
-
-    int extraCheckTopLeft = m_TileMap->GetTileType(updatedPos.x - armOffsetX, updatedPos.y);
-    int extraCheckTopRight = m_TileMap->GetTileType(updatedPos.x + armOffsetX, updatedPos.y);
-    
-    int extraCheckBottomLeft = m_TileMap->GetTileType(updatedPos.x - armOffsetX, updatedPos.y - extraOffsetY);
-    int extraCheckBottomRight = m_TileMap->GetTileType(updatedPos.x + armOffsetX, updatedPos.y - extraOffsetY);
-
-	int leftLeg = m_TileMap->GetTileType(updatedPos.x - legOffsetX, updatedPos.y - limbOffsetY);
-	int rightLeg = m_TileMap->GetTileType(updatedPos.x + legOffsetX, updatedPos.y - limbOffsetY);
-
-    if (playerHead != 0)
-    {
-        c_JumpVel.SetZero();
-    }
-
-    if (leftLeg != 0 || rightLeg != 0)
-    {
-        inAir = false;
-        canJump = true;
-        c_JumpVel.SetZero();
-        if (c_MoveVel.x == 0)
-        {
-            current_Player_State = P_STATE_IDLE;
-        }
-    }
-    else
-    {
-        inAir = true;
-    }
-
-    if (c_MoveVel.x < 0)
-    {
-        if (
-            leftHand != 0 ||
-            extraCheckTopLeft != 0 ||
-            extraCheckBottomLeft != 0 
-            )
-        {
-            c_MoveVel.SetZero();
-        }
-    }
-    else
-    {
-        if (
-            rightHand != 0 ||
-            extraCheckTopRight != 0 ||
-            extraCheckBottomRight != 0
-            )
-        {
-            c_MoveVel.SetZero();
-        }
-    }
+    Vector3 updatedPos = c_Position + ((c_JumpVel + c_MoveVel) * c_MoveSpeed) * dt;
     
 
-    this->c_Position = c_Position + (c_JumpVel + (c_MoveVel * c_MoveSpeed)) * dt;
+	this->c_Position = c_Position + ((c_JumpVel + c_MoveVel) * c_MoveSpeed) * dt;
     
     //To Let Player stay exactly on ground
+	c_JumpVel.SetZero();
     c_MoveVel.SetZero();
 }
 

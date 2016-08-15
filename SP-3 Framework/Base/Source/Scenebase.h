@@ -84,7 +84,7 @@ protected:
         GEO_TEXT,
         GEO_BACKGROUND,
         GEO_TILESHEET,
-
+		GEO_TEST,
         NUM_GEOMETRY,
     };
 

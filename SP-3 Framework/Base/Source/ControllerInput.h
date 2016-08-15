@@ -1,6 +1,5 @@
 #ifndef CONTROLLER_INPUTS_H_
 #define CONTROLLER_INPUTS_H_
-#include "ControllerButton.h"
 #include "Vector3.h"
 
 enum CONTROLLER_INPUT_BUTTONS
@@ -10,8 +9,8 @@ enum CONTROLLER_INPUT_BUTTONS
     CONTROLLER_X,
     CONTROLLER_Y,
 
-    CONTROLLER_LSHOULDER,
-    CONTROLLER_RSHOULDER,
+    CONTROLLER_LBUMPER,
+	CONTROLLER_RBUMPER,
 
     CONTROLLER_BACK,
     CONTROLLER_START,
@@ -31,6 +30,12 @@ enum CONTROLLER_JOYSTICK
 {
     L_JOYSTICK = 8,
     R_JOYSTICK,
+};
+
+enum CONTROLLER_TRIGGER
+{
+	L_TRIGGER,
+	R_TRIGGER,
 };
 
 enum CONTROLLER_ID
@@ -60,19 +65,20 @@ public:
     virtual ~ControllerInput();
 
     void ControllerInput_Init(CONTROLLER_ID controllerID);
-    void ControllerInput_Update();
 
     //Getters
     bool GetIsKeyPressed(CONTROLLER_INPUT_BUTTONS CONTROLLER_BUTTON);
     bool GetIsKeyHeld(CONTROLLER_INPUT_BUTTONS CONTROLLER_BUTTON);
     bool GetIsKeyReleased(CONTROLLER_INPUT_BUTTONS CONTROLLER_BUTTON);
 
+	bool GetIsTriggerPressed(CONTROLLER_TRIGGER TRIGGER_TYPE);
+
 	Vector3 GetDirection(CONTROLLER_JOYSTICK JOYSTICK_TYPE);
 
 private:
     CONTROLLER_ID controllerID;
     int GetInputs[NUM_CONTROLLER_INPUT];
-    ControllerButton ControllerButtons[NUM_CONTROLLER_INPUT];
+	
 };
 
 #endif CONTROLLER_INPUTS_H_

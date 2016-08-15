@@ -130,6 +130,8 @@ public:
     bool isControllerButtonPressed(CONTROLLER_TYPE controllerType, CONTROLLER_INPUT_BUTTONS Action);
     bool isControllerButtonReleased(CONTROLLER_TYPE controllerType, CONTROLLER_INPUT_BUTTONS Action);
 
+	bool GetIsControllerTriggerPressed(CONTROLLER_TYPE controllerType, CONTROLLER_TRIGGER TRIGGER_TYPE);
+
 	Vector3 GetControllerDirection(CONTROLLER_TYPE controllerType, CONTROLLER_JOYSTICK joystickType);
 
     void Controls_Init();

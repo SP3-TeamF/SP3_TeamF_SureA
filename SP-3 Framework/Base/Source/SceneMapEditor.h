@@ -38,6 +38,7 @@ public:
 private:
     int currentTileType;
     float editor_X_Offet;
+	float editor_Y_Offet;
     string MapEditorName;
 
     //Map Editor stuff

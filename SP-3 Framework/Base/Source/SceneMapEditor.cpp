@@ -1,5 +1,6 @@
 #include "SceneMapEditor.h"
 #include "Application.h"
+#include "GLFW\glfw3.h"
 
 SceneMapEditor::SceneMapEditor()
 {
@@ -82,7 +83,7 @@ void SceneMapEditor::UpdateMapEditor(double dt)
         MapEditorName = "Image//CSV//" + mapName + ".csv";
 
         EditorMap = new TileMap();
-        EditorMap->Init(1024, 800, 25, 64, 800, 2048, 32);
+        EditorMap->Init(1024, 800, 50, 64, 1600, 2048, 32);
         EditorMap->LoadMap(MapEditorName.c_str());
     }
     else
@@ -92,15 +93,15 @@ void SceneMapEditor::UpdateMapEditor(double dt)
             EditorMap->SaveMap(MapEditorName);
         }
 
-        if (controls.isKeyboardButtonPressed(KEYBOARD_F11))
-        {
-            CURR_EDITOR_STATE = ITEM_SELECTOR;
-        }
-
         if (controls.isKeyboardButtonPressed(KEYBOARD_F2))
         {
             MapEditorInit();
         }
+
+		if (controls.isKeyboardButtonPressed(KEYBOARD_F11))
+		{
+			CURR_EDITOR_STATE = ITEM_SELECTOR;
+		}
     }
 
     if (controls.isKeyboardButtonPressed(MOUSE_L_CLICK) || controls.isKeyboardButtonHeld(MOUSE_L_CLICK))
@@ -110,7 +111,7 @@ void SceneMapEditor::UpdateMapEditor(double dt)
         y = Application::GetWindowHeight() - y;
 
         x = x / EditorMap->GetTileSize() + editor_X_Offet / EditorMap->GetTileSize();
-        y = EditorMap->GetNumWorldTile_Height() - y / EditorMap->GetTileSize();
+		y = EditorMap->GetNumWorldTile_Height() - (y / EditorMap->GetTileSize() + editor_Y_Offet / EditorMap->GetTileSize());
 
         x = x < 0 ? 0 : x;
         x = x >= EditorMap->world_Tile_Map[0].size() ? EditorMap->world_Tile_Map[0].size() - 2 : x;
@@ -129,7 +130,7 @@ void SceneMapEditor::UpdateMapEditor(double dt)
         y = Application::GetWindowHeight() - y;
 
         x = x / EditorMap->GetTileSize() + editor_X_Offet / EditorMap->GetTileSize();
-        y = EditorMap->GetNumWorldTile_Height() - y / EditorMap->GetTileSize();
+		y = EditorMap->GetNumWorldTile_Height() - (y / EditorMap->GetTileSize() + editor_Y_Offet / EditorMap->GetTileSize());
 
         x = x < 0 ? 0 : x;
         x = x >= EditorMap->world_Tile_Map[0].size() ? EditorMap->world_Tile_Map[0].size() - 1 : x;
@@ -141,7 +142,7 @@ void SceneMapEditor::UpdateMapEditor(double dt)
         currentTileType = EditorMap->GetSpectificTileType(x, y);
     }
 
-    if (controls.isKeyboardButtonPressed(KEYBOARD_A) || controls.isKeyboardButtonHeld(KEYBOARD_A))
+	if (controls.isKeyboardButtonPressed(KEYBOARD_LEFT) || controls.isKeyboardButtonHeld(KEYBOARD_LEFT))
     {
         editor_X_Offet -= EditorMap->GetTileSize();
         if (editor_X_Offet < 0)
@@ -151,15 +152,33 @@ void SceneMapEditor::UpdateMapEditor(double dt)
         
     }
 
-    if (controls.isKeyboardButtonPressed(KEYBOARD_D) || controls.isKeyboardButtonHeld(KEYBOARD_D))
+	if (controls.isKeyboardButtonPressed(KEYBOARD_RIGHT) || controls.isKeyboardButtonHeld(KEYBOARD_RIGHT))
     {
         editor_X_Offet += EditorMap->GetTileSize();
-        if (editor_X_Offet > EditorMap->GetNumWorldTile_Width() * EditorMap->GetTileSize() * 0.5 - EditorMap->GetTileSize())
+		if (editor_X_Offet > EditorMap->GetNumWorldTile_Width() * EditorMap->GetTileSize() * 0.5 - EditorMap->GetTileSize())
         {
-            editor_X_Offet = EditorMap->GetNumWorldTile_Width() * EditorMap->GetTileSize() * 0.5 - EditorMap->GetTileSize();
+			editor_X_Offet = EditorMap->GetNumWorldTile_Width() * EditorMap->GetTileSize() * 0.5 - EditorMap->GetTileSize();
         }
     }
 
+	if (controls.isKeyboardButtonPressed(KEYBOARD_DOWN) || controls.isKeyboardButtonHeld(KEYBOARD_DOWN))
+	{
+		editor_Y_Offet -= EditorMap->GetTileSize();
+		if (editor_Y_Offet < 0)
+		{
+			editor_Y_Offet = 0;
+		}
+
+	}
+
+	if (controls.isKeyboardButtonPressed(KEYBOARD_UP) || controls.isKeyboardButtonHeld(KEYBOARD_UP))
+	{
+		editor_Y_Offet += EditorMap->GetTileSize();
+		if (editor_Y_Offet > EditorMap->GetNumWorldTile_Height() * EditorMap->GetTileSize() * 0.5 - EditorMap->GetTileSize())
+		{
+			editor_Y_Offet = EditorMap->GetNumWorldTile_Height() * EditorMap->GetTileSize() * 0.5 - EditorMap->GetTileSize();
+		}
+	}
 }
 
 void SceneMapEditor::UpdateSelectionScreen(double dt)
@@ -193,7 +212,7 @@ void SceneMapEditor::RenderMapEditor()
 {
     if (EditorMap != nullptr)
     {
-        RenderTileMap(EditorMap, editor_X_Offet);
+		RenderTileMap(EditorMap, editor_X_Offet, editor_Y_Offet);
     }
 }
 
@@ -218,6 +237,7 @@ void SceneMapEditor::MapEditorInit()
 {
     MapEditorName = "";
     editor_X_Offet = 0;
+	editor_Y_Offet = 0;
     currentTileType = 0;
 
 	controls.isControllerButtonHeld(CONTROLLER_1, CONTROLLER_RSTICKER);

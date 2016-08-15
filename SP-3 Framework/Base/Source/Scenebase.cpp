@@ -406,7 +406,7 @@ void Scenebase::RenderTileMap(TileMap* currentMap, float x_offSet, float y_Offse
                 ,currentMap->world_Tile_Map[i][k]
                 , currentMap->GetTileSize()
                 , k * currentMap->GetTileSize() - x_offSet * scrollSpeed
-                , currentMap->GetWorldHeight() - currentMap->GetTileSize() - i * currentMap->GetTileSize() + y_Offset * scrollSpeed
+                , currentMap->GetWorldHeight() - currentMap->GetTileSize() - i * currentMap->GetTileSize() - y_Offset * scrollSpeed
                 , z_Offset
                 );
 		}

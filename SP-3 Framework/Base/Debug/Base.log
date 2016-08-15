@@ -1,0 +1,135 @@
+﻿Build started 8/15/2016 10:22:24 AM.
+     1>Project "C:\Users\509n1\Desktop\SP-3 Framework(8-14-11PM)\SP-3 Framework\Base\Base.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\509n1\Desktop\SP-3 Framework(8-14-11PM)\SP-3 Framework\/irrKlang/include" /I"C:\Users\509n1\Desktop\SP-3 Framework(8-14-11PM)\SP-3 Framework\/Common/Source" /I"C:\Users\509n1\Desktop\SP-3 Framework(8-14-11PM)\SP-3 Framework\/glew/include" /I"C:\Users\509n1\Desktop\SP-3 Framework(8-14-11PM)\SP-3 Framework\/glfw/include" /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\AABB.cpp Source\Application.cpp Source\ControllerButton.cpp Source\ControllerInput.cpp Source\KeyboardButton.cpp Source\OBJMesh.cpp source\Scenebase.cpp Source\BulletInfo.cpp Source\Button.cpp Source\Camera.cpp Source\Camera3.cpp Source\Character.cpp Source\Controls.cpp Source\Enemy.cpp Source\GameObject.cpp Source\Idle.cpp Source\LoadHmap.cpp Source\LoadOBJ.cpp Source\LoadTGA.cpp Source\main.cpp Source\Mesh.cpp Source\MeshBuilder.cpp Source\Minimap.cpp Source\Player.cpp Source\SceneMapEditor.cpp Source\shader.cpp Source\SpriteAnimation.cpp Source\Strategy.cpp Source\TileMap.cpp Source\Utility.cpp Source\weapon.cpp
+         weapon.cpp
+         Utility.cpp
+         TileMap.cpp
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\tilemap.cpp(157): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\tilemap.cpp(158): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+         Strategy.cpp
+         SpriteAnimation.cpp
+         shader.cpp
+         SceneMapEditor.cpp
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\scenemapeditor.cpp(122): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\scenemapeditor.cpp(141): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\scenemapeditor.cpp(159): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\scenemapeditor.cpp(182): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+         Player.cpp
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\player.cpp(68): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\player.cpp(73): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\player.cpp(78): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\player.cpp(83): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\player.cpp(88): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\player.cpp(98): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\player.cpp(100): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\player.cpp(102): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\player.cpp(103): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\player.cpp(105): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\player.cpp(106): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\player.cpp(166): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\player.cpp(191): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\player.cpp(192): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\player.cpp(193): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\player.cpp(202): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\player.cpp(203): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\player.cpp(204): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         Minimap.cpp
+         MeshBuilder.cpp
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\meshbuilder.cpp(608): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\meshbuilder.cpp(610): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\meshbuilder.cpp(619): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\meshbuilder.cpp(639): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\meshbuilder.cpp(641): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\meshbuilder.cpp(744): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\meshbuilder.cpp(745): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\meshbuilder.cpp(811): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\meshbuilder.cpp(812): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\meshbuilder.cpp(927): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\meshbuilder.cpp(928): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\meshbuilder.cpp(1043): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\meshbuilder.cpp(1049): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\meshbuilder.cpp(1055): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         Mesh.cpp
+         main.cpp
+         LoadTGA.cpp
+         LoadOBJ.cpp
+         LoadHmap.cpp
+         Idle.cpp
+         GameObject.cpp
+         Enemy.cpp
+         Controls.cpp
+         Character.cpp
+         Generating Code...
+         Compiling...
+         Camera3.cpp
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\camera3.cpp(83): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\camera3.cpp(93): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\camera3.cpp(103): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\camera3.cpp(113): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+         Camera.cpp
+         Button.cpp
+         BulletInfo.cpp
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\bulletinfo.cpp(32): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\bulletinfo.cpp(117): warning C4244: 'argument' : conversion from 'const double' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\bulletinfo.cpp(118): warning C4244: 'argument' : conversion from 'const double' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\bulletinfo.cpp(120): warning C4244: 'argument' : conversion from 'const double' to 'const float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\bulletinfo.cpp(133): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\bulletinfo.cpp(134): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         Scenebase.cpp
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\scenebase.cpp(114): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\scenebase.cpp(411): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
+         OBJMesh.cpp
+         KeyboardButton.cpp
+         ControllerInput.cpp
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\controllerinput.cpp(27): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\controllerinput.cpp(34): warning C4800: 'BUTTON_STATE' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\controllerinput.cpp(39): warning C4800: 'BUTTON_STATE' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\controllerinput.cpp(44): warning C4800: 'BUTTON_STATE' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\controllerinput.cpp(56): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\controllerinput.cpp(61): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         ControllerButton.cpp
+         Application.cpp
+         AABB.cpp
+         Generating Code...
+     1>c:\users\509n1\desktop\sp-3 framework(8-14-11pm)\sp-3 framework\base\source\controllerinput.cpp(69): warning C4715: 'ControllerInput::GetDirection' : not all control paths return a value
+       Link:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\509n1\Desktop\SP-3 Framework(8-14-11PM)\SP-3 Framework\Debug\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Users\509n1\Desktop\SP-3 Framework(8-14-11PM)\SP-3 Framework\Debug" /LIBPATH:"C:\Users\509n1\Desktop\SP-3 Framework(8-14-11PM)\SP-3 Framework\/glfw/lib-msvc100" /LIBPATH:"C:\Users\509n1\Desktop\SP-3 Framework(8-14-11PM)\SP-3 Framework\/glew/lib" /LIBPATH:"C:\Users\509n1\Desktop\SP-3 Framework(8-14-11PM)\SP-3 Framework\/irrKlang/lib" Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib irrKlang.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\509n1\Desktop\SP-3 Framework(8-14-11PM)\SP-3 Framework\Debug\Base.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\509n1\Desktop\SP-3 Framework(8-14-11PM)\SP-3 Framework\Debug\Base.lib" /MACHINE:X86 Debug\AABB.obj
+         Debug\Application.obj
+         Debug\ControllerButton.obj
+         Debug\ControllerInput.obj
+         Debug\KeyboardButton.obj
+         Debug\OBJMesh.obj
+         Debug\Scenebase.obj
+         Debug\BulletInfo.obj
+         Debug\Button.obj
+         Debug\Camera.obj
+         Debug\Camera3.obj
+         Debug\Character.obj
+         Debug\Controls.obj
+         Debug\Enemy.obj
+         Debug\GameObject.obj
+         Debug\Idle.obj
+         Debug\LoadHmap.obj
+         Debug\LoadOBJ.obj
+         Debug\LoadTGA.obj
+         Debug\main.obj
+         Debug\Mesh.obj
+         Debug\MeshBuilder.obj
+         Debug\Minimap.obj
+         Debug\Player.obj
+         Debug\SceneMapEditor.obj
+         Debug\shader.obj
+         Debug\SpriteAnimation.obj
+         Debug\Strategy.obj
+         Debug\TileMap.obj
+         Debug\Utility.obj
+         Debug\weapon.obj
+     1>AABB.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
+     1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+         Base.vcxproj -> C:\Users\509n1\Desktop\SP-3 Framework(8-14-11PM)\SP-3 Framework\Debug\Base.exe
+     1>Done Building Project "C:\Users\509n1\Desktop\SP-3 Framework(8-14-11PM)\SP-3 Framework\Base\Base.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:17.33

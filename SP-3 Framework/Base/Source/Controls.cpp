@@ -17,11 +17,6 @@ void Controls::Update()
 	{
 		keyboardArray[i].Update();
 	}
-
-    for (int i = 0; i < MAX_NUM_CONTROLLERS; ++i)
-    {
-        controllerArray[i].ControllerInput_Update();
-    }
 }
 
 bool Controls::isKeyboardButtonHeld(BUTTON_ID Action)
@@ -69,6 +64,11 @@ bool Controls::isControllerButtonReleased(CONTROLLER_TYPE controllerType, CONTRO
 Vector3 Controls::GetControllerDirection(CONTROLLER_TYPE controllerType, CONTROLLER_JOYSTICK joystickType)
 {
 	return controllerArray[controllerType].GetDirection(joystickType);
+}
+
+bool Controls::GetIsControllerTriggerPressed(CONTROLLER_TYPE controllerType, CONTROLLER_TRIGGER TRIGGER_TYPE)
+{
+	return controllerArray[controllerType].GetIsTriggerPressed(TRIGGER_TYPE);
 }
 
 void Controls::Controls_Init()

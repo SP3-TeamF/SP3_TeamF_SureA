@@ -13,7 +13,6 @@
   <ItemGroup>
     <ClCompile Include="Source\AABB.cpp" />
     <ClCompile Include="Source\Application.cpp" />
-    <ClCompile Include="Source\ControllerButton.cpp" />
     <ClCompile Include="Source\ControllerInput.cpp" />
     <ClCompile Include="Source\KeyboardButton.cpp" />
     <ClCompile Include="Source\OBJMesh.cpp" />
@@ -46,7 +45,6 @@
   <ItemGroup>
     <ClInclude Include="Source\AABB.h" />
     <ClInclude Include="Source\Application.h" />
-    <ClInclude Include="Source\ControllerButton.h" />
     <ClInclude Include="Source\ControllerInput.h" />
     <ClInclude Include="Source\Geometry.h" />
     <ClInclude Include="Source\KeyboardButton.h" />

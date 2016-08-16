@@ -1,17 +1,19 @@
 #include "test.h"
 
 test::test()
-{}
+{
+}
 
 test::~test()
-{}
+{
+}
 
 void test::Init()
 {
 	Scenebase::Init();
 	player->SetPlayerBorder(64, 1024, 64, 736);
 	m_TileMap = new TileMap();
-	m_TileMap->Init(1024, 800, 25, 64, 800, 2048, 32);
+    m_TileMap->Init(1024, 800, 2048, 1600, 32);
 	m_TileMap->LoadMap("Image//CSV//potato.csv");
 	player->Set_cMoveSpeed(100);
 }

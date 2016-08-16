@@ -22,17 +22,16 @@ TileMap::~TileMap(void)
      world_Tile_Map.clear();
 }
 
-void TileMap::Init(const int screenHeight, const int screenWidth,
-                   const int numTile_Screen_Width, const int numTile_Screen_Height,
-                   const int worldHeight, const int worldWidth,
+void TileMap::Init(const int screenWidth, const int screenHeight,
+                   const int worldWidth, const int worldHeight,
                    const int theTileSize
                    )
 {
     this->screen_Width = screenWidth;
     this->screen_Height = screenHeight;
     
-    this->numTile_Screen_Width = numTile_Screen_Width;
-    this->numTile_Screen_Height = numTile_Screen_Height;
+    this->numTile_Screen_Width = (int)screenWidth / theTileSize;
+    this->numTile_Screen_Height = (int)screenHeight / theTileSize;
     
     this->world_Width = worldWidth;
     this->world_Height = worldHeight;
@@ -75,8 +74,10 @@ bool TileMap::LoadFile(const string mapName)
             string currentText = "";
             getline(file, currentText);
 
-            if (currentLine >= numTile_World_Height)
+            if (currentLine > numTile_World_Height)
+            { 
                 break;
+            }
 
             if (currentLine == 0)
             {
@@ -89,7 +90,12 @@ bool TileMap::LoadFile(const string mapName)
                     ++maxNumColumns;
                 }
                 if (maxNumColumns != numTile_World_Width)
+                {
+                    cout << "Fail to load: " << mapName << endl;
                     return false;
+                }
+
+                ++currentLine;
             }
 
             int currentColum = 0;
@@ -98,7 +104,7 @@ bool TileMap::LoadFile(const string mapName)
             istringstream iss(currentText);
             while (getline(iss, token, ',') && (currentColum < numTile_World_Width))
             {
-                world_Tile_Map[currentLine][currentColum++] = atoi(token.c_str());
+                world_Tile_Map[numTile_World_Height - currentLine][currentColum++] = atoi(token.c_str());
             }
 
             currentLine++;
@@ -107,7 +113,7 @@ bool TileMap::LoadFile(const string mapName)
     }
 	else
 	{
-		WriteMap(mapName, world_Tile_Map, numTile_World_Height, numTile_World_Width);
+        WriteMap(mapName, world_Tile_Map, numTile_World_Width, numTile_World_Height);
 	}
 
 
@@ -123,6 +129,16 @@ int TileMap::GetNumScreenTile_Width(void)
 int TileMap::GetNumScreenTile_Height(void)
 {
     return numTile_Screen_Height;
+}
+
+int TileMap::GetScreenWidth(void)
+{
+	return screen_Width;
+}
+
+int TileMap::GetScreenHeight(void)
+{
+	return screen_Height;
 }
 
 //World Getters
@@ -154,18 +170,10 @@ int TileMap::GetTileSize(void)
 
 int TileMap::GetTileType(float xPosition, float yPosition)
 {
-    int tileMapPosX = (xPosition / tileSize);
-    int tileMapPosY = numTile_World_Height - (yPosition / tileSize);
-
-    return world_Tile_Map[tileMapPosY][tileMapPosX];
+   return world_Tile_Map[yPosition][xPosition];
 }
 
-int TileMap::GetSpectificTileType(int xPosition, int yPosition)
-{
-    return world_Tile_Map[yPosition][xPosition];
-}
-
-bool TileMap::WriteMap(const string mapName, vector<vector<int>> mapVariables, int mapHeight, int mapWidth)
+bool TileMap::WriteMap(const string mapName, vector<vector<int>> mapVariables, int mapWidth, int mapHeight)
 {
 	ofstream newFile;
 	newFile.open(mapName);
@@ -192,11 +200,11 @@ bool TileMap::SaveMap(const string mapName)
     ofstream newFile;
     newFile.open(mapName);
 
-    for (int y = 0; y < numTile_World_Height; ++y)
+    for (int y = numTile_World_Height - 1; y >=0 ; --y)
     {
         for (int x = 0; x < numTile_World_Width; ++x)
         {
-            newFile << GetSpectificTileType(x, y) << ",";
+            newFile << GetTileType(x, y) << ",";
 
             if (x == numTile_World_Width - 1)
             {

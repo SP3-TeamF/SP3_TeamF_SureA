@@ -1,13 +1,19 @@
-﻿Build started 8/15/2016 2:06:53 PM.
+﻿Build started 8/16/2016 2:22:04 PM.
      1>Project "C:\Users\509n1\Desktop\SP3_TeamF_SureA\SP-3 Framework\Base\Base.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\509n1\Desktop\SP3_TeamF_SureA\SP-3 Framework\/irrKlang/include" /I"C:\Users\509n1\Desktop\SP3_TeamF_SureA\SP-3 Framework\/Common/Source" /I"C:\Users\509n1\Desktop\SP3_TeamF_SureA\SP-3 Framework\/glew/include" /I"C:\Users\509n1\Desktop\SP3_TeamF_SureA\SP-3 Framework\/glfw/include" /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\SceneMapEditor.cpp
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\509n1\Desktop\SP3_TeamF_SureA\SP-3 Framework\/irrKlang/include" /I"C:\Users\509n1\Desktop\SP3_TeamF_SureA\SP-3 Framework\/Common/Source" /I"C:\Users\509n1\Desktop\SP3_TeamF_SureA\SP-3 Framework\/glew/include" /I"C:\Users\509n1\Desktop\SP3_TeamF_SureA\SP-3 Framework\/glfw/include" /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\SceneMapEditor.cpp source\Scenebase.cpp
+         Scenebase.cpp
+     1>c:\users\509n1\desktop\sp3_teamf_surea\sp-3 framework\base\source\scenebase.cpp(114): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\509n1\desktop\sp3_teamf_surea\sp-3 framework\base\source\scenebase.cpp(399): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\509n1\desktop\sp3_teamf_surea\sp-3 framework\base\source\scenebase.cpp(400): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\509n1\desktop\sp3_teamf_surea\sp-3 framework\base\source\scenebase.cpp(422): warning C4244: 'argument' : conversion from 'int' to 'const float', possible loss of data
          SceneMapEditor.cpp
      1>c:\users\509n1\desktop\sp3_teamf_surea\sp-3 framework\base\source\scenemapeditor.cpp(123): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\509n1\desktop\sp3_teamf_surea\sp-3 framework\base\source\scenemapeditor.cpp(142): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\509n1\desktop\sp3_teamf_surea\sp-3 framework\base\source\scenemapeditor.cpp(160): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\509n1\desktop\sp3_teamf_surea\sp-3 framework\base\source\scenemapeditor.cpp(179): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\509n1\desktop\sp3_teamf_surea\sp-3 framework\base\source\scenemapeditor.cpp(201): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\509n1\desktop\sp3_teamf_surea\sp-3 framework\base\source\scenemapeditor.cpp(143): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp3_teamf_surea\sp-3 framework\base\source\scenemapeditor.cpp(160): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp3_teamf_surea\sp-3 framework\base\source\scenemapeditor.cpp(178): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\509n1\desktop\sp3_teamf_surea\sp-3 framework\base\source\scenemapeditor.cpp(200): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+         Generating Code...
        Link:
          D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\509n1\Desktop\SP3_TeamF_SureA\SP-3 Framework\Debug\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Users\509n1\Desktop\SP3_TeamF_SureA\SP-3 Framework\Debug" /LIBPATH:"C:\Users\509n1\Desktop\SP3_TeamF_SureA\SP-3 Framework\/glfw/lib-msvc100" /LIBPATH:"C:\Users\509n1\Desktop\SP3_TeamF_SureA\SP-3 Framework\/glew/lib" /LIBPATH:"C:\Users\509n1\Desktop\SP3_TeamF_SureA\SP-3 Framework\/irrKlang/lib" Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib irrKlang.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\509n1\Desktop\SP3_TeamF_SureA\SP-3 Framework\Debug\Base.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\509n1\Desktop\SP3_TeamF_SureA\SP-3 Framework\Debug\Base.lib" /MACHINE:X86 Debug\AABB.obj
          Debug\Application.obj
@@ -36,6 +42,7 @@
          Debug\shader.obj
          Debug\SpriteAnimation.obj
          Debug\Strategy.obj
+         Debug\test.obj
          Debug\TileMap.obj
          Debug\Utility.obj
          Debug\weapon.obj
@@ -46,4 +53,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.58
+Time Elapsed 00:00:02.44

@@ -3,8 +3,8 @@
 
 CBulletInfo::CBulletInfo(void)
 	: m_bStatus(false)
-	, speed(0)
-	, lifetime(0)
+	, speed(10)
+	, lifetime(5)
     , nextPosition(0)
 	, damage(1)
 {
@@ -62,6 +62,7 @@ Vector3 CBulletInfo::GetPosition(void)
 void CBulletInfo::SetDirection(const Vector3 direction)
 {
     this->direction = direction;
+	direction.Normalized();
 }
 
 // Get the direction of this CBulletInfo instance
@@ -113,12 +114,11 @@ void CBulletInfo::Update(const double dt)
     if (GetStatus() == true)
     {
         // Update the position of the bullet
-      
         SetPosition(GetPosition() + GetDirection() * GetSpeed() * dt);
         nextPosition = GetPosition() + GetDirection() * GetSpeed() * dt;
         // Update the lifetime
+		std::cout << GetLifetime() << std::endl;
         SetLifetime(GetLifetime() - dt);
-
         // Check if the lifetime is gone
         if (GetLifetime() < 0)
         {
@@ -143,3 +143,4 @@ bool CBulletInfo::bulletHitboxCheck(AABB* hitbox)
     }
     return false;
 }
+

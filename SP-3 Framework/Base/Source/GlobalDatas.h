@@ -1,7 +1,7 @@
-#include "BulletInfo.h"
 
 #ifndef GLOBAL_VARIABLE_H
 #define GLOBAL_VARIABLE_H
+#include "BulletInfo.h"
 
 #include "TileMap.h"
 #include <vector>

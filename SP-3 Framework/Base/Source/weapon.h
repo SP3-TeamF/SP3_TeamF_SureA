@@ -5,10 +5,12 @@
 #include "Vector3.h"
 #include <vector>
 #include "GlobalDatas.h"
+#include "Player.h"
 using std::vector;
 
 class weapon
 {
+	
 public:
 	weapon();
     weapon(float timeBetweenEachBullet, int maxClipSize, int maxAmmoCapacity, double reloadTime, int weaponDamage);
@@ -18,9 +20,14 @@ public:
     void reloadWeapon();
     void updateBullets(double dt);
     void resetWeaponAmmo();
+	void fireNet(Vector3 view, Vector3 position);
     void fireWeapon(Vector3 view, Vector3 position);
+	void renderGO();
+	Vector3 getBulletPosition();
     
     bool canFireBullet();
+
+	CBulletInfo* FetchGO();
 
 	double getWeaponReloadTime();
     int getCurrentHeldAmmo();
@@ -28,6 +35,11 @@ public:
     int getMaxClipSize();
     int getMaxAmmoCapacity();
 	int weaponDamage;
+
+	vector<CBulletInfo*> GetBulletList();
+protected:
+	std::vector<CBulletInfo *> m_goList;
+
 private:
 	int maxClipSize;
 	int currentHeldAmmo;
@@ -39,6 +51,7 @@ private:
     double currentTime;
     double weaponReloadTime;
     double timeBetweenEachBullet;
+	CBulletInfo* bullet;
 
 };
 

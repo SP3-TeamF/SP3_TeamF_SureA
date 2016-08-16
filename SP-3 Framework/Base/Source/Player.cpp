@@ -76,7 +76,7 @@ void Player::ConstrainPlayer()
     if (c_Position.y < downBorder)
     {
         c_Position.y = downBorder;
-        c_JumpVel.SetZero();
+		c_Movement.SetZero();
     }
     else if (c_Position.y > upBorder)
     {
@@ -95,14 +95,13 @@ void Player::ConstrainPlayer()
 
 void Player::UpdateMovement(double dt)
 {
-    Vector3 updatedPos = c_Position + ((c_JumpVel + c_MoveVel) * c_MoveSpeed) * dt;
+    Vector3 updatedPos = c_Position + (c_Movement * c_MoveSpeed) * dt;
     
 
-	this->c_Position = c_Position + ((c_JumpVel + c_MoveVel) * c_MoveSpeed) * dt;
+	this->c_Position = c_Position + (c_Movement * c_MoveSpeed) * dt;
     
     //To Let Player stay exactly on ground
-	c_JumpVel.SetZero();
-    c_MoveVel.SetZero();
+	c_Movement.SetZero();
 }
 
 bool Player::GetInAir()

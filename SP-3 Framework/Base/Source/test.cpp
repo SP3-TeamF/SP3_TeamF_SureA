@@ -23,22 +23,22 @@ void test::Update(double dt)
 {
 	if (controls.isKeyboardButtonHeld(KEYBOARD_W))
 	{
-		player->Add_cJumpVel(Vector3(0,1,0));
+		player->Add_cMovement(Vector3(0, 1, 0));
 	}
 	if (controls.isKeyboardButtonHeld(KEYBOARD_S))
 	{
-		player->Add_cJumpVel(Vector3(0, -1, 0));
+		player->Add_cMovement(Vector3(0, -1, 0));
 	}
 	if (controls.isKeyboardButtonHeld(KEYBOARD_D))
 	{
-		player->Add_cMoveVel(Vector3(1, 0, 0));
+		player->Add_cMovement(Vector3(1, 0, 0));
 	}
 	if (controls.isKeyboardButtonHeld(KEYBOARD_A))
 	{
-		player->Add_cMoveVel(Vector3(-1, 0, 0));
+		player->Add_cMovement(Vector3(-1, 0, 0));
 	}
 
-	player->Add_cJumpVel(controls.GetControllerDirection(CONTROLLER_1, L_JOYSTICK));
+	player->Add_cMovement(controls.GetControllerDirection(CONTROLLER_1, L_JOYSTICK));
 
 	if (controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_LSTICKER))
 	{

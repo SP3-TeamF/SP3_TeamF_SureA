@@ -2,6 +2,7 @@
 #define TEST_H
 
 #include "SceneMapEditor.h"
+#include "BulletInfo.h"
 
 class test : public Scenebase
 {

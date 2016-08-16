@@ -1,4 +1,5 @@
 #include "test.h"
+#include "weapon.h"
 
 test::test()
 {
@@ -11,7 +12,7 @@ test::~test()
 void test::Init()
 {
 	Scenebase::Init();
-	player->SetPlayerBorder(64, 1024, 64, 736);
+	player->SetPlayerBorder(64, 960, 64, 736);
 	m_TileMap = new TileMap();
     m_TileMap->Init(1024, 800, 2048, 1600, 32);
 	m_TileMap->LoadMap("Image//CSV//potato.csv");
@@ -39,10 +40,15 @@ void test::Update(double dt)
 
 	player->Add_cJumpVel(controls.GetControllerDirection(CONTROLLER_1, L_JOYSTICK));
 
-	cout << player->Get_cPosition() << endl;
-	player->Update(dt);
-
-
+	if (controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_LSTICKER))
+	{
+		player->Set_cMoveSpeed(300.f);
+	}
+	else{
+		player->Set_cMoveSpeed(100.f);
+	}
+	
+	player->Update(dt);	
 }
 
 void test::Render()

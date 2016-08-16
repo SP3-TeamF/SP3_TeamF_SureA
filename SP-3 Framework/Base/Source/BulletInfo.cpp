@@ -117,7 +117,6 @@ void CBulletInfo::Update(const double dt)
         SetPosition(GetPosition() + GetDirection() * GetSpeed() * dt);
         nextPosition = GetPosition() + GetDirection() * GetSpeed() * dt;
         // Update the lifetime
-		std::cout << GetLifetime() << std::endl;
         SetLifetime(GetLifetime() - dt);
         // Check if the lifetime is gone
         if (GetLifetime() < 0)

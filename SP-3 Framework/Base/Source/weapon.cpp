@@ -3,11 +3,12 @@
 weapon::weapon()
 {
     maxClipSize = 10;
-    currentHeldAmmo = 10;
+    currentHeldAmmo = 1;
     maxAmmoCapacity = 5;
-    currentLoadedAmmo = 5;
+    currentLoadedAmmo = 1;
     timeBetweenEachBullet = 1.f;
     currentTime = 0;
+	reloadTimer = 0;
     isReloading = false;
     weaponReloadTime = 0;
 	weaponDamage = 0;
@@ -32,46 +33,95 @@ weapon::weapon(float timeBetweenEachBullet, int maxClipSize, int maxAmmoCapacity
     this->weaponReloadTime = reloadTime;
 	this->weaponDamage = weaponDamage;
 	bullet->SetStatus(false);
-
+	reloadTimer = 0;
 
 }
 
 void weapon::fireWeapon(Vector3 view, Vector3 position)
 {
-	if (view != 0){
-		
+	if (view != 0 && canFireBullet()){
 		view.Normalized();
 		CBulletInfo* bullet = FetchGO();
 		bullet->SetStatus(true);
-		bullet->Init(position, view, 1000, 3, 10);
+		bullet->Init(position, view, 500, 3, 10);
+		currentLoadedAmmo--;
+		currentTime = 0;
+		reloadTimer = 0;
+		isReloading = true;
 	}
-	//::cout << bullet->GetPosition() << std::endl;
 
+}
+
+void weapon::waterWeapon(Vector3 view, Vector3 position){
+	if (view != 0 && canFireBullet()){
+		view.Normalized();
+		CBulletInfo* bullet = FetchGO();
+		bullet->SetStatus(true);
+		bullet->Init(position, view, 150, 6, 20);
+		currentLoadedAmmo--;
+		currentTime = 0;
+		reloadTimer = 0;
+		isReloading = true;
+	}
+}
+
+void weapon::airWeapon(Vector3 view, Vector3 position){
+	if (view != 0 && canFireBullet()){
+		view.Normalized();
+		CBulletInfo* bullet = FetchGO();
+		bullet->SetStatus(true);
+		bullet->Init(position, view, 1000, 6, 20);
+		currentLoadedAmmo--;
+		currentTime = 0;
+		reloadTimer = 0;
+		isReloading = true;
+	}
 }
 
 void weapon::fireNet(Vector3 view, Vector3 position)
 {
+	if (view != 0 && canFireBullet()){
 
+		view.Normalized();
+		CBulletInfo* bullet = FetchGO();
+		bullet->SetStatus(true);
+		bullet->Init(position, view, 100, 3, 10);
+		currentLoadedAmmo--;
+		currentTime = 0;
+		reloadTimer = 0;
+		isReloading = true;
+	}
 }
 
 void weapon::Update(double dt)
 {
-	currentTime += dt;
+	cout << isReloading << std::endl;
+
+	if (isReloading == true && reloadTimer <=1){
+		reloadTimer += dt;
+		currentLoadedAmmo = 1;
+	}
+	else{
+		reloadTimer = 0;
+		isReloading = false;
+	}
+	
 	for (auto bulletIt : m_goList)
 	{
-		if (canFireBullet()){
+		currentTime += dt;
+		
+		
 			if (bulletIt->GetSpeed())
 			{
 				bulletIt->Update(dt);
 			}
-		}
+		
 	}
-	//std::cout << bullet->GetDirection() << "       " << bullet->GetSpeed() << std::endl;
 }
 
 bool weapon::canFireBullet()
 {
-    if (currentTime > timeBetweenEachBullet && currentLoadedAmmo > 0)
+    if (currentTime > timeBetweenEachBullet && currentLoadedAmmo > 0 && isReloading == false)
     {
         return true;
     }
@@ -81,27 +131,10 @@ bool weapon::canFireBullet()
 
 void weapon::reloadWeapon()
 {
-    if (currentHeldAmmo > 0 && currentLoadedAmmo < maxClipSize)
-    {
-        if (currentHeldAmmo > maxClipSize - currentLoadedAmmo)
-        {
-            if (currentLoadedAmmo > 0)
-            {
-                currentHeldAmmo -= maxClipSize - currentLoadedAmmo;
-                currentLoadedAmmo = maxClipSize;
-            }
-            else
-            {
-                currentHeldAmmo -= maxClipSize;
-                currentLoadedAmmo = maxClipSize;
-            }
-        }
-        else
-        {
-            currentLoadedAmmo = currentHeldAmmo;
-            currentHeldAmmo = 0;
-        }
-    }
+	if (currentHeldAmmo > 0 && currentLoadedAmmo < maxClipSize)
+	{
+		currentLoadedAmmo = 1;
+	}
 }
 
 double weapon::getWeaponReloadTime()

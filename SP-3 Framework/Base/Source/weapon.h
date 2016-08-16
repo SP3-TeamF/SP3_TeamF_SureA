@@ -22,6 +22,8 @@ public:
     void resetWeaponAmmo();
 	void fireNet(Vector3 view, Vector3 position);
     void fireWeapon(Vector3 view, Vector3 position);
+	void waterWeapon(Vector3 view, Vector3 position);
+	void airWeapon(Vector3 view, Vector3 position);
 	void renderGO();
 	Vector3 getBulletPosition();
     
@@ -48,6 +50,7 @@ private:
 
 	bool isReloading;
 
+	double reloadTimer;
     double currentTime;
     double weaponReloadTime;
     double timeBetweenEachBullet;

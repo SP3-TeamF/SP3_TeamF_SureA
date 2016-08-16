@@ -108,11 +108,11 @@ Vector3 ControllerInput::GetDirection(CONTROLLER_JOYSTICK JOYSTICK_TYPE)
 			{
 				dirX = storedAxes[0];
 				dirY = storedAxes[1];
-				if (dirX > -0.1 && dirX < 0.1)
+				if (dirX > -0.2 && dirX < 0.2)
 				{
 					dirX = 0;
 				}
-				if (dirY > -0.1 && dirY < 0.1)
+				if (dirY > -0.2 && dirY < 0.2)
 				{
 					dirY = 0;
 				}
@@ -120,13 +120,13 @@ Vector3 ControllerInput::GetDirection(CONTROLLER_JOYSTICK JOYSTICK_TYPE)
 			}
 			case R_JOYSTICK:
 			{
-				dirX = storedAxes[3];
-				dirY = storedAxes[4];
-				if (dirX > -0.1 && dirX < 0.1)
+				dirX = storedAxes[4];
+				dirY = -storedAxes[3];
+				if (dirX > -0.2 && dirX < 0.2)
 				{
 					dirX = 0;
 				}
-				if (dirY > -0.1 && dirY < 0.1)
+				if (dirY > -0.2 && dirY < 0.2)
 				{
 					dirY = 0;
 				}

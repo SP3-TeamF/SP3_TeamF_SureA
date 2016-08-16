@@ -83,7 +83,7 @@ void SceneMapEditor::UpdateMapEditor(double dt)
         MapEditorName = "Image//CSV//" + mapName + ".csv";
 
         EditorMap = new TileMap();
-        EditorMap->Init(1024, 800, 50, 64, 1600, 2048, 32);
+        EditorMap->Init(1024, 800, 2048, 1600, 32);
         EditorMap->LoadMap(MapEditorName.c_str());
     }
     else
@@ -111,16 +111,17 @@ void SceneMapEditor::UpdateMapEditor(double dt)
         y = Application::GetWindowHeight() - y;
 
         x = x / EditorMap->GetTileSize() + editor_X_Offet / EditorMap->GetTileSize();
-		y = EditorMap->GetNumWorldTile_Height() - (y / EditorMap->GetTileSize() + editor_Y_Offet / EditorMap->GetTileSize());
+		y = y / EditorMap->GetTileSize() + editor_Y_Offet / EditorMap->GetTileSize();
 
         x = x < 0 ? 0 : x;
-        x = x >= EditorMap->world_Tile_Map[0].size() ? EditorMap->world_Tile_Map[0].size() - 2 : x;
+        x = x >= EditorMap->world_Tile_Map[0].size() ? EditorMap->world_Tile_Map[0].size() - 1 : x;
 
         y = y < 0 ? 0 : y;
         y = y >= EditorMap->world_Tile_Map.size() ? EditorMap->world_Tile_Map.size() - 1 : y;
 
 
         EditorMap->SetTile(currentTileType, x, y);
+       
     }
 
     if (controls.isKeyboardButtonPressed(MOUSE_R_CLICK))
@@ -130,7 +131,7 @@ void SceneMapEditor::UpdateMapEditor(double dt)
         y = Application::GetWindowHeight() - y;
 
         x = x / EditorMap->GetTileSize() + editor_X_Offet / EditorMap->GetTileSize();
-		y = EditorMap->GetNumWorldTile_Height() - (y / EditorMap->GetTileSize() + editor_Y_Offet / EditorMap->GetTileSize());
+		y = y / EditorMap->GetTileSize() + editor_Y_Offet / EditorMap->GetTileSize();
 
         x = x < 0 ? 0 : x;
         x = x >= EditorMap->world_Tile_Map[0].size() ? EditorMap->world_Tile_Map[0].size() - 1 : x;
@@ -139,7 +140,7 @@ void SceneMapEditor::UpdateMapEditor(double dt)
         y = y >= EditorMap->world_Tile_Map.size() ? EditorMap->world_Tile_Map.size() - 1 : y;
 
 
-        currentTileType = EditorMap->GetSpectificTileType(x, y);
+        currentTileType = EditorMap->GetTileType(x, y);
     }
 
 	if (controls.isKeyboardButtonPressed(KEYBOARD_LEFT) || controls.isKeyboardButtonHeld(KEYBOARD_LEFT))
@@ -148,35 +149,33 @@ void SceneMapEditor::UpdateMapEditor(double dt)
         if (editor_X_Offet < 0)
         {
             editor_X_Offet = 0;
-        }
-        
+        }      
     }
 
 	if (controls.isKeyboardButtonPressed(KEYBOARD_RIGHT) || controls.isKeyboardButtonHeld(KEYBOARD_RIGHT))
     {
         editor_X_Offet += EditorMap->GetTileSize();
-		if (editor_X_Offet > EditorMap->GetNumWorldTile_Width() * EditorMap->GetTileSize() * 0.5 - EditorMap->GetTileSize())
+        if (editor_X_Offet > EditorMap->GetWorldWidth() - EditorMap->GetScreenWidth())
         {
-			editor_X_Offet = EditorMap->GetNumWorldTile_Width() * EditorMap->GetTileSize() * 0.5 - EditorMap->GetTileSize();
+            editor_X_Offet = EditorMap->GetWorldWidth() - EditorMap->GetScreenWidth();
         }
     }
 
 	if (controls.isKeyboardButtonPressed(KEYBOARD_DOWN) || controls.isKeyboardButtonHeld(KEYBOARD_DOWN))
 	{
-		editor_Y_Offet -= EditorMap->GetTileSize();
+        editor_Y_Offet -= EditorMap->GetTileSize();
 		if (editor_Y_Offet < 0)
 		{
 			editor_Y_Offet = 0;
 		}
-
 	}
 
 	if (controls.isKeyboardButtonPressed(KEYBOARD_UP) || controls.isKeyboardButtonHeld(KEYBOARD_UP))
 	{
 		editor_Y_Offet += EditorMap->GetTileSize();
-		if (editor_Y_Offet > EditorMap->GetNumWorldTile_Height() * EditorMap->GetTileSize() * 0.5 - EditorMap->GetTileSize())
+        if (editor_Y_Offet > EditorMap->GetWorldHeight() - EditorMap->GetScreenHeight())
 		{
-			editor_Y_Offet = EditorMap->GetNumWorldTile_Height() * EditorMap->GetTileSize() * 0.5 - EditorMap->GetTileSize();
+            editor_Y_Offet = EditorMap->GetWorldHeight() - EditorMap->GetScreenHeight();
 		}
 	}
 }
@@ -190,7 +189,7 @@ void SceneMapEditor::UpdateSelectionScreen(double dt)
         y = Application::GetWindowHeight() - y;
 
         x = x / TileSelectionScreen->GetTileSize();
-        y = TileSelectionScreen->GetNumWorldTile_Height() - y / TileSelectionScreen->GetTileSize();
+        y = y / TileSelectionScreen->GetTileSize();
 
         x = x < 0 ? 0 : x;
         x = x >= TileSelectionScreen->world_Tile_Map[0].size() ? TileSelectionScreen->world_Tile_Map[0].size() - 1 : x;
@@ -198,7 +197,7 @@ void SceneMapEditor::UpdateSelectionScreen(double dt)
         y = y < 0 ? 0 : y;
         y = y >= TileSelectionScreen->world_Tile_Map.size() ? TileSelectionScreen->world_Tile_Map.size() - 1 : y;
 
-        currentTileType = TileSelectionScreen->GetSpectificTileType(x, y);
+        currentTileType = TileSelectionScreen->GetTileType(x, y);
     }
 
     if (controls.isKeyboardButtonPressed(KEYBOARD_F11))
@@ -211,7 +210,7 @@ void SceneMapEditor::UpdateSelectionScreen(double dt)
 void SceneMapEditor::RenderMapEditor()
 {
     if (EditorMap != nullptr)
-    {
+	{
 		RenderTileMap(EditorMap, editor_X_Offet, editor_Y_Offet);
     }
 }
@@ -229,7 +228,7 @@ void SceneMapEditor::TilemapInit()
 {
     //Tile Map Init 
     TileSelectionScreen = new TileMap();
-    TileSelectionScreen->Init(1024, 800, 25, 32, 800, 1024, 32);
+    TileSelectionScreen->Init(1024, 800, 1024, 800, 32);
     TileSelectionScreen->LoadMap("Image//CSV//TileMap.csv");
 }
 

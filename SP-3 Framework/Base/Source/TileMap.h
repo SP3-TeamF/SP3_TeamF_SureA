@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TILEMAP_H_
+#define TILEMAP_H_
 
 #include <vector>
 #include <fstream>
@@ -12,9 +13,8 @@ public:
 	TileMap(void);
 	~TileMap(void);
 
-	void Init(const int screenHeight, const int screenWidth, 
-              const int numTile_Screen_Width, const int numTile_Screen_Height,
-              const int world_Height, const int world_Width,
+    void Init(const int screenWidth, const int screenHeight,
+              const int world_Width, const int world_Height,
 			  const int theTileSize = 25
               );
 
@@ -24,14 +24,19 @@ public:
 
 	//getter
     int GetTileSize(void);
-	int GetNumScreenTile_Width(void);
-	int GetNumScreenTile_Height(void);		
-    int GetNumWorldTile_Width(void);
-    int GetNumWorldTile_Height(void);
+
+	//World get functions
 	int GetWorldWidth(void);
 	int GetWorldHeight(void);
+	int GetNumWorldTile_Width(void);
+	int GetNumWorldTile_Height(void);
+
+	//Screen get functions
+	int GetScreenWidth(void);
+	int GetScreenHeight(void);
+	int GetNumScreenTile_Width(void);
+	int GetNumScreenTile_Height(void);
 	int GetTileType(float xPosition, float yPosition);
-    int GetSpectificTileType(int x, int y);
 
 	//Setter
 	void SetTile(int typeNo, int xPos, int yPos);
@@ -57,3 +62,5 @@ private:
 
 	bool LoadFile(const string mapName);
 };
+
+#endif TILEMAP_H_

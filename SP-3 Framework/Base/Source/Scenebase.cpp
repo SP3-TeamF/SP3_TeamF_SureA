@@ -145,8 +145,6 @@ void Scenebase::Update(double dt)
     fps = (float)(1.f / dt);
 
 	camera.Update(dt);
-
-
 }
 
 //Render Functions
@@ -396,24 +394,30 @@ void Scenebase::RenderTile(Mesh *mesh, int tileID, const float size, const float
 	projectionStack.PopMatrix();
 }
 
-void Scenebase::RenderTileMap(TileMap* currentMap, float x_offSet, float y_Offset, float z_Offset, float scrollSpeed)
+void Scenebase::RenderTileMap(TileMap* currentMap, float x_Offset, float y_Offset, float z_Offset, float scrollSpeed)
 {
-	for (int i = 0; i < currentMap->GetNumWorldTile_Height(); i++)
+	int tileOffSetX = x_Offset / currentMap->GetTileSize();
+    int tileOffSetY = y_Offset / currentMap->GetTileSize();
+
+    for (int y = tileOffSetY; y < tileOffSetY + currentMap->GetNumScreenTile_Height(); ++y)
 	{
-		for (int k = 0; k < currentMap->GetNumWorldTile_Width() - 1; k++)
+        if (y >= currentMap->GetNumWorldTile_Height())
+            break;
+
+        for (int x = tileOffSetX; x < tileOffSetX + currentMap->GetNumScreenTile_Width(); ++x)
 		{
-			if (k >= currentMap->GetNumWorldTile_Width())
+			if (x >= currentMap->GetNumWorldTile_Width())
 				break;
 
-			if (currentMap->world_Tile_Map[i][k] == 0)
+			if (currentMap->world_Tile_Map[y][x] == 0)
 				continue;
 
             RenderTile(
                 meshList[GEO_TILESHEET]
-                ,currentMap->world_Tile_Map[i][k]
+                , currentMap->world_Tile_Map[y][x]
                 , currentMap->GetTileSize()
-                , k * currentMap->GetTileSize() - x_offSet * scrollSpeed
-                , currentMap->GetWorldHeight() - currentMap->GetTileSize() - i * currentMap->GetTileSize() - y_Offset * scrollSpeed
+                , x * currentMap->GetTileSize() - x_Offset * scrollSpeed
+                , y * currentMap->GetTileSize() - y_Offset * scrollSpeed
                 , z_Offset
                 );
 		}

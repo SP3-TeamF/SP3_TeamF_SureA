@@ -5,7 +5,8 @@
 #include "Scenebase.h"
 #include "test.h"
 #include "SceneMapEditor.h"
-
+#include "TutorialScene.h"
+#include "Collisiontest.h"
 class Application
 {
 public:

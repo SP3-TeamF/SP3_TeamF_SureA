@@ -117,8 +117,8 @@ void Scenebase::Init()
 	meshList[GEO_TILESHEET] = MeshBuilder::GenerateTileMesh("TileSheet", 21, 23);
 	meshList[GEO_TILESHEET]->textureID = LoadTGA("Image//TileSheet1.tga");
 
-	meshList[GEO_TEST] = MeshBuilder::Generate2DMesh("ds", Color(1,1,1),0,0,10,10);
-	meshList[GEO_TEST]->textureArray[0] = LoadTGA("Image//test.tga");
+	meshList[GEO_TEST] = MeshBuilder::Generate2DMesh("ds", Color(1,1,1),0,0,32,32);
+	meshList[GEO_TEST]->textureID= LoadTGA("Image//MC1.tga");
 	
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;

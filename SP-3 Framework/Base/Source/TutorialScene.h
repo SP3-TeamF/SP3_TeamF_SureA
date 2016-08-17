@@ -19,6 +19,8 @@ public:
 	virtual void Exit();
 
 private:
+	float Test_X_OFFSET;
+	float Test_Y_OFFSET;
 	weapon* Weapon;
 	WEAPON_TYPE WeaponType;
 };

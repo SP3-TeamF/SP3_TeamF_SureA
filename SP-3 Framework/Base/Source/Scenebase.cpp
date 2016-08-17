@@ -73,6 +73,7 @@ void Scenebase::Init()
 	m_parameters[U_TEXT_ENABLED] = glGetUniformLocation(m_programID, "textEnabled");
 	m_parameters[U_TEXT_COLOR] = glGetUniformLocation(m_programID, "textColor");
 
+
 	// Use our shader
 	glUseProgram(m_programID);
 
@@ -120,6 +121,80 @@ void Scenebase::Init()
 	meshList[GEO_TEST] = MeshBuilder::Generate2DMesh("ds", Color(1,1,1),0,0,32,32);
 	meshList[GEO_TEST]->textureID= LoadTGA("Image//avatar.tga");
 	
+
+	
+	meshList[GEO_MCDOWN] = MeshBuilder::GenerateSpriteAnimation("down", 1, 3);
+	meshList[GEO_MCDOWN]->textureID = LoadTGA("Image//MCdown.tga");
+	SpriteAnimation *sa1 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCDOWN]);
+	if (sa1)
+	{
+		sa1->m_anim = new Animation();
+		sa1->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+
+	meshList[GEO_MCUP] = MeshBuilder::GenerateSpriteAnimation("up", 1, 3);
+	meshList[GEO_MCUP]->textureID = LoadTGA("Image//MCup.tga");
+	SpriteAnimation *sa2 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCUP]);
+	if (sa2)
+	{
+		sa2->m_anim = new Animation();
+		sa2->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+
+	meshList[GEO_MCLEFT] = MeshBuilder::GenerateSpriteAnimation("left", 1, 3);
+	meshList[GEO_MCLEFT]->textureID = LoadTGA("Image//MCleft.tga");
+	SpriteAnimation *sa3 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCLEFT]);
+	if (sa3)
+	{
+		sa3->m_anim = new Animation();
+		sa3->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+
+	meshList[GEO_MCRIGHT] = MeshBuilder::GenerateSpriteAnimation("right", 1, 3);
+	meshList[GEO_MCRIGHT]->textureID = LoadTGA("Image//MCright.tga");
+	SpriteAnimation *sa4 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCRIGHT]);
+	if (sa4)
+	{
+		sa4->m_anim = new Animation();
+		sa4->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+
+	meshList[GEO_MCTOPLEFT] = MeshBuilder::GenerateSpriteAnimation("topleft", 1, 3);
+	meshList[GEO_MCTOPLEFT]->textureID = LoadTGA("Image//MCupleft.tga");
+	SpriteAnimation *sa5 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCTOPLEFT]);
+	if (sa5)
+	{
+		sa5->m_anim = new Animation();
+		sa5->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+
+	meshList[GEO_MCDOWNLEFT] = MeshBuilder::GenerateSpriteAnimation("downleft", 1, 3);
+	meshList[GEO_MCDOWNLEFT]->textureID = LoadTGA("Image//MCdownleft.tga");
+	SpriteAnimation *sa6 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCDOWNLEFT]);
+	if (sa6)
+	{
+		sa6->m_anim = new Animation();
+		sa6->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+
+	meshList[GEO_MCDOWNRIGHT] = MeshBuilder::GenerateSpriteAnimation("downright", 1, 3);
+	meshList[GEO_MCDOWNRIGHT]->textureID = LoadTGA("Image//MCdownright.tga");
+	SpriteAnimation *sa7 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCDOWNRIGHT]);
+	if (sa7)
+	{
+		sa7->m_anim = new Animation();
+		sa7->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+
+	meshList[GEO_MCTOPRIGHT] = MeshBuilder::GenerateSpriteAnimation("topright", 1, 3);
+	meshList[GEO_MCTOPRIGHT]->textureID = LoadTGA("Image//MCupright.tga");
+	SpriteAnimation *sa8 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCTOPRIGHT]);
+	if (sa8)
+	{
+		sa8->m_anim = new Animation();
+		sa8->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;
 	perspective.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
@@ -144,7 +219,11 @@ void Scenebase::Update(double dt)
 
     fps = (float)(1.f / dt);
 
+
 	camera.Update(dt);
+	
+	
+
 }
 
 //Render Functions
@@ -408,7 +487,7 @@ void Scenebase::RenderTileMap(TileMap* currentMap, float x_Offset, float y_Offse
 		{
 			if (x >= currentMap->GetNumWorldTile_Width())
 				break;
-
+		
 			if (currentMap->world_Tile_Map[y][x] == 0)
 				continue;
 

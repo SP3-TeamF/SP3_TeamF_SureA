@@ -53,6 +53,7 @@ class Scenebase : public Scene
 		U_COLOR_TEXTURE,
 		U_TEXT_ENABLED,
 		U_TEXT_COLOR,
+		
 		U_TOTAL,
 	};
 public:
@@ -85,6 +86,14 @@ protected:
         GEO_BACKGROUND,
         GEO_TILESHEET,
 		GEO_TEST,
+		GEO_MCUP,
+		GEO_MCDOWN,
+		GEO_MCLEFT,
+		GEO_MCRIGHT,
+		GEO_MCTOPRIGHT,
+		GEO_MCTOPLEFT,
+		GEO_MCDOWNLEFT,
+		GEO_MCDOWNRIGHT,
         NUM_GEOMETRY,
     };
 

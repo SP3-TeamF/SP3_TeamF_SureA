@@ -28,21 +28,53 @@ void TutorialScene::Init()
 
 void TutorialScene::Update(double dt)
 {
-	if (controls.isKeyboardButtonHeld(KEYBOARD_W))
+	SpriteAnimation *sa1 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCDOWN]);
+	if (sa1)
 	{
-		player->Add_cMovement(Vector3(0, 1, 0));
+		sa1->Update(dt);
+		sa1->m_anim->animActive = true;
 	}
-	if (controls.isKeyboardButtonHeld(KEYBOARD_S))
+	SpriteAnimation *sa2 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCUP]);
+	if (sa2)
 	{
-		player->Add_cMovement(Vector3(0, -1, 0));
+		sa2->Update(dt);
+		sa2->m_anim->animActive = true;
 	}
-	if (controls.isKeyboardButtonHeld(KEYBOARD_D))
+	SpriteAnimation *sa3 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCLEFT]);
+	if (sa3)
 	{
-		player->Add_cMovement(Vector3(1, 0, 0));
+		sa3->Update(dt);
+		sa3->m_anim->animActive = true;
 	}
-	if (controls.isKeyboardButtonHeld(KEYBOARD_A))
+	SpriteAnimation *sa4 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCRIGHT]);
+	if (sa4)
 	{
-		player->Add_cMovement(Vector3(-1, 0, 0));
+		sa4->Update(dt);
+		sa4->m_anim->animActive = true;
+	}
+	SpriteAnimation *sa5 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCTOPLEFT]);
+	if (sa5)
+	{
+		sa5->Update(dt);
+		sa5->m_anim->animActive = true;
+	}
+	SpriteAnimation *sa6 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCDOWNLEFT]);
+	if (sa6)
+	{
+		sa6->Update(dt);
+		sa6->m_anim->animActive = true;
+	}
+	SpriteAnimation *sa7 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCDOWNRIGHT]);
+	if (sa7)
+	{
+		sa7->Update(dt);
+		sa7->m_anim->animActive = true;
+	}
+	SpriteAnimation *sa8 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCTOPRIGHT]);
+	if (sa8)
+	{
+		sa8->Update(dt);
+		sa8->m_anim->animActive = true;
 	}
 
 	player->Add_cMovement(controls.GetControllerDirection(CONTROLLER_1, L_JOYSTICK));
@@ -124,6 +156,25 @@ void TutorialScene::Update(double dt)
 			GlobalData.world_Y_offset = m_TileMap->GetWorldHeight() - m_TileMap->GetScreenHeight();
 		}
 	}
+
+	if (controls.isKeyboardButtonHeld(KEYBOARD_W))
+	{
+		player->Add_cMovement(Vector3(0, 1, 0));
+
+	}
+	if (controls.isKeyboardButtonHeld(KEYBOARD_S))
+	{
+		player->Add_cMovement(Vector3(0, -1, 0));
+	}
+	if (controls.isKeyboardButtonHeld(KEYBOARD_D))
+	{
+		player->Add_cMovement(Vector3(1, 0, 0));
+	}
+	if (controls.isKeyboardButtonHeld(KEYBOARD_A))
+	{
+		player->Add_cMovement(Vector3(-1, 0, 0));
+	}
+
 	Weapon->Update(dt);
 
 }	
@@ -135,7 +186,27 @@ void TutorialScene::Render()
 	{
 		RenderTileMap(m_TileMap, GlobalData.world_X_offset, GlobalData.world_Y_offset);
 	}
-	Render2DMesh(meshList[GEO_TEST], false, 1.0f, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+
+
+		if (controls.isKeyboardButtonHeld(KEYBOARD_W))
+			Render2DMesh(meshList[GEO_MCUP], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+		else if (controls.isKeyboardButtonHeld(KEYBOARD_S))
+			Render2DMesh(meshList[GEO_MCDOWN], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+		else if(controls.isKeyboardButtonHeld(KEYBOARD_A))
+			Render2DMesh(meshList[GEO_MCLEFT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+		else if(controls.isKeyboardButtonHeld(KEYBOARD_D))
+			Render2DMesh(meshList[GEO_MCRIGHT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+		else if(controls.isKeyboardButtonHeld(KEYBOARD_W) && (controls.isKeyboardButtonHeld(KEYBOARD_D)))
+			Render2DMesh(meshList[GEO_MCTOPRIGHT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+		else if(controls.isKeyboardButtonHeld(KEYBOARD_W) && (controls.isKeyboardButtonHeld(KEYBOARD_A)))
+			Render2DMesh(meshList[GEO_MCTOPLEFT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+		else if(controls.isKeyboardButtonHeld(KEYBOARD_S) && (controls.isKeyboardButtonHeld(KEYBOARD_A)))
+			Render2DMesh(meshList[GEO_MCDOWNLEFT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+		else if(controls.isKeyboardButtonHeld(KEYBOARD_S) && (controls.isKeyboardButtonHeld(KEYBOARD_D)))
+			Render2DMesh(meshList[GEO_MCDOWNRIGHT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+		else 
+			Render2DMesh(meshList[GEO_MCDOWN], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	
 
 	vector<CBulletInfo*> temp = Weapon->GetBulletList();
 	for (auto bulletIt : temp)

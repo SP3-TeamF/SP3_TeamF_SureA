@@ -399,12 +399,12 @@ void Scenebase::RenderTileMap(TileMap* currentMap, float x_Offset, float y_Offse
 	int tileOffSetX = x_Offset / currentMap->GetTileSize();
     int tileOffSetY = y_Offset / currentMap->GetTileSize();
 
-    for (int y = tileOffSetY; y < tileOffSetY + currentMap->GetNumScreenTile_Height(); ++y)
+    for (int y = tileOffSetY; y < tileOffSetY + currentMap->GetNumScreenTile_Height()+1; ++y)
 	{
         if (y >= currentMap->GetNumWorldTile_Height())
             break;
 
-        for (int x = tileOffSetX; x < tileOffSetX + currentMap->GetNumScreenTile_Width(); ++x)
+        for (int x = tileOffSetX; x < tileOffSetX + currentMap->GetNumScreenTile_Width()+1; ++x)
 		{
 			if (x >= currentMap->GetNumWorldTile_Width())
 				break;

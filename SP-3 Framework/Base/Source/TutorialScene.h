@@ -8,7 +8,9 @@ class TutorialScene : public Scenebase
 {
 	enum WEAPON_TYPE{
 		WT_NET,
-		WT_FIRE
+		WT_FIRE,
+		WT_WATER,
+		WT_AIR
 	};
 public:
 	TutorialScene();

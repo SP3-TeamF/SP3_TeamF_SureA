@@ -110,8 +110,8 @@ void SceneMapEditor::UpdateMapEditor(double dt)
         Application::GetCursorPos(&x, &y);
         y = Application::GetWindowHeight() - y;
 
-        x = x / EditorMap->GetTileSize() + editor_X_Offet / EditorMap->GetTileSize();
-		y = y / EditorMap->GetTileSize() + editor_Y_Offet / EditorMap->GetTileSize();
+        x = x / EditorMap->GetTileSize() + GlobalData.world_X_offset / EditorMap->GetTileSize();
+		y = y / EditorMap->GetTileSize() + GlobalData.world_Y_offset / EditorMap->GetTileSize();
 
         x = x < 0 ? 0 : x;
         x = x >= EditorMap->world_Tile_Map[0].size() ? EditorMap->world_Tile_Map[0].size() - 1 : x;
@@ -130,8 +130,8 @@ void SceneMapEditor::UpdateMapEditor(double dt)
         Application::GetCursorPos(&x, &y);
         y = Application::GetWindowHeight() - y;
 
-        x = x / EditorMap->GetTileSize() + editor_X_Offet / EditorMap->GetTileSize();
-		y = y / EditorMap->GetTileSize() + editor_Y_Offet / EditorMap->GetTileSize();
+        x = x / EditorMap->GetTileSize() + GlobalData.world_X_offset / EditorMap->GetTileSize();
+		y = y / EditorMap->GetTileSize() + GlobalData.world_Y_offset / EditorMap->GetTileSize();
 
         x = x < 0 ? 0 : x;
         x = x >= EditorMap->world_Tile_Map[0].size() ? EditorMap->world_Tile_Map[0].size() - 1 : x;
@@ -145,37 +145,37 @@ void SceneMapEditor::UpdateMapEditor(double dt)
 
 	if (controls.isKeyboardButtonPressed(KEYBOARD_LEFT) || controls.isKeyboardButtonHeld(KEYBOARD_LEFT))
     {
-        editor_X_Offet -= EditorMap->GetTileSize();
-        if (editor_X_Offet < 0)
+        GlobalData.world_X_offset -= EditorMap->GetTileSize();
+        if (GlobalData.world_X_offset < 0)
         {
-            editor_X_Offet = 0;
+            GlobalData.world_X_offset = 0;
         }      
     }
 
 	if (controls.isKeyboardButtonPressed(KEYBOARD_RIGHT) || controls.isKeyboardButtonHeld(KEYBOARD_RIGHT))
     {
-        editor_X_Offet += EditorMap->GetTileSize();
-        if (editor_X_Offet > EditorMap->GetWorldWidth() - EditorMap->GetScreenWidth())
+        GlobalData.world_X_offset += EditorMap->GetTileSize();
+        if (GlobalData.world_X_offset > EditorMap->GetWorldWidth() - EditorMap->GetScreenWidth())
         {
-            editor_X_Offet = EditorMap->GetWorldWidth() - EditorMap->GetScreenWidth();
+            GlobalData.world_X_offset = EditorMap->GetWorldWidth() - EditorMap->GetScreenWidth();
         }
     }
 
 	if (controls.isKeyboardButtonPressed(KEYBOARD_DOWN) || controls.isKeyboardButtonHeld(KEYBOARD_DOWN))
 	{
-        editor_Y_Offet -= EditorMap->GetTileSize();
-		if (editor_Y_Offet < 0)
+        GlobalData.world_Y_offset -= EditorMap->GetTileSize();
+		if (GlobalData.world_Y_offset < 0)
 		{
-			editor_Y_Offet = 0;
+			GlobalData.world_Y_offset = 0;
 		}
 	}
 
 	if (controls.isKeyboardButtonPressed(KEYBOARD_UP) || controls.isKeyboardButtonHeld(KEYBOARD_UP))
 	{
-		editor_Y_Offet += EditorMap->GetTileSize();
-        if (editor_Y_Offet > EditorMap->GetWorldHeight() - EditorMap->GetScreenHeight())
+		GlobalData.world_Y_offset += EditorMap->GetTileSize();
+        if (GlobalData.world_Y_offset > EditorMap->GetWorldHeight() - EditorMap->GetScreenHeight())
 		{
-            editor_Y_Offet = EditorMap->GetWorldHeight() - EditorMap->GetScreenHeight();
+            GlobalData.world_Y_offset = EditorMap->GetWorldHeight() - EditorMap->GetScreenHeight();
 		}
 	}
 }
@@ -211,7 +211,7 @@ void SceneMapEditor::RenderMapEditor()
 {
     if (EditorMap != nullptr)
 	{
-		RenderTileMap(EditorMap, editor_X_Offet, editor_Y_Offet);
+		RenderTileMap(EditorMap, GlobalData.world_X_offset, GlobalData.world_Y_offset);
     }
 }
 
@@ -235,8 +235,8 @@ void SceneMapEditor::TilemapInit()
 void SceneMapEditor::MapEditorInit()
 {
     MapEditorName = "";
-    editor_X_Offet = 0;
-	editor_Y_Offet = 0;
+    GlobalData.world_X_offset = 0;
+	GlobalData.world_Y_offset = 0;
     currentTileType = 0;
 
 	controls.isControllerButtonHeld(CONTROLLER_1, CONTROLLER_RSTICKER);

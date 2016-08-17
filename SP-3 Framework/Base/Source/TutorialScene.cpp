@@ -12,9 +12,9 @@ TutorialScene::~TutorialScene()
 void TutorialScene::Init()
 {
 	Scenebase::Init();
-	Scenebase::Init();
-	Test_X_OFFSET = 0;
-	Test_Y_OFFSET = 0;
+
+	GlobalData.world_X_offset = 0;
+	GlobalData.world_Y_offset = 0;
 	player->SetPlayerBorder(64, 800, 64, 736);
 	
 	m_TileMap = new TileMap();
@@ -57,24 +57,37 @@ void TutorialScene::Update(double dt)
 	
 	player->Update(dt);
 	
-	if ((controls.GetIsControllerTriggerPressed(CONTROLLER_1, R_TRIGGER))|| (controls.isKeyboardButtonPressed(KEYBOARD_SPACE))){
+	if ((controls.GetIsControllerTriggerPressed(CONTROLLER_1, R_TRIGGER)) || (controls.isKeyboardButtonPressed(KEYBOARD_SPACE))){
 
 		if (WeaponType == WT_FIRE){
 			Weapon->fireWeapon((controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK)), player->Get_cPosition());
-			
 		}
-		else if (WeaponType == WT_NET){
+		if (WeaponType == WT_WATER){
+			Weapon->waterWeapon((controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK)), player->Get_cPosition());
+		}
+		if (WeaponType == WT_AIR){
+			Weapon->airWeapon((controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK)), player->Get_cPosition());
+		}
+		if (WeaponType == WT_NET){
 			Weapon->fireNet((controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK)), player->Get_cPosition());
-			
 		}
 	}
-	if (controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_UP)){
+	if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_UP) || controls.isKeyboardButtonPressed(KEYBOARD_1))){
 		WeaponType = WT_NET;
+		std::cout << "Net" << std::endl;
 	}
-	if (controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_LEFT)){
+	if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_DOWN) || controls.isKeyboardButtonPressed(KEYBOARD_2))){
+		WeaponType = WT_WATER;
+		std::cout << "Water" << std::endl;
+	}
+	if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_RIGHT) || controls.isKeyboardButtonPressed(KEYBOARD_3))){
+		WeaponType = WT_AIR;
+		std::cout << "Air" << std::endl;
+	}
+	if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_LEFT) || controls.isKeyboardButtonPressed(KEYBOARD_4))){
 		WeaponType = WT_FIRE;
+		std::cout << "Fire" << std::endl;
 	}
-
 
 	if (controls.isKeyboardButtonPressed(KEYBOARD_LEFT) || controls.isKeyboardButtonHeld(KEYBOARD_LEFT))
 	{
@@ -96,19 +109,19 @@ void TutorialScene::Update(double dt)
 
 	if (controls.isKeyboardButtonPressed(KEYBOARD_DOWN) || controls.isKeyboardButtonHeld(KEYBOARD_DOWN))
 	{
-		Test_Y_OFFSET -= m_TileMap->GetTileSize();
-		if (Test_Y_OFFSET < 0)
+		GlobalData.world_Y_offset -= m_TileMap->GetTileSize();
+		if (GlobalData.world_Y_offset < 0)
 		{
-			Test_Y_OFFSET = 0;
+			GlobalData.world_Y_offset = 0;
 		}
 	}
 
 	if (controls.isKeyboardButtonPressed(KEYBOARD_UP) || controls.isKeyboardButtonHeld(KEYBOARD_UP))
 	{
-		Test_Y_OFFSET += m_TileMap->GetTileSize();
-		if (Test_Y_OFFSET > m_TileMap->GetWorldHeight() - m_TileMap->GetScreenHeight())
+		GlobalData.world_Y_offset += m_TileMap->GetTileSize();
+		if (GlobalData.world_Y_offset > m_TileMap->GetWorldHeight() - m_TileMap->GetScreenHeight())
 		{
-			Test_Y_OFFSET = m_TileMap->GetWorldHeight() - m_TileMap->GetScreenHeight();
+			GlobalData.world_Y_offset = m_TileMap->GetWorldHeight() - m_TileMap->GetScreenHeight();
 		}
 	}
 	Weapon->Update(dt);
@@ -122,7 +135,7 @@ void TutorialScene::Render()
 	{
 		RenderTileMap(m_TileMap, GlobalData.world_X_offset, GlobalData.world_Y_offset);
 	}
-	Render2DMesh(meshList[GEO_TEST], false, 2.0f, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	Render2DMesh(meshList[GEO_TEST], false, 1.0f, player->Get_cPosition().x, player->Get_cPosition().y, 0);
 
 	vector<CBulletInfo*> temp = Weapon->GetBulletList();
 	for (auto bulletIt : temp)

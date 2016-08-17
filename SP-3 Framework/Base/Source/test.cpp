@@ -54,7 +54,7 @@ void test::Update(double dt)
 void test::Render()
 {
 	Scenebase::Render();
-	Render2DMesh(meshList[GEO_TEST], false, 2.0f, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	Render2DMesh(meshList[GEO_TEST], false, 3.0f, player->Get_cPosition().x, player->Get_cPosition().y, 0);
 }
 
 void test::Exit()

@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="Source\AABB.cpp" />
     <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\Collisiontest.cpp" />
     <ClCompile Include="Source\ControllerInput.cpp" />
     <ClCompile Include="Source\KeyboardButton.cpp" />
     <ClCompile Include="Source\OBJMesh.cpp" />
@@ -40,12 +41,14 @@
     <ClCompile Include="Source\Strategy.cpp" />
     <ClCompile Include="Source\test.cpp" />
     <ClCompile Include="Source\TileMap.cpp" />
+    <ClCompile Include="Source\TutorialScene.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
     <ClCompile Include="Source\weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AABB.h" />
     <ClInclude Include="Source\Application.h" />
+    <ClInclude Include="Source\Collisiontest.h" />
     <ClInclude Include="Source\ControllerInput.h" />
     <ClInclude Include="Source\Geometry.h" />
     <ClInclude Include="Source\KeyboardButton.h" />
@@ -77,6 +80,7 @@
     <ClInclude Include="Source\Strategy.h" />
     <ClInclude Include="Source\test.h" />
     <ClInclude Include="Source\TileMap.h" />
+    <ClInclude Include="Source\TutorialScene.h" />
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Vertex.h" />
     <ClInclude Include="Source\weapon.h" />

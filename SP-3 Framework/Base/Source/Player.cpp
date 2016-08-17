@@ -99,6 +99,8 @@ void Player::UpdateMovement(double dt)
 	updatedPos.x += m_TileMap->GetTileSize() * 0.5;
 	updatedPos.y += m_TileMap->GetTileSize() * 0.5;
 
+	int currentTile = 237;
+
 	int tilePosX = updatedPos.x / m_TileMap->GetTileSize() + GlobalData.world_X_offset;
 	int tilePosY = updatedPos.y / m_TileMap->GetTileSize() + GlobalData.world_Y_offset;
 
@@ -127,7 +129,6 @@ void Player::UpdateMovement(double dt)
 	int extraCheckBottomLeft = m_TileMap->GetTileType((updatedPos.x - rightOffsetX) / m_TileMap->GetTileSize() + GlobalData.world_X_offset, (updatedPos.y - extraOffseyY_b) / m_TileMap->GetTileSize() + GlobalData.world_Y_offset);
 	int extraCheckBottomRight = m_TileMap->GetTileType((updatedPos.x + rightOffsetX) / m_TileMap->GetTileSize() + GlobalData.world_X_offset, (updatedPos.y - extraOffseyY_b) / m_TileMap->GetTileSize() + GlobalData.world_Y_offset);
 
-<<<<<<< HEAD
 	//if (extraCheckTopLeft != 0 || extraCheckTopRight != 0 || extraCheckBottomLeft != 0 || extraCheckBottomRight!=0)
 	//{
 	//	c_Movement.y = 0;
@@ -136,61 +137,54 @@ void Player::UpdateMovement(double dt)
 	//{
 	//	c_Movement.x = 0;
 	//}
-	if (c_Movement.y == 1)
-=======
-
-	if (extraCheckTopLeft != 237 || extraCheckTopRight != 237 || extraCheckBottomLeft != 237 || extraCheckBottomRight != 237)
-	if (c_Movement.y == 1)
+	if (c_Movement.y > 0)
 	{
-		if (extraCheckTopLeft != 0 || extraCheckTopRight != 0)
+		if (extraCheckTopLeft != currentTile || extraCheckTopRight != currentTile)
 		{
 			c_Movement.y = 0;
 		}
-		if (leftHand != 0 || rightHand != 0)
+		if (leftHand != currentTile || rightHand != currentTile)
 		{
 			c_Movement.x = 0;
 		}
 	}
-	if (c_Movement.y == -1)
+	if (c_Movement.y < 0)
 	{
-		if (extraCheckBottomLeft != 0 || extraCheckBottomRight != 0)
+		if (extraCheckBottomLeft != currentTile || extraCheckBottomRight != currentTile)
 		{
 			c_Movement.y = 0;
 		}
-		if (leftLeg != 0 || rightLeg != 0)
+		if (leftLeg != currentTile || rightLeg != currentTile)
 		{
 			c_Movement.x = 0;
 		}
 	}
-	if (c_Movement.x == 1)
+	if (c_Movement.x > 0)
 	{
-		if (extraCheckTopRight != 0 || extraCheckBottomRight != 0)
+		if (extraCheckTopRight != currentTile || extraCheckBottomRight != currentTile)
 		{
 			c_Movement.y = 0;
 		}
 
-		if (rightHand != 0 || rightLeg != 0)
+		if (rightHand != currentTile || rightLeg != currentTile)
 		{
 			c_Movement.x = 0;
 		}
 	}
-	if (c_Movement.x == -1)
+	if (c_Movement.x <0)
 	{
-		if (extraCheckTopLeft != 0 || extraCheckBottomLeft != 0)
+		if (extraCheckTopLeft != currentTile || extraCheckBottomLeft != currentTile)
 		{
 			c_Movement.y = 0;
 		}
-		if (leftHand != 0 || leftLeg != 0)
+		if (leftHand != currentTile || leftLeg != currentTile)
 		{
 			c_Movement.x = 0;
 		}
 	}
-
-
-
 
 	this->c_Position = c_Position + (c_Movement * c_MoveSpeed) * dt;
-	cout << extraCheckTopLeft << " " << extraCheckTopRight << endl;
+	//cout << extraCheckTopLeft << " " << extraCheckTopRight << endl;
 	//To Let Player stay exactly on ground
 	c_Movement.SetZero();
 }

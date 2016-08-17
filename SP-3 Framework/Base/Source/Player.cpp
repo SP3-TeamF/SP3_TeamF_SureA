@@ -61,6 +61,7 @@ void Player::ConstrainPlayer()
 {
 
 	float shift_X = 0;
+	float shift_Y = 0;
 
 	if (c_Position.x < leftBorder)
 	{
@@ -84,6 +85,7 @@ void Player::ConstrainPlayer()
 	}
 
 	shift_X += GlobalData.world_X_offset;
+	shift_Y += GlobalData.world_Y_offset;
 
 	float tileShifted = (m_TileMap->GetNumScreenTile_Width() * m_TileMap->GetTileSize());
 
@@ -91,13 +93,18 @@ void Player::ConstrainPlayer()
 	{
 		GlobalData.world_X_offset = shift_X;
 	}
+
+	if (shift_Y >= 0 && m_TileMap->GetWorldHeight () > tileShifted)
+	{
+		GlobalData.world_Y_offset = shift_Y;
+	}
 }
 
 void Player::UpdateMovement(double dt)
 {
 	Vector3 updatedPos = c_Position + (c_Movement * c_MoveSpeed) * dt;
-	updatedPos.x += m_TileMap->GetTileSize() * 0.5;
-	updatedPos.y += m_TileMap->GetTileSize() * 0.5;
+	updatedPos.x += m_TileMap->GetTileSize() * 0.5  + GlobalData.world_X_offset;
+	updatedPos.y += m_TileMap->GetTileSize() * 0.5 + GlobalData.world_Y_offset;
 
 	int currentTile = 237;
 
@@ -117,26 +124,18 @@ void Player::UpdateMovement(double dt)
 
 	//int c_tile = m_TileMap->GetTileType(tilePosX, tilePosY);
 
-	int rightHand = m_TileMap->GetTileType((updatedPos.x + armOffsetX) / m_TileMap->GetTileSize() + GlobalData.world_X_offset, (updatedPos.y + limbOffsetY_H) / m_TileMap->GetTileSize() + GlobalData.world_Y_offset);
-	int rightLeg = m_TileMap->GetTileType((updatedPos.x + legOffsetX) / m_TileMap->GetTileSize() + GlobalData.world_X_offset, (updatedPos.y - limbOffsetY) / m_TileMap->GetTileSize() + GlobalData.world_Y_offset);
+	int rightHand = m_TileMap->GetTileType(( updatedPos.x + armOffsetX) / m_TileMap->GetTileSize()  , (updatedPos.y + limbOffsetY_H) / m_TileMap->GetTileSize());
+	int rightLeg = m_TileMap->GetTileType(( updatedPos.x + legOffsetX) / m_TileMap->GetTileSize() , (updatedPos.y - limbOffsetY) / m_TileMap->GetTileSize());
 
-	int leftHand = m_TileMap->GetTileType((updatedPos.x - armOffsetX) / m_TileMap->GetTileSize() + GlobalData.world_X_offset, (updatedPos.y + limbOffsetY_H) / m_TileMap->GetTileSize() + GlobalData.world_Y_offset);
-	int leftLeg = m_TileMap->GetTileType((updatedPos.x - legOffsetX) / m_TileMap->GetTileSize() + GlobalData.world_X_offset, (updatedPos.y - limbOffsetY) / m_TileMap->GetTileSize() + GlobalData.world_Y_offset);
+	int leftHand = m_TileMap->GetTileType(( updatedPos.x - armOffsetX) / m_TileMap->GetTileSize() , (updatedPos.y + limbOffsetY_H) / m_TileMap->GetTileSize());
+	int leftLeg = m_TileMap->GetTileType(( updatedPos.x - legOffsetX) / m_TileMap->GetTileSize() , (updatedPos.y - limbOffsetY) / m_TileMap->GetTileSize());
 
-	int extraCheckTopLeft = m_TileMap->GetTileType((updatedPos.x - rightOffsetX) / m_TileMap->GetTileSize() + GlobalData.world_X_offset, (updatedPos.y + extraOffsetY_t) / m_TileMap->GetTileSize() + GlobalData.world_Y_offset);
-	int extraCheckTopRight = m_TileMap->GetTileType((updatedPos.x + rightOffsetX) / m_TileMap->GetTileSize() + GlobalData.world_X_offset, (updatedPos.y + extraOffsetY_t) / m_TileMap->GetTileSize() + GlobalData.world_Y_offset);
+	int extraCheckTopLeft = m_TileMap->GetTileType(( updatedPos.x - rightOffsetX) / m_TileMap->GetTileSize()  ,  (updatedPos.y + extraOffsetY_t) / m_TileMap->GetTileSize());
+	int extraCheckTopRight = m_TileMap->GetTileType(( updatedPos.x + rightOffsetX) / m_TileMap->GetTileSize() ,  (updatedPos.y + extraOffsetY_t) / m_TileMap->GetTileSize());
 
-	int extraCheckBottomLeft = m_TileMap->GetTileType((updatedPos.x - rightOffsetX) / m_TileMap->GetTileSize() + GlobalData.world_X_offset, (updatedPos.y - extraOffseyY_b) / m_TileMap->GetTileSize() + GlobalData.world_Y_offset);
-	int extraCheckBottomRight = m_TileMap->GetTileType((updatedPos.x + rightOffsetX) / m_TileMap->GetTileSize() + GlobalData.world_X_offset, (updatedPos.y - extraOffseyY_b) / m_TileMap->GetTileSize() + GlobalData.world_Y_offset);
+	int extraCheckBottomLeft = m_TileMap->GetTileType(( updatedPos.x - rightOffsetX) / m_TileMap->GetTileSize() ,  (updatedPos.y - extraOffseyY_b) / m_TileMap->GetTileSize());
+	int extraCheckBottomRight = m_TileMap->GetTileType(( updatedPos.x + rightOffsetX) / m_TileMap->GetTileSize() , (updatedPos.y - extraOffseyY_b) / m_TileMap->GetTileSize());
 
-	//if (extraCheckTopLeft != 0 || extraCheckTopRight != 0 || extraCheckBottomLeft != 0 || extraCheckBottomRight!=0)
-	//{
-	//	c_Movement.y = 0;
-	//}
-	//if (leftLeg != 0 || leftHand != 0 || rightHand != 0 || rightLeg != 0)
-	//{
-	//	c_Movement.x = 0;
-	//}
 	if (c_Movement.y > 0)
 	{
 		if (extraCheckTopLeft != currentTile || extraCheckTopRight != currentTile)
@@ -184,7 +183,8 @@ void Player::UpdateMovement(double dt)
 	}
 
 	this->c_Position = c_Position + (c_Movement * c_MoveSpeed) * dt;
-	//cout << extraCheckTopLeft << " " << extraCheckTopRight << endl;
+	cout << GlobalData.world_X_offset << " " << rightLeg << endl;
+
 	//To Let Player stay exactly on ground
 	c_Movement.SetZero();
 }

@@ -65,7 +65,7 @@ void Collisiontest::Update(double dt)
 	//cout << player->Get_cPosition() << endl;
 	player->Update(dt);
 
-	cout << m_TileMap->GetTileType(0, 0) << endl;
+	//cout << m_TileMap->GetTileType(0, 0) << endl;
 
 }
 

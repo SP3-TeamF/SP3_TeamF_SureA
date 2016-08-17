@@ -95,7 +95,7 @@ void weapon::fireNet(Vector3 view, Vector3 position)
 
 void weapon::Update(double dt)
 {
-	cout << isReloading << std::endl;
+	//cout << isReloading << std::endl;
 
 	if (isReloading == true && reloadTimer <=1){
 		reloadTimer += dt;

@@ -95,12 +95,54 @@ void Player::ConstrainPlayer()
 
 void Player::UpdateMovement(double dt)
 {
-    Vector3 updatedPos = c_Position + (c_Movement * c_MoveSpeed) * dt;
-    
+	Vector3 updatedPos = c_Position + (c_Movement * c_MoveSpeed) * dt;
+	updatedPos.x += m_TileMap->GetTileSize() * 0.5;
+	updatedPos.y += m_TileMap->GetTileSize() * 0.5;
+
+	int tilePosX = updatedPos.x / m_TileMap->GetTileSize() + GlobalData.world_X_offset;
+	int tilePosY = updatedPos.y / m_TileMap->GetTileSize() + GlobalData.world_Y_offset;
+
+	float armOffsetX = m_TileMap->GetTileSize() * 0.5;
+	float legOffsetX = m_TileMap->GetTileSize() * 0.5;
+
+	float limbOffsetY = m_TileMap->GetTileSize()*0.5;
+	float extraOffsetY = m_TileMap->GetTileSize() * 0.5;
+
+	int c_tile = m_TileMap->GetTileType(tilePosX, tilePosY);
+
+	int rightHand = m_TileMap->GetTileType((updatedPos.x + armOffsetX) / m_TileMap->GetTileSize(), tilePosY);
+	int rightLeg = m_TileMap->GetTileType((updatedPos.x + legOffsetX) / m_TileMap->GetTileSize(), (updatedPos.y - limbOffsetY) / m_TileMap->GetTileSize());
+
+	int extraCheckTopLeft = m_TileMap->GetTileType((updatedPos.x - armOffsetX) / m_TileMap->GetTileSize(), (updatedPos.y + extraOffsetY) / m_TileMap->GetTileSize());
+	int extraCheckTopRight = m_TileMap->GetTileType((updatedPos.x + armOffsetX) / m_TileMap->GetTileSize(), (updatedPos.y + extraOffsetY) / m_TileMap->GetTileSize());
+
+	int extraCheckBottomLeft = m_TileMap->GetTileType((updatedPos.x - armOffsetX) / m_TileMap->GetTileSize(), (updatedPos.y - extraOffsetY) / m_TileMap->GetTileSize());
+	int extraCheckBottomRight = m_TileMap->GetTileType((updatedPos.x + armOffsetX) / m_TileMap->GetTileSize(), (updatedPos.y - extraOffsetY) / m_TileMap->GetTileSize());
+
+	int leftHand = m_TileMap->GetTileType((updatedPos.x - armOffsetX) / m_TileMap->GetTileSize(), tilePosY);
+	int leftLeg = m_TileMap->GetTileType((updatedPos.x - legOffsetX) / m_TileMap->GetTileSize(), (updatedPos.y - limbOffsetY) / m_TileMap->GetTileSize());
+	
+
+
+	if (extraCheckTopLeft != 0 || extraCheckTopRight != 0 || extraCheckBottomLeft != 0 || extraCheckBottomRight!=0)
+	{
+		c_Movement.y = 0;
+	}
+	if (leftLeg != 0 || leftHand != 0)
+	{
+		c_Movement.x = 0;
+	}
+
+	if (rightHand != 0 || rightLeg != 0)
+	{
+		c_Movement.x = 0;
+	}
+
+	
 
 	this->c_Position = c_Position + (c_Movement * c_MoveSpeed) * dt;
-    
-    //To Let Player stay exactly on ground
+	cout << leftLeg << endl;
+	//To Let Player stay exactly on ground
 	c_Movement.SetZero();
 }
 

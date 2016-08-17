@@ -102,46 +102,90 @@ void Player::UpdateMovement(double dt)
 	int tilePosX = updatedPos.x / m_TileMap->GetTileSize() + GlobalData.world_X_offset;
 	int tilePosY = updatedPos.y / m_TileMap->GetTileSize() + GlobalData.world_Y_offset;
 
-	float armOffsetX = m_TileMap->GetTileSize() * 0.5;
-	float legOffsetX = m_TileMap->GetTileSize() * 0.5;
+	float armOffsetX = m_TileMap->GetTileSize() * 0.3;
+	float legOffsetX = m_TileMap->GetTileSize() * 0.3;
 
-	float limbOffsetY = m_TileMap->GetTileSize()*0.5;
-	float extraOffsetY = m_TileMap->GetTileSize() * 0.5;
+	float limbOffsetY = m_TileMap->GetTileSize() * 0.35;
+	float limbOffsetY_H = m_TileMap->GetTileSize() * 0.2;
 
-	int c_tile = m_TileMap->GetTileType(tilePosX, tilePosY);
+	float extraOffsetY_t = m_TileMap->GetTileSize() * 0.25;
+	float extraOffseyY_b = m_TileMap->GetTileSize() * 0.4;
 
-	int rightHand = m_TileMap->GetTileType((updatedPos.x + armOffsetX) / m_TileMap->GetTileSize(), tilePosY);
-	int rightLeg = m_TileMap->GetTileType((updatedPos.x + legOffsetX) / m_TileMap->GetTileSize(), (updatedPos.y - limbOffsetY) / m_TileMap->GetTileSize());
+	float rightOffsetX = m_TileMap->GetTileSize() * 0.2;
 
-	int extraCheckTopLeft = m_TileMap->GetTileType((updatedPos.x - armOffsetX) / m_TileMap->GetTileSize(), (updatedPos.y + extraOffsetY) / m_TileMap->GetTileSize());
-	int extraCheckTopRight = m_TileMap->GetTileType((updatedPos.x + armOffsetX) / m_TileMap->GetTileSize(), (updatedPos.y + extraOffsetY) / m_TileMap->GetTileSize());
+	//int c_tile = m_TileMap->GetTileType(tilePosX, tilePosY);
 
-	int extraCheckBottomLeft = m_TileMap->GetTileType((updatedPos.x - armOffsetX) / m_TileMap->GetTileSize(), (updatedPos.y - extraOffsetY) / m_TileMap->GetTileSize());
-	int extraCheckBottomRight = m_TileMap->GetTileType((updatedPos.x + armOffsetX) / m_TileMap->GetTileSize(), (updatedPos.y - extraOffsetY) / m_TileMap->GetTileSize());
+	int rightHand = m_TileMap->GetTileType((updatedPos.x + armOffsetX) / m_TileMap->GetTileSize() + GlobalData.world_X_offset, (updatedPos.y + limbOffsetY_H) / m_TileMap->GetTileSize() + GlobalData.world_Y_offset);
+	int rightLeg = m_TileMap->GetTileType((updatedPos.x + legOffsetX) / m_TileMap->GetTileSize() + GlobalData.world_X_offset, (updatedPos.y - limbOffsetY) / m_TileMap->GetTileSize() + GlobalData.world_Y_offset);
 
-	int leftHand = m_TileMap->GetTileType((updatedPos.x - armOffsetX) / m_TileMap->GetTileSize(), tilePosY);
-	int leftLeg = m_TileMap->GetTileType((updatedPos.x - legOffsetX) / m_TileMap->GetTileSize(), (updatedPos.y - limbOffsetY) / m_TileMap->GetTileSize());
-	
+	int leftHand = m_TileMap->GetTileType((updatedPos.x - armOffsetX) / m_TileMap->GetTileSize() + GlobalData.world_X_offset, (updatedPos.y + limbOffsetY_H) / m_TileMap->GetTileSize() + GlobalData.world_Y_offset);
+	int leftLeg = m_TileMap->GetTileType((updatedPos.x - legOffsetX) / m_TileMap->GetTileSize() + GlobalData.world_X_offset, (updatedPos.y - limbOffsetY) / m_TileMap->GetTileSize() + GlobalData.world_Y_offset);
 
+	int extraCheckTopLeft = m_TileMap->GetTileType((updatedPos.x - rightOffsetX) / m_TileMap->GetTileSize() + GlobalData.world_X_offset, (updatedPos.y + extraOffsetY_t) / m_TileMap->GetTileSize() + GlobalData.world_Y_offset);
+	int extraCheckTopRight = m_TileMap->GetTileType((updatedPos.x + rightOffsetX) / m_TileMap->GetTileSize() + GlobalData.world_X_offset, (updatedPos.y + extraOffsetY_t) / m_TileMap->GetTileSize() + GlobalData.world_Y_offset);
 
-	if (extraCheckTopLeft != 0 || extraCheckTopRight != 0 || extraCheckBottomLeft != 0 || extraCheckBottomRight!=0)
+	int extraCheckBottomLeft = m_TileMap->GetTileType((updatedPos.x - rightOffsetX) / m_TileMap->GetTileSize() + GlobalData.world_X_offset, (updatedPos.y - extraOffseyY_b) / m_TileMap->GetTileSize() + GlobalData.world_Y_offset);
+	int extraCheckBottomRight = m_TileMap->GetTileType((updatedPos.x + rightOffsetX) / m_TileMap->GetTileSize() + GlobalData.world_X_offset, (updatedPos.y - extraOffseyY_b) / m_TileMap->GetTileSize() + GlobalData.world_Y_offset);
+
+	//if (extraCheckTopLeft != 0 || extraCheckTopRight != 0 || extraCheckBottomLeft != 0 || extraCheckBottomRight!=0)
+	//{
+	//	c_Movement.y = 0;
+	//}
+	//if (leftLeg != 0 || leftHand != 0 || rightHand != 0 || rightLeg != 0)
+	//{
+	//	c_Movement.x = 0;
+	//}
+	if (c_Movement.y == 1)
 	{
-		c_Movement.y = 0;
+		if (extraCheckTopLeft != 0 || extraCheckTopRight != 0)
+		{
+			c_Movement.y = 0;
+		}
+		if (leftHand != 0 || rightHand != 0)
+		{
+			c_Movement.x = 0;
+		}
 	}
-	if (leftLeg != 0 || leftHand != 0)
+	if (c_Movement.y == -1)
 	{
-		c_Movement.x = 0;
+		if (extraCheckBottomLeft != 0 || extraCheckBottomRight != 0)
+		{
+			c_Movement.y = 0;
+		}
+		if (leftLeg != 0 || rightLeg != 0)
+		{
+			c_Movement.x = 0;
+		}
+	}
+	if (c_Movement.x == 1)
+	{
+		if (extraCheckTopRight != 0 || extraCheckBottomRight != 0)
+		{
+			c_Movement.y = 0;
+		}
+
+		if (rightHand != 0 || rightLeg != 0)
+		{
+			c_Movement.x = 0;
+		}
+	}
+	if (c_Movement.x == -1)
+	{
+		if (extraCheckTopLeft != 0 || extraCheckBottomLeft != 0)
+		{
+			c_Movement.y = 0;
+		}
+		if (leftHand != 0 || leftLeg != 0)
+		{
+			c_Movement.x = 0;
+		}
 	}
 
-	if (rightHand != 0 || rightLeg != 0)
-	{
-		c_Movement.x = 0;
-	}
 
 	
 
 	this->c_Position = c_Position + (c_Movement * c_MoveSpeed) * dt;
-	cout << leftLeg << endl;
+	cout << extraCheckTopLeft << " " << extraCheckTopRight << endl;
 	//To Let Player stay exactly on ground
 	c_Movement.SetZero();
 }

@@ -71,17 +71,25 @@ void Player::ConstrainPlayer()
 	else if (c_Position.x > rightBorder)
 	{
 		shift_X = c_Position.x - rightBorder;
+
+		
 		c_Position.x = rightBorder;
+		if (GlobalData.world_X_offset>(m_TileMap->GetWorldWidth() - m_TileMap->GetScreenWidth()))
+			GlobalData.world_X_offset = (m_TileMap->GetWorldWidth() - m_TileMap->GetScreenWidth());
 	}
 
 	if (c_Position.y < downBorder)
 	{
+		shift_Y = c_Position.y - downBorder;
 		c_Position.y = downBorder;
-		c_Movement.SetZero();
+
 	}
 	else if (c_Position.y > upBorder)
 	{
+		shift_Y = c_Position.y - upBorder;
 		c_Position.y = upBorder;
+		if (GlobalData.world_Y_offset>(m_TileMap->GetWorldHeight() - m_TileMap->GetScreenHeight()))
+			GlobalData.world_Y_offset = (m_TileMap->GetWorldHeight() - m_TileMap->GetScreenHeight());
 	}
 
 	shift_X += GlobalData.world_X_offset;
@@ -102,7 +110,9 @@ void Player::ConstrainPlayer()
 
 void Player::UpdateMovement(double dt)
 {
-	Vector3 updatedPos = c_Position + (c_Movement * c_MoveSpeed) * dt;
+
+
+		Vector3 updatedPos = c_Position + (c_Movement * c_MoveSpeed) * dt;
 	updatedPos.x += m_TileMap->GetTileSize() * 0.5  + GlobalData.world_X_offset;
 	updatedPos.y += m_TileMap->GetTileSize() * 0.5 + GlobalData.world_Y_offset;
 
@@ -121,7 +131,6 @@ void Player::UpdateMovement(double dt)
 	float extraOffseyY_b = m_TileMap->GetTileSize() * 0.4;
 
 	float rightOffsetX = m_TileMap->GetTileSize() * 0.2;
-
 	//int c_tile = m_TileMap->GetTileType(tilePosX, tilePosY);
 
 	int rightHand = m_TileMap->GetTileType(( updatedPos.x + armOffsetX) / m_TileMap->GetTileSize()  , (updatedPos.y + limbOffsetY_H) / m_TileMap->GetTileSize());
@@ -183,8 +192,8 @@ void Player::UpdateMovement(double dt)
 	}
 
 	this->c_Position = c_Position + (c_Movement * c_MoveSpeed) * dt;
-	cout << GlobalData.world_X_offset << " " << rightLeg << endl;
-
+	//cout << GlobalData.world_X_offset << " " << rightLeg << "   here" <<(m_TileMap->GetWorldWidth() - m_TileMap->GetNumScreenTile_Width())<< endl;
+	//cout << m_TileMap->GetWorldWidth() << " ere" << m_TileMap->GetScreenWidth() << endl;
 	//To Let Player stay exactly on ground
 	c_Movement.SetZero();
 }

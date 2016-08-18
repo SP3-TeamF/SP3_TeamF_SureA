@@ -22,6 +22,8 @@ weapon::weapon()
 		bullet->SetSpeed(5.f);
 	}
 
+	WeaponType = WT_NET;
+	
 
 }
 
@@ -51,58 +53,68 @@ void weapon::fireWeapon(Vector3 view, Vector3 position)
 		view.Normalized();
 		CBulletInfo* bullet = FetchGO();
 		bullet->SetStatus(true);
-		bullet->Init(position, view, 500, 3, 10);
 		currentLoadedAmmo--;
 		currentTime = 0;
 		reloadTimer = 0;
 		isReloading = true;
-	}
-
-}
-
-void weapon::waterWeapon(Vector3 view, Vector3 position){
-	if (view != 0 && canFireBullet()){
-		view.Normalized();
-		CBulletInfo* bullet = FetchGO();
-		bullet->SetStatus(true);
-		bullet->Init(position, view, 150, 6, 20);
-		currentLoadedAmmo--;
-		currentTime = 0;
-		reloadTimer = 0;
-		isReloading = true;
-	}
-}
-
-void weapon::airWeapon(Vector3 view, Vector3 position){
-	if (view != 0 && canFireBullet()){
-		view.Normalized();
-		CBulletInfo* bullet = FetchGO();
-		bullet->SetStatus(true);
-		bullet->Init(position, view, 1000, 6, 20);
-		currentLoadedAmmo--;
-		currentTime = 0;
-		reloadTimer = 0;
-		isReloading = true;
-	}
-}
-
-void weapon::fireNet(Vector3 view, Vector3 position)
-{
-	if (view != 0 && canFireBullet()){
-
-		view.Normalized();
-		CBulletInfo* bullet = FetchGO();
-		bullet->SetStatus(true);
-		bullet->Init(position, view, 100, 3, 10);
-		currentLoadedAmmo--;
-		currentTime = 0;
-		reloadTimer = 0;
-		isReloading = true;
+		switch (WeaponType)
+		{
+			case WT_NET:
+			{
+						   bullet->Init(position, view, 500, 3, 10);
+						   bullet->SetBulletType(BT_NET);
+						   break;
+			}
+			case WT_FIRE:
+			{
+							bullet->Init(position, view, 150, 6, 20);
+							bullet->SetBulletType(BT_FIRE);
+							break;
+			}
+			case WT_WATER:
+			{
+							 bullet->Init(position, view, 1000, 6, 20);
+							 bullet->SetBulletType(BT_WATER);
+							 break;
+			}
+			case WT_AIR:
+			{
+						   bullet->Init(position, view, 100, 3, 10);
+						   bullet->SetBulletType(BT_AIR);
+						   break;
+			}
+		}
 	}
 }
+
 
 void weapon::Update(double dt)
 {
+	if ((controls.GetIsControllerTriggerPressed(CONTROLLER_1, R_TRIGGER)) || (controls.isKeyboardButtonPressed(KEYBOARD_SPACE))){
+			fireWeapon((controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK)), player->Get_cPosition());
+	}
+	if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_UP) || controls.isKeyboardButtonPressed(KEYBOARD_1))){
+		WeaponType = WT_NET;
+		std::cout << "Net" << std::endl;
+	}
+	if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_DOWN) || controls.isKeyboardButtonPressed(KEYBOARD_2))){
+		WeaponType = WT_WATER;
+		std::cout << "Water" << std::endl;
+	}
+	if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_RIGHT) || controls.isKeyboardButtonPressed(KEYBOARD_3))){
+		WeaponType = WT_AIR;
+		std::cout << "Air" << std::endl;
+	}
+	if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_LEFT) || controls.isKeyboardButtonPressed(KEYBOARD_4))){
+		WeaponType = WT_FIRE;
+		std::cout << "Fire" << std::endl;
+	}
+	if (controls.isKeyboardButtonPressed(KEYBOARD_SPACE))
+	{
+		fireWeapon(Vector3(1, 0, 0), player->Get_cPosition());
+	}
+	//cout << isReloading << std::endl;
+
 	if (isReloading == true && reloadTimer <=1){
 		reloadTimer += dt;
 		currentLoadedAmmo = 1;
@@ -215,8 +227,10 @@ CBulletInfo* weapon::FetchGO()
 	{
 		bullet = new CBulletInfo();
 		//test.SetCircle(Vector3(bullet->GetPosition().x, bullet->GetPosition().y, 0), 5);
+
 		m_goList.push_back(bullet);
 	}
+	
 	CBulletInfo* bullet = m_goList.back();
 	return bullet;
 }

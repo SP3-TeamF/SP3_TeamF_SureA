@@ -22,7 +22,7 @@ void TutorialScene::Init()
 	m_TileMap->LoadMap("Image//CSV//ok.csv");
 	player->Set_cMoveSpeed(100);
 	player->Set_cPosition(Vector3(300, 200, 0));
-
+	controls.GetControllerDirection(CONTROLLER_1,R_JOYSTICK) = Vector3(0, 0, 0);
 	Weapon = new weapon();
 }
 
@@ -78,6 +78,26 @@ void TutorialScene::Update(double dt)
 		sa8->m_anim->animActive = true;
 	}
 
+	SpriteAnimation *sa9 = dynamic_cast<SpriteAnimation*>(meshList[GEO_FIRE]);
+	if (sa9)
+	{
+		sa9->Update(dt);
+		sa9->m_anim->animActive = true;
+	}
+
+	SpriteAnimation *sa10 = dynamic_cast<SpriteAnimation*>(meshList[GEO_WATER]);
+	if (sa10)
+	{
+		sa10->Update(dt);
+		sa10->m_anim->animActive = true;
+	}
+
+	SpriteAnimation *sa11 = dynamic_cast<SpriteAnimation*>(meshList[GEO_AIR]);
+	if (sa11)
+	{
+		sa11->Update(dt);
+		sa11->m_anim->animActive = true;
+	}
 	player->Add_cMovement(controls.GetControllerDirection(CONTROLLER_1, L_JOYSTICK));
 
 	if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_LSTICKER) || controls.isKeyboardButtonHeld(KEYBOARD_L_SHIFT)))
@@ -90,37 +110,6 @@ void TutorialScene::Update(double dt)
 	
 	player->Update(dt);
 	
-	if ((controls.GetIsControllerTriggerPressed(CONTROLLER_1, R_TRIGGER)) || (controls.isKeyboardButtonPressed(KEYBOARD_SPACE))){
-
-		if (WeaponType == WT_FIRE){
-			Weapon->fireWeapon((controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK)), player->Get_cPosition());
-		}
-		if (WeaponType == WT_WATER){
-			Weapon->waterWeapon((controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK)), player->Get_cPosition());
-		}
-		if (WeaponType == WT_AIR){
-			Weapon->airWeapon((controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK)), player->Get_cPosition());
-		}
-		if (WeaponType == WT_NET){
-			Weapon->fireNet((controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK)), player->Get_cPosition());
-		}
-	}
-	if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_UP) || controls.isKeyboardButtonPressed(KEYBOARD_1))){
-		WeaponType = WT_NET;
-		std::cout << "Net" << std::endl;
-	}
-	if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_DOWN) || controls.isKeyboardButtonPressed(KEYBOARD_2))){
-		WeaponType = WT_WATER;
-		std::cout << "Water" << std::endl;
-	}
-	if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_RIGHT) || controls.isKeyboardButtonPressed(KEYBOARD_3))){
-		WeaponType = WT_AIR;
-		std::cout << "Air" << std::endl;
-	}
-	if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_LEFT) || controls.isKeyboardButtonPressed(KEYBOARD_4))){
-		WeaponType = WT_FIRE;
-		std::cout << "Fire" << std::endl;
-	}
 
 	if (controls.isKeyboardButtonPressed(KEYBOARD_LEFT) || controls.isKeyboardButtonHeld(KEYBOARD_LEFT))
 	{
@@ -175,6 +164,7 @@ void TutorialScene::Update(double dt)
 	{
 		player->Add_cMovement(Vector3(-1, 0, 0));
 	}
+	
 
 	Weapon->Update(dt);
 
@@ -206,8 +196,53 @@ void TutorialScene::Render()
 	{
 		RenderTileMap(m_TileMap, GlobalData.world_X_offset, GlobalData.world_Y_offset);
 	}
+	//	player->Add_cMovement(controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK));
+	if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y > 0 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x>0)
+	{
+		//render top right
+		Render2DMesh(meshList[GEO_MCTOPRIGHT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	}
+	else if (controls.GetControllerDirection(CONTROLLER_1,R_JOYSTICK).y > 0 && controls.GetControllerDirection(CONTROLLER_1,R_JOYSTICK).x < 0)
+	{
+		//render top left
+		Render2DMesh(meshList[GEO_MCTOPLEFT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	}
+	else if (controls.GetControllerDirection(CONTROLLER_1,R_JOYSTICK).y < 0 && controls.GetControllerDirection(CONTROLLER_1,R_JOYSTICK).x < 0)
+	{
+		//renderbot left
+		Render2DMesh(meshList[GEO_MCDOWNLEFT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	}
+	else if (controls.GetControllerDirection(CONTROLLER_1,R_JOYSTICK).y <0 && controls.GetControllerDirection(CONTROLLER_1,R_JOYSTICK).x > 0)
+	{
+		//render bot right
+		Render2DMesh(meshList[GEO_MCDOWNRIGHT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	}
+	else if (controls.GetControllerDirection(CONTROLLER_1,R_JOYSTICK).y == 1 && controls.GetControllerDirection(CONTROLLER_1,R_JOYSTICK).x ==0)
+	{
+		//render up
+		Render2DMesh(meshList[GEO_MCUP], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
 
-	 if (controls.isKeyboardButtonHeld(KEYBOARD_W) && (controls.isKeyboardButtonHeld(KEYBOARD_D)))
+	}
+	else if (controls.GetControllerDirection(CONTROLLER_1,R_JOYSTICK).y == -1 && controls.GetControllerDirection(CONTROLLER_1,R_JOYSTICK).x == 0)
+	{
+		//render down
+		Render2DMesh(meshList[GEO_MCDOWN], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	}
+	else if (controls.GetControllerDirection(CONTROLLER_1,R_JOYSTICK).y == 0 && controls.GetControllerDirection(CONTROLLER_1,R_JOYSTICK).x == 1)
+	{
+		//render right
+		Render2DMesh(meshList[GEO_MCRIGHT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	}
+	else if (controls.GetControllerDirection(CONTROLLER_1,R_JOYSTICK).y == 0 && controls.GetControllerDirection(CONTROLLER_1,R_JOYSTICK).x == -1)
+	{
+		//render left
+		Render2DMesh(meshList[GEO_MCLEFT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	}
+	else   
+		Render2DMesh(meshList[GEO_MCDOWN], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	
+
+	/*if (controls.isKeyboardButtonHeld(KEYBOARD_W) && (controls.isKeyboardButtonHeld(KEYBOARD_D)))
 		Render2DMesh(meshList[GEO_MCTOPRIGHT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
 	else if (controls.isKeyboardButtonHeld(KEYBOARD_W) && (controls.isKeyboardButtonHeld(KEYBOARD_A)))
 		Render2DMesh(meshList[GEO_MCTOPLEFT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
@@ -215,27 +250,41 @@ void TutorialScene::Render()
 		Render2DMesh(meshList[GEO_MCDOWNLEFT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
 	else if (controls.isKeyboardButtonHeld(KEYBOARD_S) && (controls.isKeyboardButtonHeld(KEYBOARD_D)))
 		Render2DMesh(meshList[GEO_MCDOWNRIGHT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
-		else if (controls.isKeyboardButtonHeld(KEYBOARD_W))
-			Render2DMesh(meshList[GEO_MCUP], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
-		else if (controls.isKeyboardButtonHeld(KEYBOARD_S))
-			Render2DMesh(meshList[GEO_MCDOWN], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
-		else if(controls.isKeyboardButtonHeld(KEYBOARD_A))
-			Render2DMesh(meshList[GEO_MCLEFT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
-		else if(controls.isKeyboardButtonHeld(KEYBOARD_D))
-			Render2DMesh(meshList[GEO_MCRIGHT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
-		else 
-			Render2DMesh(meshList[GEO_MCDOWN], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
-	
-		//Render2DMesh(meshList[GEO_TEST], false, 1.0f, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	else if (controls.isKeyboardButtonHeld(KEYBOARD_W))
+		Render2DMesh(meshList[GEO_MCUP], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	else if (controls.isKeyboardButtonHeld(KEYBOARD_S))
+		Render2DMesh(meshList[GEO_MCDOWN], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	else if (controls.isKeyboardButtonHeld(KEYBOARD_A))
+		Render2DMesh(meshList[GEO_MCLEFT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	else if (controls.isKeyboardButtonHeld(KEYBOARD_D))
+		Render2DMesh(meshList[GEO_MCRIGHT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	else
+		Render2DMesh(meshList[GEO_MCDOWN], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);*/
+
+
+	//Render2DMesh(meshList[GEO_TEST], false, 1.0f, player->Get_cPosition().x, player->Get_cPosition().y, 0);
 	vector<CBulletInfo*> temp = Weapon->GetBulletList();
 	for (auto bulletIt : temp)
 	{
 		if (bulletIt->GetStatus())
 		{
-			Render2DMesh(meshList[GEO_TEST], false, 1.0f, bulletIt->GetPosition().x, bulletIt->GetPosition().y, 0);
+
+			if (bulletIt->GetBulletType() == BT_FIRE)
+				Render2DMesh(meshList[GEO_FIRE], false, 32.0f, bulletIt->GetPosition().x, bulletIt->GetPosition().y, 0);
+
+			if (bulletIt->GetBulletType() == BT_AIR)
+				Render2DMesh(meshList[GEO_AIR], false, 32.0f, bulletIt->GetPosition().x, bulletIt->GetPosition().y, 0);
+
+			if (bulletIt->GetBulletType() == BT_WATER)
+				Render2DMesh(meshList[GEO_WATER], false, 32.0f, bulletIt->GetPosition().x, bulletIt->GetPosition().y, 0);
+
+			/*	if (WeaponType == WT_NET)
+					Render2DMesh(meshList[GEO_NET], false, 32.0f, bulletIt->GetPosition().x, bulletIt->GetPosition().y, 0);
+					*/
+
 		}
 	}
-	
+
 }
 
 void TutorialScene::Exit()

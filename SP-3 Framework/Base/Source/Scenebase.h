@@ -94,6 +94,10 @@ protected:
 		GEO_MCTOPLEFT,
 		GEO_MCDOWNLEFT,
 		GEO_MCDOWNRIGHT,
+		GEO_FIRE,
+		GEO_AIR,
+		GEO_WATER,
+		GEO_NET,
         NUM_GEOMETRY,
     };
 

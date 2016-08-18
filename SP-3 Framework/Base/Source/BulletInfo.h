@@ -1,6 +1,14 @@
 #pragma once
+
 #include "vector3.h"
 #include "AABB.h"
+
+enum BULLET_TYPE{
+	BT_NET,
+	BT_FIRE,
+	BT_WATER,
+	BT_AIR
+};
 
 class CBulletInfo
 {
@@ -20,12 +28,19 @@ protected:
 	float lifetime;
 	// The Damage of the bullet
 	float damage;
+	BULLET_TYPE BulletType;
 
     Vector3 nextPosition;
 public:
 	// Initialise the CBulletInfo instance
-	void Init(const Vector3 position, const Vector3 direction, const float speed, const float lifetime, int bulletDamage);
+	void Init(const Vector3 position, const Vector3 direction, const float speed, const float lifetime, int bulletDamage, BULLET_TYPE bullType = BT_NET);
 	
+	//Set current Bullet type
+	void SetBulletType(BULLET_TYPE bulletType);
+
+	//Get current bullet type;
+	BULLET_TYPE GetBulletType();
+
 	// Set the status of this CBulletInfo instance
 	void SetStatus(const bool bStatus);
 	// Get the status of this CBulletInfo instance
@@ -55,6 +70,7 @@ public:
 	void SetLifetime(const float lifetime);
 	// Get the lifetime of this CBulletInfo instance
 	float GetLifetime(void);
+
 	// Update this CBulletInfo instance
 	void Update(const double dt);
 

@@ -6,8 +6,16 @@
 #include <vector>
 #include "GlobalDatas.h"
 #include "Player.h"
+#include "Controls.h"
 using std::vector;
 
+
+enum WEAPON_TYPE{
+	WT_NET,
+	WT_FIRE,
+	WT_WATER,
+	WT_AIR
+};
 class weapon
 {
 	
@@ -20,10 +28,7 @@ public:
     void reloadWeapon();
     void updateBullets(double dt);
     void resetWeaponAmmo();
-	void fireNet(Vector3 view, Vector3 position);
     void fireWeapon(Vector3 view, Vector3 position);
-	void waterWeapon(Vector3 view, Vector3 position);
-	void airWeapon(Vector3 view, Vector3 position);
 	void renderGO();
 	Vector3 getBulletPosition();
     
@@ -39,6 +44,9 @@ public:
 	int weaponDamage;
 
 	AABB test;
+	bool isFire;
+	bool isWater;
+	bool isAir;
 
 	vector<CBulletInfo*> GetBulletList();
 
@@ -60,6 +68,8 @@ private:
     double weaponReloadTime;
     double timeBetweenEachBullet;
 	CBulletInfo* bullet;
+
+	WEAPON_TYPE WeaponType;
 
 };
 

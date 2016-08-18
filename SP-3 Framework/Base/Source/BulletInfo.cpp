@@ -2,11 +2,12 @@
 
 
 CBulletInfo::CBulletInfo(void)
-	: m_bStatus(false)
-	, speed(10)
-	, lifetime(5)
-    , nextPosition(0)
-	, damage(1)
+: m_bStatus(false)
+, speed(10)
+, lifetime(5)
+, nextPosition(0)
+, damage(1)
+
 {
 }
 
@@ -21,7 +22,8 @@ void CBulletInfo::Init(const Vector3 position,
     const Vector3 direction,
     const float speed,
     const float lifetime,
-	int bulletDamage
+	int bulletDamage,
+	BULLET_TYPE bulletType
 	)
 {
     this->position = position;
@@ -30,8 +32,20 @@ void CBulletInfo::Init(const Vector3 position,
     this->lifetime = lifetime;
     SetStatus(true);
 	this->damage = bulletDamage;
+	this->BulletType = bulletType;
 }
 
+//Set current Bullet type
+void CBulletInfo::SetBulletType(BULLET_TYPE bulletType)
+{
+	this->BulletType = bulletType;
+}
+
+//Get current bullet type;
+BULLET_TYPE CBulletInfo::GetBulletType()
+{
+	return this->BulletType;
+}
 
 // Set the status of this CBulletInfo instance
 void CBulletInfo::SetStatus(const bool bStatus)

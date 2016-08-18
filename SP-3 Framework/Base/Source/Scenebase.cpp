@@ -195,6 +195,34 @@ void Scenebase::Init()
 		sa8->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
 	}
 
+	meshList[GEO_FIRE] = MeshBuilder::GenerateSpriteAnimation("topright", 1, 7);
+	meshList[GEO_FIRE]->textureID = LoadTGA("Image//fire.tga");
+	SpriteAnimation *sa9 = dynamic_cast<SpriteAnimation*>(meshList[GEO_FIRE]);
+	if (sa9)
+	{
+		sa9->m_anim = new Animation();
+		sa9->m_anim->Set(0,6, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+
+	meshList[GEO_WATER] = MeshBuilder::GenerateSpriteAnimation("topright", 1, 6);
+	meshList[GEO_WATER]->textureID = LoadTGA("Image//water.tga");
+	SpriteAnimation *sa10 = dynamic_cast<SpriteAnimation*>(meshList[GEO_WATER]);
+	if (sa10)
+	{
+		sa10->m_anim = new Animation();
+		sa10->m_anim->Set(0, 4, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+
+	meshList[GEO_AIR] = MeshBuilder::GenerateSpriteAnimation("topright", 1, 4);
+	meshList[GEO_AIR]->textureID = LoadTGA("Image//air.tga");
+	SpriteAnimation *sa11 = dynamic_cast<SpriteAnimation*>(meshList[GEO_AIR]);
+	if (sa11)
+	{
+		sa11->m_anim = new Animation();
+		sa11->m_anim->Set(0,3 , 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+
+
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;
 	perspective.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);

@@ -6,12 +6,8 @@
 
 class TutorialScene : public Scenebase
 {
-	enum WEAPON_TYPE{
-		WT_NET,
-		WT_FIRE,
-		WT_WATER,
-		WT_AIR
-	};
+
+
 public:
 	TutorialScene();
 	~TutorialScene();
@@ -23,8 +19,11 @@ public:
 private:
 	float Test_X_OFFSET;
 	float Test_Y_OFFSET;
+	bool isFire;
+	bool isWater;
+	bool isAir;
 	weapon* Weapon;
-	WEAPON_TYPE WeaponType;
+	Vector3 controllermovement;
 };
 
 #endif

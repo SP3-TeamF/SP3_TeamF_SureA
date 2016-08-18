@@ -90,8 +90,10 @@ void weapon::fireWeapon(Vector3 view, Vector3 position)
 
 void weapon::Update(double dt)
 {
+
+
 	if ((controls.GetIsControllerTriggerPressed(CONTROLLER_1, R_TRIGGER)) || (controls.isKeyboardButtonPressed(KEYBOARD_SPACE))){
-			fireWeapon((controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK)), player->Get_cPosition());
+			fireWeapon((controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK)), player->Get_cPosition()+Vector3(GlobalData.world_X_offset,GlobalData.world_Y_offset,0));
 	}
 	if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_UP) || controls.isKeyboardButtonPressed(KEYBOARD_1))){
 		WeaponType = WT_NET;
@@ -139,8 +141,8 @@ void weapon::Update(double dt)
 void weapon::bulletCollision(double dt)
 {
 	Vector3 updatedPos = bullet->GetPosition() + (bullet->GetDirection() * bullet->GetSpeed()) * dt;
-	updatedPos.x += m_TileMap->GetTileSize() * 0.5 + GlobalData.world_X_offset;
-	updatedPos.y += m_TileMap->GetTileSize() * 0.5 + GlobalData.world_Y_offset;
+	updatedPos.x += m_TileMap->GetTileSize() * 0.5;
+	updatedPos.y += m_TileMap->GetTileSize() * 0.5;
 
 	int currentTile = 237;
 

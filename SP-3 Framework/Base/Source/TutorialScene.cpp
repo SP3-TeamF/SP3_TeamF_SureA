@@ -167,20 +167,19 @@ void TutorialScene::Update(double dt)
 	
 
 	Weapon->Update(dt);
-
+	
 	vector<CBulletInfo*> temp = Weapon->GetBulletList();
 	for (auto bulletIt : temp)
 	{
 		Vector3 updatedPos = bulletIt->GetPosition() + (bulletIt->GetDirection() * bulletIt->GetSpeed()) * dt;
-		updatedPos.x += m_TileMap->GetTileSize() * 0.5 + GlobalData.world_X_offset;
-		updatedPos.y += m_TileMap->GetTileSize() * 0.5 + GlobalData.world_Y_offset;
+		updatedPos.x += m_TileMap->GetTileSize() * 0.5;
+		updatedPos.y += m_TileMap->GetTileSize() * 0.5;
 
 		int currentTile = 237;
 
 		int tilePosX = updatedPos.x / m_TileMap->GetTileSize();
 		int tilePosY = updatedPos.y / m_TileMap->GetTileSize();
 		int test = (m_TileMap->GetTileType(tilePosX, tilePosY));
-
 		if (test != currentTile)
 		{
 			bulletIt->SetStatus(false);
@@ -270,13 +269,13 @@ void TutorialScene::Render()
 		{
 
 			if (bulletIt->GetBulletType() == BT_FIRE)
-				Render2DMesh(meshList[GEO_FIRE], false, 32.0f, bulletIt->GetPosition().x, bulletIt->GetPosition().y, 0);
+				Render2DMesh(meshList[GEO_FIRE], false, 32.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
 
 			if (bulletIt->GetBulletType() == BT_AIR)
-				Render2DMesh(meshList[GEO_AIR], false, 32.0f, bulletIt->GetPosition().x, bulletIt->GetPosition().y, 0);
+				Render2DMesh(meshList[GEO_AIR], false, 32.0f,  bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
 
 			if (bulletIt->GetBulletType() == BT_WATER)
-				Render2DMesh(meshList[GEO_WATER], false, 32.0f, bulletIt->GetPosition().x, bulletIt->GetPosition().y, 0);
+				Render2DMesh(meshList[GEO_WATER], false, 32.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
 
 			/*	if (WeaponType == WT_NET)
 					Render2DMesh(meshList[GEO_NET], false, 32.0f, bulletIt->GetPosition().x, bulletIt->GetPosition().y, 0);

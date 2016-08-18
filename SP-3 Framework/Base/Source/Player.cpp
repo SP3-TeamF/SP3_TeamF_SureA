@@ -198,7 +198,6 @@ void Player::UpdateMovement(double dt)
 
 	this->c_Position = c_Position + (c_Movement * c_MoveSpeed) * dt;
 	//cout << GlobalData.world_X_offset << " " << rightLeg << "   here" <<(m_TileMap->GetWorldWidth() - m_TileMap->GetNumScreenTile_Width())<< endl;
-	cout << extraCheckBottomLeft << " " << extraCheckBottomRight << endl;
 	//To Let Player stay exactly on ground
 	c_Movement.SetZero();
 }

@@ -63,7 +63,7 @@ bool CBulletInfo::GetStatus(void)
 // Set the position of this CBulletInfo instance
 void CBulletInfo::SetPosition(const Vector3 position)
 {
-    this->position = position;
+	this->position = position;
 }
 
 // Get the position of this CBulletInfo instance
@@ -127,10 +127,11 @@ void CBulletInfo::Update(const double dt)
     // Check if the bullet is active
     if (GetStatus() == true)
     {
-        // Update the position of the bullet
+		
+		float mapoffsetx= (m_TileMap->GetWorldWidth() + GlobalData.world_X_offset);
+		float mapoffsety = (m_TileMap->GetWorldHeight() + GlobalData.world_Y_offset);
+
         SetPosition(GetPosition() + GetDirection() * GetSpeed() * dt);
-        nextPosition = GetPosition() + GetDirection() * GetSpeed() * dt;
-        // Update the lifetime
         SetLifetime(GetLifetime() - dt);
         // Check if the lifetime is gone
         if (GetLifetime() < 0)

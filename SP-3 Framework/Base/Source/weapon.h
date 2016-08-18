@@ -38,7 +38,12 @@ public:
     int getMaxAmmoCapacity();
 	int weaponDamage;
 
+	AABB test;
+
 	vector<CBulletInfo*> GetBulletList();
+
+	void bulletCollision(double dt);
+
 protected:
 	std::vector<CBulletInfo *> m_goList;
 

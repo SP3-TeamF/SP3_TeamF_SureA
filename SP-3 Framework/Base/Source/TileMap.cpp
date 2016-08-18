@@ -170,7 +170,15 @@ int TileMap::GetTileSize(void)
 
 int TileMap::GetTileType(float xPosition, float yPosition)
 {
-   return world_Tile_Map[yPosition][xPosition];
+	if (xPosition >= 0 &&
+		xPosition < GetNumWorldTile_Width() &&
+		yPosition >= 0 &&
+		yPosition < GetNumWorldTile_Height()
+		)
+	{
+		return world_Tile_Map[yPosition][xPosition];
+	}
+	return -1;
 }
 
 bool TileMap::WriteMap(const string mapName, vector<vector<int>> mapVariables, int mapWidth, int mapHeight)
@@ -221,5 +229,12 @@ bool TileMap::SaveMap(const string mapName)
 
 void TileMap::SetTile(int typeNo, int xPos, int yPos)
 {
-	world_Tile_Map[yPos][xPos] = typeNo;
+	if (xPos >= 0 &&
+		xPos < GetNumWorldTile_Width() &&
+		yPos >= 0 &&
+		yPos < GetNumWorldTile_Height()
+		)
+	{
+		world_Tile_Map[yPos][xPos] = typeNo;
+	}
 }

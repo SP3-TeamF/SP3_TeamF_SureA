@@ -28,6 +28,7 @@ void TutorialScene::Init()
 
 void TutorialScene::Update(double dt)
 {
+	m_TileMap->GetTileType(-12, 420);
 	SpriteAnimation *sa1 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCDOWN]);
 	if (sa1)
 	{
@@ -177,6 +178,25 @@ void TutorialScene::Update(double dt)
 
 	Weapon->Update(dt);
 
+	vector<CBulletInfo*> temp = Weapon->GetBulletList();
+	for (auto bulletIt : temp)
+	{
+		Vector3 updatedPos = bulletIt->GetPosition() + (bulletIt->GetDirection() * bulletIt->GetSpeed()) * dt;
+		updatedPos.x += m_TileMap->GetTileSize() * 0.5 + GlobalData.world_X_offset;
+		updatedPos.y += m_TileMap->GetTileSize() * 0.5 + GlobalData.world_Y_offset;
+
+		int currentTile = 237;
+
+		int tilePosX = updatedPos.x / m_TileMap->GetTileSize();
+		int tilePosY = updatedPos.y / m_TileMap->GetTileSize();
+		int test = (m_TileMap->GetTileType(tilePosX, tilePosY));
+
+		if (test != currentTile)
+		{
+			bulletIt->SetStatus(false);
+			bulletIt->SetPosition(Vector3(player->Get_cPosition().x, player->Get_cPosition().y, 0));
+		}
+	}
 }	
 
 void TutorialScene::Render()

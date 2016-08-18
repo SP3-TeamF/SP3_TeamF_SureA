@@ -14,6 +14,14 @@ weapon::weapon()
 	weaponDamage = 0;
 	CBulletInfo* bullet = FetchGO();
 
+	for (std::vector<CBulletInfo *>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
+	{
+		CBulletInfo *bullet = (CBulletInfo *)*it;
+		bullet->SetDirection(Vector3(1, 0, 0));
+		bullet->SetPosition(Vector3(300, 200, 0));
+		bullet->SetSpeed(5.f);
+	}
+
 
 }
 
@@ -95,8 +103,6 @@ void weapon::fireNet(Vector3 view, Vector3 position)
 
 void weapon::Update(double dt)
 {
-	//cout << isReloading << std::endl;
-
 	if (isReloading == true && reloadTimer <=1){
 		reloadTimer += dt;
 		currentLoadedAmmo = 1;
@@ -109,14 +115,38 @@ void weapon::Update(double dt)
 	for (auto bulletIt : m_goList)
 	{
 		currentTime += dt;
-		
-		
-			if (bulletIt->GetSpeed())
-			{
-				bulletIt->Update(dt);
-			}
-		
+		if (bulletIt->GetSpeed())
+		{
+			bulletIt->Update(dt);
+		}
 	}
+	bulletCollision(dt);
+
+}
+
+void weapon::bulletCollision(double dt)
+{
+	Vector3 updatedPos = bullet->GetPosition() + (bullet->GetDirection() * bullet->GetSpeed()) * dt;
+	updatedPos.x += m_TileMap->GetTileSize() * 0.5 + GlobalData.world_X_offset;
+	updatedPos.y += m_TileMap->GetTileSize() * 0.5 + GlobalData.world_Y_offset;
+
+	int currentTile = 237;
+
+	int tilePosX = updatedPos.x / m_TileMap->GetTileSize();
+	int tilePosY = updatedPos.y / m_TileMap->GetTileSize();
+
+	//for (std::vector<CBulletInfo *>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
+	//{
+	//	CBulletInfo *bullet = (CBulletInfo *)*it;
+	//	if (bullet->GetStatus() == true)
+	//	{
+	//		if (m_TileMap->GetTileType(tilePosX, tilePosY) != 237)
+	//		{
+	//			//bullet->bulletHitboxCheck();
+	//		}
+	//	}
+	//}
+
 }
 
 bool weapon::canFireBullet()
@@ -184,6 +214,7 @@ CBulletInfo* weapon::FetchGO()
 	for (unsigned i = 0; i < 10; ++i)
 	{
 		bullet = new CBulletInfo();
+		//test.SetCircle(Vector3(bullet->GetPosition().x, bullet->GetPosition().y, 0), 5);
 		m_goList.push_back(bullet);
 	}
 	CBulletInfo* bullet = m_goList.back();

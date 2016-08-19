@@ -48,27 +48,56 @@ bool Controls::isKeyboardButtonReleased(BUTTON_ID Action)
 
 bool Controls::isControllerButtonHeld(CONTROLLER_TYPE controllerType, CONTROLLER_INPUT_BUTTONS Action)
 {
-    return controllerArray[controllerType].GetIsKeyHeld(Action);
+	if (isControllerPresent(controllerType))
+	{
+		return controllerArray[controllerType].GetIsKeyHeld(Action);
+	}
+	return false;
 }
              
 bool Controls::isControllerButtonPressed(CONTROLLER_TYPE controllerType, CONTROLLER_INPUT_BUTTONS Action)
 {
-    return controllerArray[controllerType].GetIsKeyPressed(Action);
+	if (isControllerPresent(controllerType))
+	{
+		return controllerArray[controllerType].GetIsKeyPressed(Action);
+	}
+	return false;
 }
 
 bool Controls::isControllerButtonReleased(CONTROLLER_TYPE controllerType, CONTROLLER_INPUT_BUTTONS Action)
 {
-    return controllerArray[controllerType].GetIsKeyReleased(Action);
+	if (isControllerPresent(controllerType))
+	{
+		return controllerArray[controllerType].GetIsKeyReleased(Action);
+	}
+	return false;
 }
 
 Vector3 Controls::GetControllerDirection(CONTROLLER_TYPE controllerType, CONTROLLER_JOYSTICK joystickType)
 {
-	return controllerArray[controllerType].GetDirection(joystickType);
+	if (isControllerPresent(controllerType))
+	{
+		return controllerArray[controllerType].GetDirection(joystickType);
+	}
+	return Vector3(0, 0, 0);
 }
 
 bool Controls::GetIsControllerTriggerPressed(CONTROLLER_TYPE controllerType, CONTROLLER_TRIGGER TRIGGER_TYPE)
 {
-	return controllerArray[controllerType].GetIsTriggerPressed(TRIGGER_TYPE);
+	if (isControllerPresent(controllerType))
+	{
+		return controllerArray[controllerType].GetIsTriggerPressed(TRIGGER_TYPE);
+	}
+	return false;
+}
+
+bool Controls::isControllerPresent(CONTROLLER_TYPE controllerType)
+{
+	if (glfwJoystickPresent(controllerType) == 0)
+	{
+		return false;
+	}
+	return true;
 }
 
 void Controls::Controls_Init()

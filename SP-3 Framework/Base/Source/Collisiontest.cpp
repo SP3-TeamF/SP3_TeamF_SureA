@@ -266,6 +266,4 @@ void Collisiontest::MapEditorInit()
 	editor_X_Offet = 0;
 	editor_Y_Offet = 0;
 	currentTileType = 0;
-
-	controls.isControllerButtonHeld(CONTROLLER_1, CONTROLLER_RSTICKER);
 }

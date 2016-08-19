@@ -238,6 +238,4 @@ void SceneMapEditor::MapEditorInit()
     GlobalData.world_X_offset = 0;
 	GlobalData.world_Y_offset = 0;
     currentTileType = 0;
-
-	controls.isControllerButtonHeld(CONTROLLER_1, CONTROLLER_RSTICKER);
 }

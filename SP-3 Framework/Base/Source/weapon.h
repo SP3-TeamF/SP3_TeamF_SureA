@@ -6,7 +6,7 @@
 #include <vector>
 #include "GlobalDatas.h"
 #include "Player.h"
-#include "Controls.h"
+#include "controls.h"
 using std::vector;
 
 

@@ -110,9 +110,7 @@ void Player::ConstrainPlayer()
 
 void Player::UpdateMovement(double dt)
 {
-
-
-		Vector3 updatedPos = c_Position + (c_Movement * c_MoveSpeed) * dt;
+	Vector3 updatedPos = c_Position + (c_Movement * c_MoveSpeed) * dt;
 	updatedPos.x += m_TileMap->GetTileSize() * 0.5  + GlobalData.world_X_offset;
 	updatedPos.y += m_TileMap->GetTileSize() * 0.5 + GlobalData.world_Y_offset;
 
@@ -197,7 +195,7 @@ void Player::UpdateMovement(double dt)
 	}
 
 	this->c_Position = c_Position + (c_Movement * c_MoveSpeed) * dt;
-	//cout << GlobalData.world_X_offset << " " << rightLeg << "   here" <<(m_TileMap->GetWorldWidth() - m_TileMap->GetNumScreenTile_Width())<< endl;
+
 	//To Let Player stay exactly on ground
 	c_Movement.SetZero();
 }

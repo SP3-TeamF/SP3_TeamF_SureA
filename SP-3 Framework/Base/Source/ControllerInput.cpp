@@ -3,6 +3,7 @@
 #include <iostream>
 using std::cout;
 using std::endl;
+#include "GlobalDatas.h"
 
 ControllerInput::ControllerInput()
 {
@@ -24,7 +25,7 @@ void ControllerInput::ControllerInput_Init(CONTROLLER_ID controllerID)
 
 bool ControllerInput::GetIsKeyPressed(CONTROLLER_INPUT_BUTTONS CONTROLLER_BUTTON)
 {
-	if (glfwJoystickPresent(controllerID))
+	if (GlobalData.isControllerConnected)
 	{
 		int controllerInput;
 		const unsigned char * arrayButtonStatus = glfwGetJoystickButtons(0, &controllerInput);
@@ -37,7 +38,7 @@ bool ControllerInput::GetIsKeyPressed(CONTROLLER_INPUT_BUTTONS CONTROLLER_BUTTON
 
 bool ControllerInput::GetIsKeyHeld(CONTROLLER_INPUT_BUTTONS CONTROLLER_BUTTON)
 {
-	if (glfwJoystickPresent(controllerID))
+	if (GlobalData.isControllerConnected)
 	{
 		int controllerInput;
 		const unsigned char * arrayButtonStatus = glfwGetJoystickButtons(0, &controllerInput);
@@ -50,7 +51,7 @@ bool ControllerInput::GetIsKeyHeld(CONTROLLER_INPUT_BUTTONS CONTROLLER_BUTTON)
 
 bool ControllerInput::GetIsKeyReleased(CONTROLLER_INPUT_BUTTONS CONTROLLER_BUTTON)
 {
-	if (glfwJoystickPresent(controllerID))
+	if (GlobalData.isControllerConnected)
 	{
 		int controllerInput;
 		const unsigned char * arrayButtonStatus = glfwGetJoystickButtons(0, &controllerInput);
@@ -62,7 +63,7 @@ bool ControllerInput::GetIsKeyReleased(CONTROLLER_INPUT_BUTTONS CONTROLLER_BUTTO
 
 bool ControllerInput::GetIsTriggerPressed(CONTROLLER_TRIGGER TRIGGER_TYPE)
 {
-	if (glfwJoystickPresent(controllerID))
+	if (GlobalData.isControllerConnected)
 	{
 		int JoystickData;
 		const float* storedTrigger = glfwGetJoystickAxes(controllerID, &JoystickData);
@@ -97,7 +98,7 @@ Vector3 ControllerInput::GetDirection(CONTROLLER_JOYSTICK JOYSTICK_TYPE)
 	float dirX = 0;
 	float dirY = 0;
 
-	if (glfwJoystickPresent(controllerID))
+	if (GlobalData.isControllerConnected)
 	{
 		int JoystickData;
 		const float* storedAxes = glfwGetJoystickAxes(controllerID, &JoystickData);

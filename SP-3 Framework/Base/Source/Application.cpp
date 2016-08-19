@@ -152,10 +152,10 @@ void Application::Run()
 	scene = new TutorialScene ();
 
 	scene->Init();
-
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
 	{
+		
 		m_dElapsedTime = m_timer.getElapsedTime();
 		m_dAccumulatedTime_ThreadOne += m_dElapsedTime;
 		m_dAccumulatedTime_ThreadTwo += m_dElapsedTime;
@@ -167,6 +167,7 @@ void Application::Run()
 		}
 		if (m_dAccumulatedTime_ThreadTwo > 1){
 			m_dAccumulatedTime_ThreadTwo = 0.0;
+			GlobalData.isControllerConnected = controls.isControllerPresent(CONTROLLER_1);
 		}
 		scene->Render();
 		//Swap buffers

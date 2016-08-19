@@ -11,7 +11,7 @@
 #include "Vector2.h"
 #include "Player.h"
 #include "GlobalDatas.h"
-#include "Controls.h"
+#include "controls.h"
 #include "SpriteAnimation.h"
 
 class Scenebase : public Scene

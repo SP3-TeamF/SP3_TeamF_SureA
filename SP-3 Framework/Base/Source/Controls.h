@@ -1,5 +1,5 @@
-#ifndef CONTROLS_H_
-#define CONTROLS_H_
+#ifndef controls_H_
+#define controls_H_
 
 #include "KeyboardButton.h"
 #include "ControllerInput.h"
@@ -118,8 +118,8 @@ public:
 		return globalV;
 	}
 
-    Controls();
-    virtual ~Controls();
+	Controls();
+	virtual ~Controls();
 	void Update();
 
     bool isKeyboardButtonHeld(BUTTON_ID Action);
@@ -132,12 +132,13 @@ public:
 
 	bool GetIsControllerTriggerPressed(CONTROLLER_TYPE controllerType, CONTROLLER_TRIGGER TRIGGER_TYPE);
 
+	bool isControllerPresent(CONTROLLER_TYPE controllerType);
 	Vector3 GetControllerDirection(CONTROLLER_TYPE controllerType, CONTROLLER_JOYSTICK joystickType);
 
-    void Controls_Init();
+	void Controls_Init();
 private:
     KeyboardButton keyboardArray[NUM_BUTTON_ID];
     ControllerInput controllerArray[MAX_NUM_CONTROLLERS];
 };
 
-#endif // !CONTROLS_H_
+#endif // !controls_H_

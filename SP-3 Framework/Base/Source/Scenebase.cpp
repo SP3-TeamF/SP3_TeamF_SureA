@@ -22,7 +22,7 @@ Scenebase::~Scenebase()
 void Scenebase::Init()
 {
 	// Blue background
-	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	// Enable depth test
 	//	glEnable(GL_DEPTH_TEST);
 	// Accept fragment if it closer to the camera than the former one
@@ -120,8 +120,6 @@ void Scenebase::Init()
 
 	meshList[GEO_TEST] = MeshBuilder::Generate2DMesh("ds", Color(1,1,1),0,0,32,32);
 	meshList[GEO_TEST]->textureID= LoadTGA("Image//avatar.tga");
-	
-
 	
 	meshList[GEO_MCDOWN] = MeshBuilder::GenerateSpriteAnimation("down", 1, 3);
 	meshList[GEO_MCDOWN]->textureID = LoadTGA("Image//MCdown.tga");
@@ -439,7 +437,6 @@ void Scenebase::RenderMeshIn2D(Mesh *mesh, bool enableLight, float size, float x
     modelStack.Rotate(rotateAngle, 0, 1, 0);
 	modelStack.Scale(size, size, size);
 
-
 	Mtx44 MVP, modelView, modelView_inverse_transpose;
 
 	MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top();
@@ -506,7 +503,7 @@ void Scenebase::RenderTileMap(TileMap* currentMap, float x_Offset, float y_Offse
 	int tileOffSetX = x_Offset / currentMap->GetTileSize();
     int tileOffSetY = y_Offset / currentMap->GetTileSize();
 
-    for (int y = tileOffSetY; y < tileOffSetY + currentMap->GetNumScreenTile_Height()+1; ++y)
+    for (int y = tileOffSetY; y < tileOffSetY + currentMap->GetNumScreenTile_Height() + 1; ++y)
 	{
         if (y >= currentMap->GetNumWorldTile_Height())
             break;

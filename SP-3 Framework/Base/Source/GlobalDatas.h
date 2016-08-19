@@ -1,4 +1,3 @@
-
 #ifndef GLOBAL_VARIABLE_H
 #define GLOBAL_VARIABLE_H
 #include "BulletInfo.h"
@@ -45,6 +44,7 @@ public:
 	float world_X_offset = 0.f;
 	float world_Y_offset = 0.f;
 
+	bool isControllerConnected = false;
 };
 
 #endif GLOBAL_VARIABLE_H

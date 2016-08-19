@@ -6,10 +6,11 @@
 #include "Player.h"
 
 enum BULLET_TYPE{
-	BT_NET,
+	BT_NET = 0,
 	BT_FIRE,
 	BT_WATER,
-	BT_AIR
+	BT_AIR,
+	BT_NETSPREAD
 };
 
 class CBulletInfo
@@ -77,5 +78,7 @@ public:
 	void Update(const double dt);
 
     bool bulletHitboxCheck(AABB* hitbox);
+
+	float scale = 0;
 };
 

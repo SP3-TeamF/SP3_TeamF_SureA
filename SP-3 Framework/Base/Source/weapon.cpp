@@ -61,26 +61,30 @@ void weapon::fireWeapon(Vector3 view, Vector3 position)
 		{
 			case WT_NET:
 			{
-						   bullet->Init(position, view, 500, 3, 10);
+						   bullet->Init(position, view, 100, 3, 1);
 						   bullet->SetBulletType(BT_NET);
+						   bullet->scale = 1;
 						   break;
 			}
 			case WT_FIRE:
 			{
 							bullet->Init(position, view, 150, 6, 20);
 							bullet->SetBulletType(BT_FIRE);
+							bullet->scale = 1;
 							break;
 			}
 			case WT_WATER:
 			{
 							 bullet->Init(position, view, 1000, 6, 20);
 							 bullet->SetBulletType(BT_WATER);
+							 bullet->scale = 1;
 							 break;
 			}
 			case WT_AIR:
 			{
-						   bullet->Init(position, view, 100, 3, 10);
+						   bullet->Init(position, view, 500, 3, 10);
 						   bullet->SetBulletType(BT_AIR);
+						   bullet->scale = 1;
 						   break;
 			}
 		}
@@ -129,7 +133,7 @@ void weapon::Update(double dt)
 	for (auto bulletIt : m_goList)
 	{
 		currentTime += dt;
-		if (bulletIt->GetSpeed())
+		if (bulletIt->GetStatus())
 		{
 			bulletIt->Update(dt);
 		}

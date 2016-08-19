@@ -1,6 +1,5 @@
 #include "BulletInfo.h"
 
-
 CBulletInfo::CBulletInfo(void)
 : m_bStatus(false)
 , speed(10)
@@ -133,8 +132,9 @@ void CBulletInfo::Update(const double dt)
 
         SetPosition(GetPosition() + GetDirection() * GetSpeed() * dt);
         SetLifetime(GetLifetime() - dt);
+
         // Check if the lifetime is gone
-        if (GetLifetime() < 0)
+        if (GetLifetime() <= 0)
         {
             SetStatus(false);
         }

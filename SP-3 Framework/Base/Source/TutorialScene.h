@@ -19,9 +19,9 @@ public:
 private:
 	float Test_X_OFFSET;
 	float Test_Y_OFFSET;
-	bool isFire;
-	bool isWater;
-	bool isAir;
+	float netScale;
+	bool netHit;
+	bool stop;
 	weapon* Weapon;
 	Vector3 controllermovement;
 };

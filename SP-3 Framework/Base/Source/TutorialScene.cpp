@@ -19,15 +19,20 @@ void TutorialScene::Init()
 	
 	m_TileMap = new TileMap();
 	m_TileMap->Init(1024, 800, 2048, 1600, 32);
-	m_TileMap->LoadMap("Image//CSV//ok.csv");
+	m_TileMap->LoadMap("Image//CSV//ZenTut.csv");
 	player->Set_cMoveSpeed(100);
 	player->Set_cPosition(Vector3(300, 200, 0));
 	controls.GetControllerDirection(CONTROLLER_1,R_JOYSTICK) = Vector3(0, 0, 0);
 	Weapon = new weapon();
+	netHit = false;
+	stop = false;
+	netScale = 32.f;
 }
 
 void TutorialScene::Update(double dt)
 {
+	//fps = 1 / dt;
+	//cout << fps << endl;
 	m_TileMap->GetTileType(-12, 420);
 	SpriteAnimation *sa1 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCDOWN]);
 	if (sa1)
@@ -165,9 +170,8 @@ void TutorialScene::Update(double dt)
 		player->Add_cMovement(Vector3(-1, 0, 0));
 	}
 	
-
 	Weapon->Update(dt);
-	
+
 	vector<CBulletInfo*> temp = Weapon->GetBulletList();
 	for (auto bulletIt : temp)
 	{
@@ -182,8 +186,13 @@ void TutorialScene::Update(double dt)
 		int test = (m_TileMap->GetTileType(tilePosX, tilePosY));
 		if (test != currentTile)
 		{
-			bulletIt->SetStatus(false);
-			bulletIt->SetPosition(Vector3(player->Get_cPosition().x, player->Get_cPosition().y, 0));
+			if (bulletIt->GetBulletType() == BT_NET)
+			{
+				bulletIt->SetBulletType(BT_NETSPREAD);
+				bulletIt->SetSpeed(0);
+				bulletIt->scale = 100;
+				bulletIt->SetLifetime(1);
+			}
 		}
 	}
 }	
@@ -239,29 +248,7 @@ void TutorialScene::Render()
 	}
 	else   
 		Render2DMesh(meshList[GEO_MCDOWN], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
-	
 
-	/*if (controls.isKeyboardButtonHeld(KEYBOARD_W) && (controls.isKeyboardButtonHeld(KEYBOARD_D)))
-		Render2DMesh(meshList[GEO_MCTOPRIGHT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
-	else if (controls.isKeyboardButtonHeld(KEYBOARD_W) && (controls.isKeyboardButtonHeld(KEYBOARD_A)))
-		Render2DMesh(meshList[GEO_MCTOPLEFT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
-	else if (controls.isKeyboardButtonHeld(KEYBOARD_S) && (controls.isKeyboardButtonHeld(KEYBOARD_A)))
-		Render2DMesh(meshList[GEO_MCDOWNLEFT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
-	else if (controls.isKeyboardButtonHeld(KEYBOARD_S) && (controls.isKeyboardButtonHeld(KEYBOARD_D)))
-		Render2DMesh(meshList[GEO_MCDOWNRIGHT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
-	else if (controls.isKeyboardButtonHeld(KEYBOARD_W))
-		Render2DMesh(meshList[GEO_MCUP], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
-	else if (controls.isKeyboardButtonHeld(KEYBOARD_S))
-		Render2DMesh(meshList[GEO_MCDOWN], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
-	else if (controls.isKeyboardButtonHeld(KEYBOARD_A))
-		Render2DMesh(meshList[GEO_MCLEFT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
-	else if (controls.isKeyboardButtonHeld(KEYBOARD_D))
-		Render2DMesh(meshList[GEO_MCRIGHT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
-	else
-		Render2DMesh(meshList[GEO_MCDOWN], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);*/
-
-
-	//Render2DMesh(meshList[GEO_TEST], false, 1.0f, player->Get_cPosition().x, player->Get_cPosition().y, 0);
 	vector<CBulletInfo*> temp = Weapon->GetBulletList();
 	for (auto bulletIt : temp)
 	{
@@ -272,18 +259,20 @@ void TutorialScene::Render()
 				Render2DMesh(meshList[GEO_FIRE], false, 32.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
 
 			if (bulletIt->GetBulletType() == BT_AIR)
-				Render2DMesh(meshList[GEO_AIR], false, 32.0f,  bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
+				Render2DMesh(meshList[GEO_AIR], false, 32.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
 
 			if (bulletIt->GetBulletType() == BT_WATER)
 				Render2DMesh(meshList[GEO_WATER], false, 32.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
 
-			/*	if (WeaponType == WT_NET)
-					Render2DMesh(meshList[GEO_NET], false, 32.0f, bulletIt->GetPosition().x, bulletIt->GetPosition().y, 0);
-					*/
-
+			if (bulletIt->GetBulletType() == BT_NET)
+					Render2DMesh(meshList[GEO_WATER], false, 32.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
+			
+			if (bulletIt->GetBulletType() == BT_NETSPREAD)
+				Render2DMesh(meshList[GEO_FIRE], false, bulletIt->scale, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
+	
 		}
+		
 	}
-
 }
 
 void TutorialScene::Exit()

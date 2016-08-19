@@ -4,8 +4,9 @@
 #include <vector>
 #include "Player.h"
 #include "Character.h"
-
+#include <queue>
 using std::vector;
+using std::queue;
 
 class Strategy
 {
@@ -14,7 +15,6 @@ public:
     ~Strategy();
 
     void ClearWaypoints();
-    bool ScanArea(float distance);
     void AddWaypoint(Vector3 pos);
     void SetPosition(Vector3 pos);
     virtual void Update(double dt) = 0;
@@ -22,12 +22,8 @@ public:
     
 protected:
     Vector3 position;
-
     float scanDistance;
-
-    Character* attackTarget;
-
-    vector<Vector3> wayPoints;
+    queue<Vector3> wayPoints;
     
 };
 

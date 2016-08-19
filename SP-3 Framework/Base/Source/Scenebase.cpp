@@ -121,8 +121,6 @@ void Scenebase::Init()
 	meshList[GEO_TEST] = MeshBuilder::Generate2DMesh("ds", Color(1,1,1),0,0,32,32);
 	meshList[GEO_TEST]->textureID= LoadTGA("Image//avatar.tga");
 	
-
-	
 	meshList[GEO_MCDOWN] = MeshBuilder::GenerateSpriteAnimation("down", 1, 3);
 	meshList[GEO_MCDOWN]->textureID = LoadTGA("Image//MCdown.tga");
 	SpriteAnimation *sa1 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCDOWN]);
@@ -506,7 +504,7 @@ void Scenebase::RenderTileMap(TileMap* currentMap, float x_Offset, float y_Offse
 	int tileOffSetX = x_Offset / currentMap->GetTileSize();
     int tileOffSetY = y_Offset / currentMap->GetTileSize();
 
-    for (int y = tileOffSetY; y < tileOffSetY + currentMap->GetNumScreenTile_Height()+1; ++y)
+    for (int y = tileOffSetY; y < tileOffSetY + currentMap->GetNumScreenTile_Height() + 1; ++y)
 	{
         if (y >= currentMap->GetNumWorldTile_Height())
             break;

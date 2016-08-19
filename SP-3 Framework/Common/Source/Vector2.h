@@ -1,9 +1,13 @@
 #ifndef VECTOR2_H
 #define VECTOR2_H
+#include <iostream>
+
+using std::ostream;
 
 struct Vector2
 {
-	float x, y;
+
+public:
 	Vector2( float a = 0, float b = 0 ); //default constructor
 	Vector2( const Vector2 &rhs ); //copy constructor
 	void Set( float a, float b ); //Set all data
@@ -14,5 +18,12 @@ struct Vector2
 	float Length( void ) const; //Get magnitude
 	float Dot( const Vector2& rhs ) const; //Dot product
 	Vector2 Normalized( void ); //Return a copy of this vector, normalized
+
+	float x; 
+	float y;
+
+    friend ostream& operator<<(ostream& os, const Vector2& vector2);
+ 
+
 };
 #endif

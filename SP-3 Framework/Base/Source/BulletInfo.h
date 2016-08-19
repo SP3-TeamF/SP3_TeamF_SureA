@@ -2,6 +2,8 @@
 
 #include "vector3.h"
 #include "AABB.h"
+#include "GlobalDatas.h"
+#include "Player.h"
 
 enum BULLET_TYPE{
 	BT_NET,

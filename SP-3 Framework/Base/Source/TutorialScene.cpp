@@ -220,24 +220,22 @@ void TutorialScene::RenderBullets()
     {
         if (bulletIt->GetStatus())
         {
+			if (bulletIt->GetBulletType() == BT_FIRE)
+				Render2DMesh(meshList[GEO_FIRE], false, 32.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
 
-            if (bulletIt->GetBulletType() == BT_FIRE)
-                Render2DMesh(meshList[GEO_FIRE], false, 32.0f, bulletIt->GetPosition().x, bulletIt->GetPosition().y, 0);
+			if (bulletIt->GetBulletType() == BT_AIR)
+				Render2DMesh(meshList[GEO_AIR], false, 32.0f,  bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
 
-            if (bulletIt->GetBulletType() == BT_AIR)
-                Render2DMesh(meshList[GEO_AIR], false, 32.0f, bulletIt->GetPosition().x, bulletIt->GetPosition().y, 0);
+			if (bulletIt->GetBulletType() == BT_WATER)
+				Render2DMesh(meshList[GEO_WATER], false, 32.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
 
-            if (bulletIt->GetBulletType() == BT_WATER)
-                Render2DMesh(meshList[GEO_WATER], false, 32.0f, bulletIt->GetPosition().x, bulletIt->GetPosition().y, 0);
+			/*	if (WeaponType == WT_NET)
+					Render2DMesh(meshList[GEO_NET], false, 32.0f, bulletIt->GetPosition().x, bulletIt->GetPosition().y, 0);
+					*/
 
-            /*	if (WeaponType == WT_NET)
-            Render2DMesh(meshList[GEO_NET], false, 32.0f, bulletIt->GetPosition().x, bulletIt->GetPosition().y, 0);
-            */
-
-        }
-    }
+		}
+	}
 }
-
 void TutorialScene::RenderMainCharacter()
 {
     if (m_TileMap != nullptr)

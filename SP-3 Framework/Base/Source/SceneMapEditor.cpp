@@ -14,8 +14,6 @@ void SceneMapEditor::Init()
 {
     Scenebase::Init();
 
-    EditorMap = nullptr;
-
     // Initialise and load the tile map
     EditorMap = nullptr;
     m_TileMap = nullptr;
@@ -66,7 +64,6 @@ void SceneMapEditor::Render()
 
 void SceneMapEditor::Exit()
 {
-
 }
 
 //Update functions
@@ -238,4 +235,18 @@ void SceneMapEditor::MapEditorInit()
     GlobalData.world_X_offset = 0;
 	GlobalData.world_Y_offset = 0;
     currentTileType = 0;
+}
+
+void SceneMapEditor::Reset()
+{
+    GlobalData.world_X_offset = 0;
+    GlobalData.world_Y_offset = 0;
+
+    // Initialise and load the tile map
+    EditorMap = nullptr;
+    m_TileMap = nullptr;
+
+    MapEditorInit();
+
+    CURR_EDITOR_STATE = MAP_EDITOR;
 }

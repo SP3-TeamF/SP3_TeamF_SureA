@@ -144,14 +144,16 @@ void Application::Init()
 
 	//Time Taken for this frame(dt)
 	m_dElapsedTime = 0.0;
+
+    //Initialise the scene manager
+    currentScene = new SceneManager();
 }
 
 void Application::Run()
 {
-	//Main Loop
-	scene = new TutorialScene ();
+    //Main loop
+    currentScene->Init();
 
-	scene->Init();
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
 	{
@@ -162,14 +164,14 @@ void Application::Run()
 		if (m_dAccumulatedTime_ThreadOne > 0){
 			//GetMouseUpdate();
 			GetKeyboardUpdate();
-			scene->Update(m_dElapsedTime);
+            currentScene->Update(m_dElapsedTime);
 			m_dAccumulatedTime_ThreadOne = 0.0;
 		}
 		if (m_dAccumulatedTime_ThreadTwo > 1){
 			m_dAccumulatedTime_ThreadTwo = 0.0;
 			GlobalData.isControllerConnected = controls.isControllerPresent(CONTROLLER_1);
 		}
-		scene->Render();
+        currentScene->Render();
 		//Swap buffers
 		glfwSwapBuffers(m_window);
 		//Get and organize events, like keyboard and mouse input, window resizing, etc...
@@ -178,8 +180,8 @@ void Application::Run()
 
 
 	} //Check if the ESC key had been pressed or if the window had been closed
-	scene->Exit();
-	delete scene;
+    currentScene->Exit();
+    delete currentScene;
 }
 
 void Application::Exit()

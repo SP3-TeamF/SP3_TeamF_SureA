@@ -61,30 +61,32 @@ void weapon::fireWeapon(Vector3 view, Vector3 position)
 		{
 			case WT_NET:
 			{
-						   bullet->Init(position, view, 100, 3, 1);
+						   bullet->Init(position, view, 100, 5, 1);
 						   bullet->SetBulletType(BT_NET);
-						   bullet->scale = 1;
+						   bullet->SetScale(Vector3(3,3,0));
+						   bullet->SetLifetime(5);
 						   break;
 			}
 			case WT_FIRE:
 			{
 							bullet->Init(position, view, 150, 6, 20);
 							bullet->SetBulletType(BT_FIRE);
-							bullet->scale = 1;
+							bullet->SetScale(Vector3(1,1,0));
 							break;
 			}
 			case WT_WATER:
 			{
 							 bullet->Init(position, view, 1000, 6, 20);
 							 bullet->SetBulletType(BT_WATER);
-							 bullet->scale = 1;
+							 bullet->SetScale(Vector3(1, 1, 0));
 							 break;
 			}
 			case WT_AIR:
 			{
 						   bullet->Init(position, view, 500, 3, 10);
 						   bullet->SetBulletType(BT_AIR);
-						   bullet->scale = 1;
+						   bullet->SetScale(Vector3(1, 1, 0));
+
 						   break;
 			}
 		}
@@ -98,7 +100,7 @@ void weapon::Update(double dt)
 	{
 		if ((controls.GetIsControllerTriggerPressed(CONTROLLER_1, R_TRIGGER)))
 		{
-			fireWeapon((controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK)), player->Get_cPosition() + Vector3(GlobalData.world_X_offset, GlobalData.world_Y_offset, 0));
+			fireWeapon((controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK)), player->Get_cPosition()+Vector3(GlobalData.world_X_offset,GlobalData.world_Y_offset,0));
 		}
 		if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_UP))){
 			WeaponType = WT_NET;

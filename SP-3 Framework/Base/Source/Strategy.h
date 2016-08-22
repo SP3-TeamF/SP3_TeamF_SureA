@@ -14,15 +14,16 @@ public:
     Strategy();
     ~Strategy();
 
+    virtual void Update(double dt) = 0;
+
     void ClearWaypoints();
     void AddWaypoint(Vector3 pos);
     void SetPosition(Vector3 pos);
-    virtual void Update(double dt) = 0;
+    
     
 protected:
     Vector3 position;
-    float scanDistance;
-    queue<Vector3> wayPoints;
+    queue<Vector3*> wayPoints;
     
 };
 

@@ -44,9 +44,7 @@ public:
 	int weaponDamage;
 
 	AABB test;
-	bool isFire;
-	bool isWater;
-	bool isAir;
+
 
 	vector<CBulletInfo*> GetBulletList();
 

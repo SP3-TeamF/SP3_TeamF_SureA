@@ -69,7 +69,6 @@ void Collisiontest::Update(double dt)
 
 }
 
-
 void Collisiontest::Render()
 {
 
@@ -95,7 +94,8 @@ void Collisiontest::Render()
 }
 
 void Collisiontest::Exit()
-{}
+{
+}
 
 //Update functions
 void Collisiontest::UpdateMapEditor(double dt)
@@ -266,4 +266,18 @@ void Collisiontest::MapEditorInit()
 	editor_X_Offet = 0;
 	editor_Y_Offet = 0;
 	currentTileType = 0;
+}
+
+void Collisiontest::Reset()
+{
+    GlobalData.world_X_offset = 0;
+    GlobalData.world_Y_offset = 0;
+
+    // Initialise and load the tile map
+    EditorMap = nullptr;
+    m_TileMap = nullptr;
+
+    MapEditorInit();
+
+    plswork = haha;
 }

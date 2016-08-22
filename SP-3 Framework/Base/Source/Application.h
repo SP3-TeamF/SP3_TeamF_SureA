@@ -2,11 +2,10 @@
 #define APPLICATION_H
 
 #include "timer.h"
-#include "Scenebase.h"
-#include "test.h"
-#include "SceneMapEditor.h"
-#include "TutorialScene.h"
-#include "Collisiontest.h"
+#include "MyMath.h"
+#include "GlobalDatas.h"
+#include "SceneManager.h"
+
 class Application
 {
 public:
@@ -51,7 +50,7 @@ private:
 	double m_dAccumulatedTime_ThreadTwo;
 
 	//handler for scene
-	Scene* scene;
+    SceneManager* currentScene;
 };
 
 #endif

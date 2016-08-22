@@ -84,6 +84,18 @@ Vector3 CBulletInfo::GetDirection(void)
     return direction;
 }
 
+// Set the scale of this CBulletInfo instance
+void CBulletInfo::SetScale(const Vector3 scale)
+{
+	this->scale = scale;
+}
+
+// Get the scale of this CBulletInfo instance
+Vector3 CBulletInfo::GetScale(void)
+{
+	return scale;
+}
+
 // Set the speed of this CBulletInfo instance
 void CBulletInfo::SetSpeed(const float speed)
 {

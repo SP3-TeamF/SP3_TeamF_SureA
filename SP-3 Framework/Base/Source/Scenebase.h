@@ -61,6 +61,7 @@ public:
     ~Scenebase();
 
 	virtual void Init();
+    virtual void Reset();
 	virtual void Update(double dt);
 	virtual void Render();
 	virtual void Exit();

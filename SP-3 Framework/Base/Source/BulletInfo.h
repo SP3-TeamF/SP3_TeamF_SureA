@@ -31,6 +31,9 @@ protected:
 	float lifetime;
 	// The Damage of the bullet
 	float damage;
+
+	// The scale of the bullet
+	Vector3 scale;
 	BULLET_TYPE BulletType;
 
     Vector3 nextPosition;
@@ -48,6 +51,12 @@ public:
 	void SetStatus(const bool bStatus);
 	// Get the status of this CBulletInfo instance
 	bool GetStatus(void);
+
+	//Set the scale of the CBulletInfo instance
+	void SetScale(const Vector3 scale);
+
+	//Get the scale of the CBulletInfo instance
+	Vector3 GetScale(void);
 	
 	// Set the position of this CBulletInfo instance
 	void SetPosition(const Vector3 position);
@@ -79,6 +88,5 @@ public:
 
     bool bulletHitboxCheck(AABB* hitbox);
 
-	float scale = 0;
 };
 

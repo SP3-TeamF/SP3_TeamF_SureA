@@ -165,19 +165,25 @@ int TileMap::GetWorldHeight(void)
 //Others
 int TileMap::GetTileSize(void)
 {
-    return tileSize;
+    if (this)
+    {
+        return tileSize;
+    }
 }
 
 int TileMap::GetTileType(float xPosition, float yPosition)
 {
-	if (xPosition >= 0 &&
-		xPosition < GetNumWorldTile_Width() &&
-		yPosition >= 0 &&
-		yPosition < GetNumWorldTile_Height()
-		)
-	{
-		return world_Tile_Map[yPosition][xPosition];
-	}
+    if (this)
+    {
+        if (xPosition >= 0 &&
+            xPosition < GetNumWorldTile_Width() &&
+            yPosition >= 0 &&
+            yPosition < GetNumWorldTile_Height()
+            )
+        {
+            return world_Tile_Map[yPosition][xPosition];
+        }
+    }
 	return -1;
 }
 

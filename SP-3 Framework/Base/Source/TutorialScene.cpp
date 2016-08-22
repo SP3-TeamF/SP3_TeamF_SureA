@@ -15,14 +15,18 @@ void TutorialScene::Init()
     Scenebase::Init();
 	GlobalData.world_X_offset = 0;
 	GlobalData.world_Y_offset = 0;
+
 	player->SetPlayerBorder(128, 864, 128, 576);
+    player->Set_cMoveSpeed(100);
+    player->Set_cPosition(Vector3(300, 200, 0));
 	
-	m_TileMap = new TileMap();
-	m_TileMap->Init(1024, 800, 2048, 1600, 32);
-	m_TileMap->LoadMap("Image//CSV//Zentut.csv");
-	player->Set_cMoveSpeed(100);
-	player->Set_cPosition(Vector3(300, 200, 0));
-	Weapon = new weapon();
+    Weapon = new weapon();
+
+    tutorialMap.Init(1024, 800, 2048, 1600, 32);
+    tutorialMap.LoadMap("Image//CSV//Zentut.csv");
+
+    m_TileMap = &tutorialMap;
+
 	netHit = false;
 	stop = false;
 	netScale = 32.f;
@@ -32,8 +36,8 @@ void TutorialScene::Init()
 //Update functions
 void TutorialScene::Update(double dt)
 {
-	fps = 1 / dt;
-	cout << fps << endl;
+	//fps = 1 / dt;
+	//cout << fps << endl;
     UpdateBullets(dt);
     Weapon->Update(dt);
     UpdateSpriteAnimations(dt);
@@ -43,24 +47,40 @@ void TutorialScene::Update(double dt)
 void TutorialScene::UpdateBullets(double dt)
 {
     vector<CBulletInfo*> temp = Weapon->GetBulletList();
-    for (auto bulletIt : temp)
-    {
-        Vector3 updatedPos = bulletIt->GetPosition() + (bulletIt->GetDirection() * bulletIt->GetSpeed()) * dt;
-        updatedPos.x += m_TileMap->GetTileSize() * 0.5 + GlobalData.world_X_offset;
-        updatedPos.y += m_TileMap->GetTileSize() * 0.5 + GlobalData.world_Y_offset;
+	for (auto bulletIt : temp)
+	{
+		if (bulletIt->GetStatus())
+		{
+			Vector3 updatedPos = bulletIt->GetPosition() + (bulletIt->GetDirection() * bulletIt->GetSpeed()) * dt;
+			updatedPos.x += m_TileMap->GetTileSize() * 0.5;
+			updatedPos.y += m_TileMap->GetTileSize() * 0.5;
 
-        int currentTile = 237;
+			int currentTile = 237;
 
-        int tilePosX = updatedPos.x / m_TileMap->GetTileSize();
-        int tilePosY = updatedPos.y / m_TileMap->GetTileSize();
-        int test = (m_TileMap->GetTileType(tilePosX, tilePosY));
+			int tilePosX = updatedPos.x / m_TileMap->GetTileSize();
+			int tilePosY = updatedPos.y / m_TileMap->GetTileSize();
 
-        if (test != currentTile)
-        {
-            bulletIt->SetStatus(false);
-            bulletIt->SetPosition(Vector3(player->Get_cPosition().x, player->Get_cPosition().y, 0));
-        }
-    }
+			int test = (m_TileMap->GetTileType(tilePosX, tilePosY));
+
+			if (test != currentTile)
+			{
+				cout << bulletIt->GetPosition().x - GlobalData.world_X_offset << endl;
+
+				if (bulletIt->GetBulletType() == BT_NET)
+				{
+					bulletIt->SetBulletType(BT_NETSPREAD);
+					bulletIt->SetSpeed(0);
+					bulletIt->SetScale(Vector3(100, 100, 0));
+					bulletIt->SetLifetime(3);
+				}
+				else if (bulletIt->GetBulletType() != BT_NETSPREAD)
+				{
+					bulletIt->SetStatus(false);
+				}
+			}
+		}
+	}
+		
 }
 
 void TutorialScene::UpdateSpriteAnimations(double dt)
@@ -138,29 +158,6 @@ void TutorialScene::UpdateSpriteAnimations(double dt)
 
 void TutorialScene::UpdatePlayerInputUpdates(double dt)
 {
-	vector<CBulletInfo*> temp = Weapon->GetBulletList();
-	for (auto bulletIt : temp)
-	{
-		Vector3 updatedPos = bulletIt->GetPosition() + (bulletIt->GetDirection() * bulletIt->GetSpeed()) * dt;
-		updatedPos.x += m_TileMap->GetTileSize() * 0.5;
-		updatedPos.y += m_TileMap->GetTileSize() * 0.5;
-
-		int currentTile = 237;
-
-		int tilePosX = updatedPos.x / m_TileMap->GetTileSize();
-		int tilePosY = updatedPos.y / m_TileMap->GetTileSize();
-		int test = (m_TileMap->GetTileType(tilePosX, tilePosY));
-		if (test != currentTile)
-		{
-			if (bulletIt->GetBulletType() == BT_NET)
-			{
-				bulletIt->SetBulletType(BT_NETSPREAD);
-				bulletIt->SetSpeed(0);
-				bulletIt->scale = 100;
-				bulletIt->SetLifetime(1);
-			}
-		}
-	}
 	if (GlobalData.isControllerConnected)
 	{
 		if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_LSTICKER)))
@@ -269,10 +266,10 @@ void TutorialScene::RenderBullets()
 				Render2DMesh(meshList[GEO_WATER], false, 32.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
 
 			if (bulletIt->GetBulletType() == BT_NET)
-					Render2DMesh(meshList[GEO_WATER], false, 32.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
+				Render2DMesh(meshList[GEO_WATER], false, 32.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
 			
 			if (bulletIt->GetBulletType() == BT_NETSPREAD)
-				Render2DMesh(meshList[GEO_FIRE], false, bulletIt->scale, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
+				Render2DMesh(meshList[GEO_FIRE], false, bulletIt->GetScale().x, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
 		}	
 	}
 }
@@ -286,38 +283,38 @@ void TutorialScene::RenderMainCharacter()
 			//render top right
 			Render2DMesh(meshList[GEO_MCTOPRIGHT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
 		}
-		if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y > 0 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x < 0)
+		else  if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y > 0 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x < 0)
 		{
 			//render top left
 			Render2DMesh(meshList[GEO_MCTOPLEFT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
 		}
-		if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y < 0 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x < 0)
+		else if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y < 0 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x < 0)
 		{
 			//renderbot left
 			Render2DMesh(meshList[GEO_MCDOWNLEFT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
 		}
-		if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y < 0 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x > 0)
+		else if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y < 0 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x > 0)
 		{
 			//render bot right
 			Render2DMesh(meshList[GEO_MCDOWNRIGHT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
 		}
-		if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y == 1 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x == 0)
+		else if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y == 1 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x == 0)
 		{
 			//render up
 			Render2DMesh(meshList[GEO_MCUP], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
 
 		}
-		if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y == -1 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x == 0)
+		else if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y == -1 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x == 0)
 		{
 			//render down
 			Render2DMesh(meshList[GEO_MCDOWN], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
 		}
-		if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y == 0 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x == 1)
+		else if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y == 0 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x == 1)
 		{
 			//render right
 			Render2DMesh(meshList[GEO_MCRIGHT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
 		}
-		if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y == 0 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x == -1)
+		else if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y == 0 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x == -1)
 		{
 			//render left
 			Render2DMesh(meshList[GEO_MCLEFT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
@@ -334,4 +331,16 @@ void TutorialScene::RenderMainCharacter()
 }
 
 void TutorialScene::Exit()
-{}
+{
+}
+
+//Other Functions
+void TutorialScene::Reset()
+{
+    m_TileMap = &tutorialMap;
+
+    netHit = false;
+    stop = false;
+    netScale = 32.f;
+    playerPosition = Vector3((int)(player->Get_cPosition().x / m_TileMap->GetTileSize()), (int)(player->Get_cPosition().y / m_TileMap->GetTileSize()));
+}

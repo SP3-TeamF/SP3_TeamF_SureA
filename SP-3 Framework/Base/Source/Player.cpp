@@ -71,8 +71,7 @@ void Player::ConstrainPlayer()
 	else if (c_Position.x > rightBorder)
 	{
 		shift_X = c_Position.x - rightBorder;
-
-		
+	
 		c_Position.x = rightBorder;
 		if (GlobalData.world_X_offset>(m_TileMap->GetWorldWidth() - m_TileMap->GetScreenWidth()))
 			GlobalData.world_X_offset = (m_TileMap->GetWorldWidth() - m_TileMap->GetScreenWidth());
@@ -111,13 +110,13 @@ void Player::ConstrainPlayer()
 void Player::UpdateMovement(double dt)
 {
 	Vector3 updatedPos = c_Position + (c_Movement * c_MoveSpeed) * dt;
-	updatedPos.x += m_TileMap->GetTileSize() * 0.5  + GlobalData.world_X_offset;
+	updatedPos.x += m_TileMap->GetTileSize() * 0.5 + GlobalData.world_X_offset;
 	updatedPos.y += m_TileMap->GetTileSize() * 0.5 + GlobalData.world_Y_offset;
 
 	int currentTile = 237;
 
-	int tilePosX = updatedPos.x / m_TileMap->GetTileSize() + GlobalData.world_X_offset;
-	int tilePosY = updatedPos.y / m_TileMap->GetTileSize() + GlobalData.world_Y_offset;
+	int tilePosX = updatedPos.x / m_TileMap->GetTileSize();
+	int tilePosY = updatedPos.y / m_TileMap->GetTileSize();
 
 	float armOffsetX_R = m_TileMap->GetTileSize() * 0.3;
 	float legOffsetX_R = m_TileMap->GetTileSize() * 0.3;

@@ -231,6 +231,11 @@ void Scenebase::Init()
     glDisable(GL_CULL_FACE);
 }
 
+void Scenebase::Reset()
+{
+
+}
+
 //Update Functions
 void Scenebase::Update(double dt)
 {

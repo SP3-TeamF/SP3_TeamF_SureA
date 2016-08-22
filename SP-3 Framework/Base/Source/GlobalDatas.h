@@ -21,11 +21,6 @@ public:
         {
             theSoundEngine->drop();
         }
-        if (tileMap)
-        {
-            delete tileMap;
-            tileMap = nullptr;
-        }
     };
    
 	static GlobalDatas& GetInstance()

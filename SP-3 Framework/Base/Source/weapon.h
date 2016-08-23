@@ -29,12 +29,14 @@ public:
     void updateBullets(double dt);
     void resetWeaponAmmo();
     void fireWeapon(Vector3 view, Vector3 position);
+	void fireEnemyWeapon(Vector3 view, Vector3 position);
 	void renderGO();
 	Vector3 getBulletPosition();
     
     bool canFireBullet();
 
 	CBulletInfo* FetchGO();
+	CBulletInfo* FetchEnemyBullet();
 
 	double getWeaponReloadTime();
     int getCurrentHeldAmmo();
@@ -47,11 +49,13 @@ public:
 
 
 	vector<CBulletInfo*> GetBulletList();
+	vector<CBulletInfo*> GetEnemyBulletList();
 
 	void bulletCollision(double dt);
 
 protected:
 	std::vector<CBulletInfo *> m_goList;
+	std::vector<CBulletInfo *> enemyList;
 
 private:
 	int maxClipSize;
@@ -66,6 +70,7 @@ private:
     double weaponReloadTime;
     double timeBetweenEachBullet;
 	CBulletInfo* bullet;
+	CBulletInfo* enemyBullet;
 
 	WEAPON_TYPE WeaponType;
 

@@ -110,10 +110,33 @@ void Scenebase::Init()
 	}
 
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
-	meshList[GEO_TEXT]->textureID = LoadTGA("Image//calibri.tga");
+	meshList[GEO_TEXT]->textureID = LoadTGA("Image//Harrington.tga");
 
     meshList[GEO_BACKGROUND] = MeshBuilder::Generate2DMesh("GEO_BACKGROUND", Color(1, 1, 1), 0.0f, 0.0f, 800.0f, 600.0f);
     meshList[GEO_BACKGROUND]->textureID = LoadTGA("Image//Night_Sky.tga");
+	
+
+	//HUD stuff
+	meshList[GEO_HUD] = MeshBuilder::Generate2DMesh("GEO_HUD", Color(1, 1, 1), 0.0f, 0.0f, 1024, 800.0f);
+	meshList[GEO_HUD]->textureID = LoadTGA("Image//HUD.tga");
+
+	meshList[GEO_HEART] = MeshBuilder::Generate2DMesh("GEO_HEART", Color(1, 1, 1), 0.0f, 0.0f, 32.f, 32.f);
+	meshList[GEO_HEART]->textureID = LoadTGA("Image//Heart.tga");
+
+	meshList[GEO_HPTEX] = MeshBuilder::Generate2DMesh("GEO_HPTEXTURE", Color(1, 1, 1), 0.0f, 0.0f, 32.f, 32.f);
+	meshList[GEO_HPTEX]->textureID = LoadTGA("Image//hpTexture.tga");
+
+	meshList[GEO_HUDNET] = MeshBuilder::Generate2DMesh("GEO_HUDNet", Color(1, 1, 1), 0.0f, 0.0f, 32.f, 32.f);
+	meshList[GEO_HUDNET]->textureID = LoadTGA("Image//HUDNet.tga");
+
+	meshList[GEO_HUDFIRE] = MeshBuilder::Generate2DMesh("GEO_HUDFIRE", Color(1, 1, 1), 0.0f, 0.0f, 32.f, 32.f);
+	meshList[GEO_HUDFIRE]->textureID = LoadTGA("Image//HUDFire.tga");
+
+	meshList[GEO_HUDWATER] = MeshBuilder::Generate2DMesh("GEO_HUDWATER", Color(1, 1, 1), 0.0f, 0.0f, 32.f, 32.f);
+	meshList[GEO_HUDWATER]->textureID = LoadTGA("Image//HUDWater.tga");
+
+	meshList[GEO_HUDAIR] = MeshBuilder::Generate2DMesh("GEO_HUDAIR", Color(1, 1, 1), 0.0f, 0.0f, 32.f, 32.f);
+	meshList[GEO_HUDAIR]->textureID = LoadTGA("Image//HUDAir.tga");
 
 	meshList[GEO_TILESHEET] = MeshBuilder::GenerateTileMesh("TileSheet", 21, 23);
 	meshList[GEO_TILESHEET]->textureID = LoadTGA("Image//TileSheet1.tga");
@@ -216,6 +239,135 @@ void Scenebase::Init()
 		sa11->m_anim = new Animation();
 		sa11->m_anim->Set(0,3 , 0, 1.f, true); //startframe, endframe, repeat, time, enable
 	}
+	meshList[GEO_AIRWISP] = MeshBuilder::GenerateSpriteAnimation("windwisp", 1, 3);
+	meshList[GEO_AIRWISP]->textureID = LoadTGA("Image//windwisp.tga");
+	SpriteAnimation *sa12 = dynamic_cast<SpriteAnimation*>(meshList[GEO_AIRWISP]);
+	if (sa12)
+	{
+		sa12->m_anim = new Animation();
+		sa12->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+
+	meshList[GEO_FIREWISP] = MeshBuilder::GenerateSpriteAnimation("windwisp", 1, 3);
+	meshList[GEO_FIREWISP]->textureID = LoadTGA("Image//firewisp.tga");
+	SpriteAnimation *sa13 = dynamic_cast<SpriteAnimation*>(meshList[GEO_FIREWISP]);
+	if (sa13)
+	{
+		sa13->m_anim = new Animation();
+		sa13->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+
+	meshList[GEO_WATERWISP] = MeshBuilder::GenerateSpriteAnimation("windwisp", 1, 3);
+	meshList[GEO_WATERWISP]->textureID = LoadTGA("Image//waterwisp.tga");
+	SpriteAnimation *sa14 = dynamic_cast<SpriteAnimation*>(meshList[GEO_WATERWISP]);
+	if (sa14)
+	{
+		sa14->m_anim = new Animation();
+		sa14->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+
+	meshList[GEO_AIRMONDOWN] = MeshBuilder::GenerateSpriteAnimation("windwisp", 1, 3);
+	meshList[GEO_AIRMONDOWN]->textureID = LoadTGA("Image//airmonDOWN.tga");
+	SpriteAnimation *sa15 = dynamic_cast<SpriteAnimation*>(meshList[GEO_AIRMONDOWN]);
+	if (sa15)
+	{
+		sa15->m_anim = new Animation();
+		sa15->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+	meshList[GEO_AIRMONUP] = MeshBuilder::GenerateSpriteAnimation("windwisp", 1, 3);
+	meshList[GEO_AIRMONUP]->textureID = LoadTGA("Image//airmonUP.tga");
+	SpriteAnimation *sa16 = dynamic_cast<SpriteAnimation*>(meshList[GEO_AIRMONUP]);
+	if (sa16)
+	{
+		sa16->m_anim = new Animation();
+		sa16->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+
+	meshList[GEO_AIRMONLEFT] = MeshBuilder::GenerateSpriteAnimation("windwisp", 1, 3);
+	meshList[GEO_AIRMONLEFT]->textureID = LoadTGA("Image//airmonLEFT.tga");
+	SpriteAnimation *sa17 = dynamic_cast<SpriteAnimation*>(meshList[GEO_AIRMONLEFT]);
+	if (sa17)
+	{
+		sa17->m_anim = new Animation();
+		sa17->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+	meshList[GEO_AIRMONRIGHT] = MeshBuilder::GenerateSpriteAnimation("windwisp", 1, 3);
+	meshList[GEO_AIRMONRIGHT]->textureID = LoadTGA("Image//airmonRIGHT.tga");
+	SpriteAnimation *sa18 = dynamic_cast<SpriteAnimation*>(meshList[GEO_AIRMONRIGHT]);
+	if (sa18)
+	{
+		sa18->m_anim = new Animation();
+		sa18->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+
+	meshList[GEO_FIREMONDOWN] = MeshBuilder::GenerateSpriteAnimation("windwisp", 1, 3);
+	meshList[GEO_FIREMONDOWN]->textureID = LoadTGA("Image//firemonDOWN.tga");
+	SpriteAnimation *sa19 = dynamic_cast<SpriteAnimation*>(meshList[GEO_FIREMONDOWN]);
+	if (sa19)
+	{
+		sa19->m_anim = new Animation();
+		sa19->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+	meshList[GEO_FIREMONUP] = MeshBuilder::GenerateSpriteAnimation("windwisp", 1, 3);
+	meshList[GEO_FIREMONUP]->textureID = LoadTGA("Image//firemonUP.tga");
+	SpriteAnimation *sa20 = dynamic_cast<SpriteAnimation*>(meshList[GEO_FIREMONUP]);
+	if (sa20)
+	{
+		sa20->m_anim = new Animation();
+		sa20->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+
+	meshList[GEO_FIREMONLEFT] = MeshBuilder::GenerateSpriteAnimation("windwisp", 1, 3);
+	meshList[GEO_FIREMONLEFT]->textureID = LoadTGA("Image//firemonLEFT.tga");
+	SpriteAnimation *sa21 = dynamic_cast<SpriteAnimation*>(meshList[GEO_FIREMONLEFT]);
+	if (sa21)
+	{
+		sa21->m_anim = new Animation();
+		sa21->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+	meshList[GEO_FIREMONRIGHT] = MeshBuilder::GenerateSpriteAnimation("windwisp", 1, 3);
+	meshList[GEO_FIREMONRIGHT]->textureID = LoadTGA("Image//firemonRIGHT.tga");
+	SpriteAnimation *sa22 = dynamic_cast<SpriteAnimation*>(meshList[GEO_FIREMONRIGHT]);
+	if (sa22)
+	{
+		sa22->m_anim = new Animation();
+		sa22->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+
+
+	meshList[GEO_WATERMONDOWN] = MeshBuilder::GenerateSpriteAnimation("windwisp", 1, 3);
+	meshList[GEO_WATERMONDOWN]->textureID = LoadTGA("Image//firemonDOWN.tga");
+	SpriteAnimation *sa23 = dynamic_cast<SpriteAnimation*>(meshList[GEO_WATERMONDOWN]);
+	if (sa23)
+	{
+		sa23->m_anim = new Animation();
+		sa23->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+	meshList[GEO_WATERMONUP] = MeshBuilder::GenerateSpriteAnimation("windwisp", 1, 3);
+	meshList[GEO_WATERMONUP]->textureID = LoadTGA("Image//firemonUP.tga");
+	SpriteAnimation *sa24 = dynamic_cast<SpriteAnimation*>(meshList[GEO_WATERMONUP]);
+	if (sa24)
+	{
+		sa24->m_anim = new Animation();
+		sa24->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+
+	meshList[GEO_WATERMONLEFT] = MeshBuilder::GenerateSpriteAnimation("windwisp", 1, 3);
+	meshList[GEO_WATERMONLEFT]->textureID = LoadTGA("Image//firemonLEFT.tga");
+	SpriteAnimation *sa25 = dynamic_cast<SpriteAnimation*>(meshList[GEO_WATERMONLEFT]);
+	if (sa25)
+	{
+		sa25->m_anim = new Animation();
+		sa25->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+	meshList[GEO_WATERMONRIGHT] = MeshBuilder::GenerateSpriteAnimation("windwisp", 1, 3);
+	meshList[GEO_WATERMONRIGHT]->textureID = LoadTGA("Image//firemonRIGHT.tga");
+	SpriteAnimation *sa26 = dynamic_cast<SpriteAnimation*>(meshList[GEO_WATERMONRIGHT]);
+	if (sa26)
+	{
+		sa26->m_anim = new Animation();
+		sa26->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
 
 	meshList[GEO_BIGNET] = MeshBuilder::GenerateQuad("bigweb",Color(1,1,1),1);
 	meshList[GEO_BIGNET]->textureID = LoadTGA("Image//bigNet.tga");
@@ -233,6 +385,273 @@ void Scenebase::Init()
 
     glDisable(GL_CULL_FACE);
 }
+
+void Scenebase::RenderSprites()
+{
+	if (GlobalData.isControllerConnected)
+	{
+		if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y > 0 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x > 0)
+		{
+			//render top right
+			Render2DMesh(meshList[GEO_MCTOPRIGHT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+		}
+		else if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y > 0 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x < 0)
+		{
+			//render top left
+			Render2DMesh(meshList[GEO_MCTOPLEFT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+		}
+		else if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y < 0 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x < 0)
+		{
+			//renderbot left
+			Render2DMesh(meshList[GEO_MCDOWNLEFT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+		}
+		else if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y < 0 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x > 0)
+		{
+			//render bot right
+			Render2DMesh(meshList[GEO_MCDOWNRIGHT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+		}
+		else if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y == 1 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x == 0)
+		{
+			//render up
+			Render2DMesh(meshList[GEO_MCUP], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+
+		}
+		else if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y == -1 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x == 0)
+		{
+			//render down
+			Render2DMesh(meshList[GEO_MCDOWN], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+		}
+		else if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y == 0 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x == 1)
+		{
+			//render right
+			Render2DMesh(meshList[GEO_MCRIGHT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+		}
+		else if (controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).y == 0 && controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK).x == -1)
+		{
+			//render left
+			Render2DMesh(meshList[GEO_MCLEFT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+		}
+		else
+		{
+			Render2DMesh(meshList[GEO_MCDOWN], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+		}
+	}
+	else
+	{
+		Render2DMesh(meshList[GEO_MCDOWN], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	}
+}
+
+
+void Scenebase::RenderSprites_keyboard()
+{
+	if (controls.isKeyboardButtonHeld(KEYBOARD_W) && (controls.isKeyboardButtonHeld(KEYBOARD_D)))
+	Render2DMesh(meshList[GEO_MCTOPRIGHT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	else if (controls.isKeyboardButtonHeld(KEYBOARD_W) && (controls.isKeyboardButtonHeld(KEYBOARD_A)))
+		Render2DMesh(meshList[GEO_MCTOPLEFT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	else if (controls.isKeyboardButtonHeld(KEYBOARD_S) && (controls.isKeyboardButtonHeld(KEYBOARD_A)))
+		Render2DMesh(meshList[GEO_MCDOWNLEFT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	else if (controls.isKeyboardButtonHeld(KEYBOARD_S) && (controls.isKeyboardButtonHeld(KEYBOARD_D)))
+		Render2DMesh(meshList[GEO_MCDOWNRIGHT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	else if (controls.isKeyboardButtonHeld(KEYBOARD_W))
+		Render2DMesh(meshList[GEO_MCUP], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	else if (controls.isKeyboardButtonHeld(KEYBOARD_S))
+		Render2DMesh(meshList[GEO_MCDOWN], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	else if (controls.isKeyboardButtonHeld(KEYBOARD_A))
+		Render2DMesh(meshList[GEO_MCLEFT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	else if (controls.isKeyboardButtonHeld(KEYBOARD_D))
+		Render2DMesh(meshList[GEO_MCRIGHT], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+	else
+		Render2DMesh(meshList[GEO_MCDOWN], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
+
+}
+void Scenebase::UpdateSpritesAnimastion(double dt)
+{
+	SpriteAnimation *sa1 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCDOWN]);
+	if (sa1)
+	{
+		sa1->Update(dt);
+		sa1->m_anim->animActive = true;
+	}
+	SpriteAnimation *sa2 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCUP]);
+	if (sa2)
+	{
+		sa2->Update(dt);
+		sa2->m_anim->animActive = true;
+	}
+	SpriteAnimation *sa3 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCLEFT]);
+	if (sa3)
+	{
+		sa3->Update(dt);
+		sa3->m_anim->animActive = true;
+	}
+	SpriteAnimation *sa4 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCRIGHT]);
+	if (sa4)
+	{
+		sa4->Update(dt);
+		sa4->m_anim->animActive = true;
+	}
+	SpriteAnimation *sa5 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCTOPLEFT]);
+	if (sa5)
+	{
+		sa5->Update(dt);
+		sa5->m_anim->animActive = true;
+	}
+	SpriteAnimation *sa6 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCDOWNLEFT]);
+	if (sa6)
+	{
+		sa6->Update(dt);
+		sa6->m_anim->animActive = true;
+	}
+	SpriteAnimation *sa7 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCDOWNRIGHT]);
+	if (sa7)
+	{
+		sa7->Update(dt);
+		sa7->m_anim->animActive = true;
+	}
+	SpriteAnimation *sa8 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCTOPRIGHT]);
+	if (sa8)
+	{
+		sa8->Update(dt);
+		sa8->m_anim->animActive = true;
+	}
+
+	SpriteAnimation *sa9 = dynamic_cast<SpriteAnimation*>(meshList[GEO_FIRE]);
+	if (sa9)
+	{
+		sa9->Update(dt);
+		sa9->m_anim->animActive = true;
+	}
+
+	SpriteAnimation *sa10 = dynamic_cast<SpriteAnimation*>(meshList[GEO_WATER]);
+	if (sa10)
+	{
+		sa10->Update(dt);
+		sa10->m_anim->animActive = true;
+	}
+
+	SpriteAnimation *sa11 = dynamic_cast<SpriteAnimation*>(meshList[GEO_AIR]);
+	if (sa11)
+	{
+		sa11->Update(dt);
+		sa11->m_anim->animActive = true;
+	}
+
+
+	SpriteAnimation *sa12 = dynamic_cast<SpriteAnimation*>(meshList[GEO_AIRWISP]);
+	if (sa12)
+	{
+		sa12->Update(dt);
+		sa12->m_anim->animActive = true;
+	}
+
+
+	SpriteAnimation *sa13 = dynamic_cast<SpriteAnimation*>(meshList[GEO_FIREWISP]);
+	if (sa13)
+	{
+		sa13->Update(dt);
+		sa13->m_anim->animActive = true;
+	}
+
+
+	SpriteAnimation *sa14 = dynamic_cast<SpriteAnimation*>(meshList[GEO_WATERWISP]);
+	if (sa14)
+	{
+		sa14->Update(dt);
+		sa14->m_anim->animActive = true;
+	}
+
+
+	SpriteAnimation *sa15 = dynamic_cast<SpriteAnimation*>(meshList[GEO_AIRMONDOWN]);
+	if (sa15)
+	{
+		sa15->Update(dt);
+		sa15->m_anim->animActive = true;
+	}
+
+	SpriteAnimation *sa16 = dynamic_cast<SpriteAnimation*>(meshList[GEO_AIRMONUP]);
+	if (sa16)
+	{
+		sa16->Update(dt);
+		sa16->m_anim->animActive = true;
+	}
+
+	SpriteAnimation *sa17 = dynamic_cast<SpriteAnimation*>(meshList[GEO_AIRMONLEFT]);
+	if (sa17)
+	{
+		sa17->Update(dt);
+		sa17->m_anim->animActive = true;
+	}
+
+	SpriteAnimation *sa18 = dynamic_cast<SpriteAnimation*>(meshList[GEO_AIRMONRIGHT]);
+	if (sa18)
+	{
+		sa18->Update(dt);
+		sa18->m_anim->animActive = true;
+	}
+
+
+	SpriteAnimation *sa19 = dynamic_cast<SpriteAnimation*>(meshList[GEO_FIREMONDOWN]);
+	if (sa19)
+	{
+		sa19->Update(dt);
+		sa19->m_anim->animActive = true;
+	}
+
+	SpriteAnimation *sa20 = dynamic_cast<SpriteAnimation*>(meshList[GEO_FIREMONUP]);
+	if (sa20)
+	{
+		sa20->Update(dt);
+		sa20->m_anim->animActive = true;
+	}
+
+
+	SpriteAnimation *sa21 = dynamic_cast<SpriteAnimation*>(meshList[GEO_FIREMONLEFT]);
+	if (sa21)
+	{
+		sa21->Update(dt);
+		sa21->m_anim->animActive = true;
+	}
+
+	SpriteAnimation *sa22 = dynamic_cast<SpriteAnimation*>(meshList[GEO_FIREMONRIGHT]);
+	if (sa22)
+	{
+		sa22->Update(dt);
+		sa22->m_anim->animActive = true;
+	}
+
+
+	SpriteAnimation *sa23 = dynamic_cast<SpriteAnimation*>(meshList[GEO_WATERMONDOWN]);
+	if (sa23)
+	{
+		sa23->Update(dt);
+		sa23->m_anim->animActive = true;
+	}
+
+	SpriteAnimation *sa24 = dynamic_cast<SpriteAnimation*>(meshList[GEO_WATERMONUP]);
+	if (sa24)
+	{
+		sa24->Update(dt);
+		sa24->m_anim->animActive = true;
+	}
+
+
+	SpriteAnimation *sa25 = dynamic_cast<SpriteAnimation*>(meshList[GEO_WATERMONLEFT]);
+	if (sa25)
+	{
+		sa25->Update(dt);
+		sa25->m_anim->animActive = true;
+	}
+
+	SpriteAnimation *sa26 = dynamic_cast<SpriteAnimation*>(meshList[GEO_WATERMONRIGHT]);
+	if (sa26)
+	{
+		sa26->Update(dt);
+		sa26->m_anim->animActive = true;
+	}
+
+}
+
 
 void Scenebase::Reset()
 {
@@ -280,6 +699,25 @@ void Scenebase::Render()
 	modelStack.LoadIdentity();
 
 	
+}
+
+void Scenebase::RenderHUD(){
+	Render2DMesh(meshList[GEO_HUD], false, 1.0f);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(Application::GetInstance().GetWindowWidth() * 0.78f + heartMove, Application::GetInstance().GetWindowHeight() * 0.79f + heartMove, 0);
+	modelStack.Scale(heartScale, heartScale, heartScale);
+	RenderMeshIn2D(meshList[GEO_HPTEX], false);
+	modelStack.PopMatrix();
+
+	Render2DMesh(meshList[GEO_HEART], false, 5, Application::GetInstance().GetWindowWidth() * 0.78f, Application::GetInstance().GetWindowHeight() * 0.79f);
+	Render2DMesh(meshList[GEO_HUDNET], false, 1, Application::GetInstance().GetWindowWidth() * 0.28f, Application::GetInstance().GetWindowHeight() * 0.91f);
+	Render2DMesh(meshList[GEO_HUDFIRE], false, 1, Application::GetInstance().GetWindowWidth() * 0.28f, Application::GetInstance().GetWindowHeight() * 0.87f);
+	Render2DMesh(meshList[GEO_HUDWATER], false, 1, Application::GetInstance().GetWindowWidth() * 0.28f, Application::GetInstance().GetWindowHeight() * 0.83f);
+	Render2DMesh(meshList[GEO_HUDAIR], false, 0.8, Application::GetInstance().GetWindowWidth() * 0.283f, Application::GetInstance().GetWindowHeight() * 0.795f);
+
+	
+
 }
 
 void Scenebase::RenderMesh(Mesh *mesh, bool enableLight)
@@ -340,7 +778,7 @@ void Scenebase::RenderText(Mesh* mesh, std::string text, Color color)
 	for (unsigned i = 0; i < text.length(); ++i)
 	{
 		Mtx44 characterSpacing;
-		characterSpacing.SetToTranslation(i * 1.0f, 0, 0); //1.0f is the spacing of each character, you may change this value
+		characterSpacing.SetToTranslation(i * 0.3f, 0, 0); //1.0f is the spacing of each character, you may change this value
 		Mtx44 MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top() * characterSpacing;
 		glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
@@ -417,7 +855,8 @@ void Scenebase::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, fl
 	for (unsigned i = 0; i < text.length(); ++i)
 	{
 		Mtx44 characterSpacing;
-		characterSpacing.SetToTranslation(i + 0.5f, 0.3f, 0); //1.0f is the spacing of each character, you may change this value
+		characterSpacing.SetToTranslation(i * 0.5f
+			, 0.3f, 0); //1.0f is the spacing of each character, you may change this value
 		Mtx44 MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top() * characterSpacing;
 		glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
@@ -440,7 +879,6 @@ void Scenebase::RenderMeshIn2D(Mesh *mesh, bool enableLight, float size, float x
 	viewStack.PushMatrix();
 	viewStack.LoadIdentity();
 	modelStack.PushMatrix();
-	modelStack.LoadIdentity();
 	modelStack.Translate(x, y, 0);
     modelStack.Rotate(rotateAngle, 0, 1, 0);
 	modelStack.Scale(size, size, size);

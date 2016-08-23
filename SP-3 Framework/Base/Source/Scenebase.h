@@ -60,6 +60,10 @@ public:
     Scenebase();
     ~Scenebase();
 
+	void RenderSprites();
+	void RenderSprites_keyboard();
+	void UpdateSpritesAnimastion(double dt);
+
 	virtual void Init();
     virtual void Reset();
 	virtual void Update(double dt);
@@ -74,17 +78,24 @@ public:
 	void RenderMesh(Mesh *mesh, bool enableLight);
     void RenderText(Mesh* mesh, std::string text, Color color);
     void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
-    void RenderTextOnScreen2(Mesh* mesh, std::string text, Color color, float size, float x, float y);
     void Render2DMesh(Mesh *mesh, bool enableLight, float size = 1.0f, float x = 0.0f, float y = 0.0f, float rotateAngle = 0);
     void RenderTileMap(TileMap* currentMap, float x_offSet = 0, float y_Offset = 0, float z_Offset = 0, float scrollSpeed = 1);
     void RenderMeshIn2D(Mesh *mesh, bool enableLight, float size = 1.0f, float x = 0.0f, float y = 0.0f, float rotateAngle = 0);
     void RenderTile(Mesh *mesh, int tileID, const float size = 1.0f, const float x = 0.0f, const float y = 0.0f, const float z = 0);
+	void RenderHUD();
   
 protected:
     enum GEOMETRY_TYPE
     {
         GEO_TEXT,
         GEO_BACKGROUND,
+		GEO_HUD,
+		GEO_HEART,
+		GEO_HPTEX,
+		GEO_HUDNET,
+		GEO_HUDFIRE,
+		GEO_HUDWATER,
+		GEO_HUDAIR,
         GEO_TILESHEET,
 		GEO_TEST,
 		GEO_MCUP,
@@ -99,8 +110,26 @@ protected:
 		GEO_AIR,
 		GEO_WATER,
 		GEO_NET,
+
 		GEO_BIGNET,
 		GEO_SMALLNET,
+
+		GEO_AIRMONUP,
+		GEO_AIRMONDOWN,
+		GEO_AIRMONLEFT,
+		GEO_AIRMONRIGHT,
+		GEO_WATERMONUP,
+		GEO_WATERMONDOWN,
+		GEO_WATERMONRIGHT,
+		GEO_WATERMONLEFT,
+		GEO_FIREMONUP,
+		GEO_FIREMONDOWN,
+		GEO_FIREMONLEFT,
+		GEO_FIREMONRIGHT,
+		GEO_FIREWISP,
+		GEO_AIRWISP,
+		GEO_WATERWISP,
+
         NUM_GEOMETRY,
     };
 
@@ -119,6 +148,8 @@ protected:
 
     float fps;
 	bool bLightEnabled;
+	float heartScale;
+	float heartMove;
 };
 
 #endif SCENEBASE_H

@@ -20,12 +20,13 @@ public:
 
     //Update function
     void UpdateBullets(double dt);
-    void UpdateSpriteAnimations(double dt);
+   
     void UpdatePlayerInputUpdates(double dt);
 
     //Render
     void RenderBullets();
     void RenderMainCharacter();
+	Scenebase *renderthesprite;
 
 private:
 	float Test_X_OFFSET;

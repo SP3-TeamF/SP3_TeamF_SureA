@@ -20,7 +20,7 @@ public:
 
     //Update function
     void UpdateBullets(double dt);
-    void UpdateSpriteAnimations(double dt);
+   
     void UpdatePlayerInputUpdates(double dt);
 
     //Render

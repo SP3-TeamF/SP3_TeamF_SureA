@@ -60,6 +60,9 @@ public:
     Scenebase();
     ~Scenebase();
 
+	void RenderSprites();
+	void UpdateSpritesAnimastion(double dt);
+
 	virtual void Init();
     virtual void Reset();
 	virtual void Update(double dt);
@@ -106,6 +109,21 @@ protected:
 		GEO_AIR,
 		GEO_WATER,
 		GEO_NET,
+		GEO_AIRMONUP,
+		GEO_AIRMONDOWN,
+		GEO_AIRMONLEFT,
+		GEO_AIRMONRIGHT,
+		GEO_WATERMONUP,
+		GEO_WATERMONDOWN,
+		GEO_WATERMONRIGHT,
+		GEO_WATERMONLEFT,
+		GEO_FIREMONUP,
+		GEO_FIREMONDOWN,
+		GEO_FIREMONLEFT,
+		GEO_FIREMONRIGHT,
+		GEO_FIREWISP,
+		GEO_AIRWISP,
+		GEO_WATERWISP,
         NUM_GEOMETRY,
     };
 

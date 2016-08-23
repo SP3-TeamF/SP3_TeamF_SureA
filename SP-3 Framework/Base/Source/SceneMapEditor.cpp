@@ -80,7 +80,7 @@ void SceneMapEditor::UpdateMapEditor(double dt)
         MapEditorName = "Image//CSV//" + mapName + ".csv";
 
         EditorMap = new TileMap();
-        EditorMap->Init(1024, 800, 2048, 1600, 32);
+        EditorMap->Init(1024, 800, 1024, 800, 32);
         EditorMap->LoadMap(MapEditorName.c_str());
     }
     else

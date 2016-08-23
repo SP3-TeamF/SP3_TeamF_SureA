@@ -1,5 +1,6 @@
 #include "TutorialScene.h"
 #include "weapon.h"
+#include "Application.h"
 
 TutorialScene::TutorialScene()
 {
@@ -16,7 +17,7 @@ void TutorialScene::Init()
 	GlobalData.world_X_offset = 0;
 	GlobalData.world_Y_offset = 0;
 
-	player->SetPlayerBorder(128, 864, 128, 576);
+	player->SetPlayerBorder(128, 864, 128, 480);
     player->Set_cMoveSpeed(100);
     player->Set_cPosition(Vector3(300, 200, 0));
 	
@@ -28,6 +29,8 @@ void TutorialScene::Init()
     m_TileMap = &tutorialMap;
 
 	netHit = false;
+	heartScale = 5.f;
+	heartMove = 0.f;
 	stop = false;
 	netScale = 32.f;
     playerPosition = Vector3((int)(player->Get_cPosition().x / m_TileMap->GetTileSize()), (int)(player->Get_cPosition().y / m_TileMap->GetTileSize()));
@@ -42,6 +45,18 @@ void TutorialScene::Update(double dt)
     Weapon->Update(dt);
     UpdateSpriteAnimations(dt);
     UpdatePlayerInputUpdates(dt);
+	if (controls.isKeyboardButtonHeld(KEYBOARD_ADD))
+	{
+		heartScale -= 0.1f;
+		heartMove += 1.5f;
+	}
+	
+	if (controls.isKeyboardButtonHeld(KEYBOARD_SUBTRACT))
+	{
+		heartScale += 0.1f;
+		heartMove -= 1.5f;
+		cout << heartScale << "      " << heartMove << endl;
+	}
 }	
 
 void TutorialScene::UpdateBullets(double dt)
@@ -239,11 +254,14 @@ void TutorialScene::UpdatePlayerInputUpdates(double dt)
 //Render functions
 void TutorialScene::Render()
 {
+
 	Scenebase::Render();
+	Scenebase::RenderHUD();
 	if (m_TileMap != nullptr)
 	{
 		RenderTileMap(m_TileMap, GlobalData.world_X_offset, GlobalData.world_Y_offset);
 	}
+	RenderHUD();
 	RenderMainCharacter();
 	RenderBullets();
 }
@@ -271,6 +289,15 @@ void TutorialScene::RenderBullets()
 			if (bulletIt->GetBulletType() == BT_NETSPREAD)
 				Render2DMesh(meshList[GEO_FIRE], false, bulletIt->GetScale().x, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
 		}	
+	}
+
+	//Enemy Bullets
+	vector<CBulletInfo*> tempEnemy = Weapon->GetEnemyBulletList();
+
+	for (auto enemyBulletIt : tempEnemy)
+	{
+		if (enemyBulletIt->GetStatus())
+			Render2DMesh(meshList[GEO_FIRE], false, 32.0f, enemyBulletIt->GetPosition().x - GlobalData.world_X_offset, enemyBulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
 	}
 }
 
@@ -338,7 +365,6 @@ void TutorialScene::Exit()
 void TutorialScene::Reset()
 {
     m_TileMap = &tutorialMap;
-
     netHit = false;
     stop = false;
     netScale = 32.f;

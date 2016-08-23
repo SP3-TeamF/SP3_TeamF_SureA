@@ -10,7 +10,8 @@ enum BULLET_TYPE{
 	BT_FIRE,
 	BT_WATER,
 	BT_AIR,
-	BT_NETSPREAD
+	BT_NETSPREAD,
+	BT_ENEMY
 };
 
 class CBulletInfo

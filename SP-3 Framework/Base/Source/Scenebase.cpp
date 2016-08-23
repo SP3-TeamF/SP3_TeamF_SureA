@@ -110,10 +110,33 @@ void Scenebase::Init()
 	}
 
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
-	meshList[GEO_TEXT]->textureID = LoadTGA("Image//calibri.tga");
+	meshList[GEO_TEXT]->textureID = LoadTGA("Image//Harrington.tga");
 
     meshList[GEO_BACKGROUND] = MeshBuilder::Generate2DMesh("GEO_BACKGROUND", Color(1, 1, 1), 0.0f, 0.0f, 800.0f, 600.0f);
     meshList[GEO_BACKGROUND]->textureID = LoadTGA("Image//Night_Sky.tga");
+	
+
+	//HUD stuff
+	meshList[GEO_HUD] = MeshBuilder::Generate2DMesh("GEO_HUD", Color(1, 1, 1), 0.0f, 0.0f, 1024, 800.0f);
+	meshList[GEO_HUD]->textureID = LoadTGA("Image//HUD.tga");
+
+	meshList[GEO_HEART] = MeshBuilder::Generate2DMesh("GEO_HEART", Color(1, 1, 1), 0.0f, 0.0f, 32.f, 32.f);
+	meshList[GEO_HEART]->textureID = LoadTGA("Image//Heart.tga");
+
+	meshList[GEO_HPTEX] = MeshBuilder::Generate2DMesh("GEO_HPTEXTURE", Color(1, 1, 1), 0.0f, 0.0f, 32.f, 32.f);
+	meshList[GEO_HPTEX]->textureID = LoadTGA("Image//hpTexture.tga");
+
+	meshList[GEO_HUDNET] = MeshBuilder::Generate2DMesh("GEO_HUDNet", Color(1, 1, 1), 0.0f, 0.0f, 32.f, 32.f);
+	meshList[GEO_HUDNET]->textureID = LoadTGA("Image//HUDNet.tga");
+
+	meshList[GEO_HUDFIRE] = MeshBuilder::Generate2DMesh("GEO_HUDFIRE", Color(1, 1, 1), 0.0f, 0.0f, 32.f, 32.f);
+	meshList[GEO_HUDFIRE]->textureID = LoadTGA("Image//HUDFire.tga");
+
+	meshList[GEO_HUDWATER] = MeshBuilder::Generate2DMesh("GEO_HUDWATER", Color(1, 1, 1), 0.0f, 0.0f, 32.f, 32.f);
+	meshList[GEO_HUDWATER]->textureID = LoadTGA("Image//HUDWater.tga");
+
+	meshList[GEO_HUDAIR] = MeshBuilder::Generate2DMesh("GEO_HUDAIR", Color(1, 1, 1), 0.0f, 0.0f, 32.f, 32.f);
+	meshList[GEO_HUDAIR]->textureID = LoadTGA("Image//HUDAir.tga");
 
 	meshList[GEO_TILESHEET] = MeshBuilder::GenerateTileMesh("TileSheet", 21, 23);
 	meshList[GEO_TILESHEET]->textureID = LoadTGA("Image//TileSheet1.tga");
@@ -279,6 +302,25 @@ void Scenebase::Render()
 	
 }
 
+void Scenebase::RenderHUD(){
+	Render2DMesh(meshList[GEO_HUD], false, 1.0f);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(Application::GetInstance().GetWindowWidth() * 0.78f + heartMove, Application::GetInstance().GetWindowHeight() * 0.79f + heartMove, 0);
+	modelStack.Scale(heartScale, heartScale, heartScale);
+	RenderMeshIn2D(meshList[GEO_HPTEX], false);
+	modelStack.PopMatrix();
+
+	Render2DMesh(meshList[GEO_HEART], false, 5, Application::GetInstance().GetWindowWidth() * 0.78f, Application::GetInstance().GetWindowHeight() * 0.79f);
+	Render2DMesh(meshList[GEO_HUDNET], false, 1, Application::GetInstance().GetWindowWidth() * 0.28f, Application::GetInstance().GetWindowHeight() * 0.91f);
+	Render2DMesh(meshList[GEO_HUDFIRE], false, 1, Application::GetInstance().GetWindowWidth() * 0.28f, Application::GetInstance().GetWindowHeight() * 0.87f);
+	Render2DMesh(meshList[GEO_HUDWATER], false, 1, Application::GetInstance().GetWindowWidth() * 0.28f, Application::GetInstance().GetWindowHeight() * 0.83f);
+	Render2DMesh(meshList[GEO_HUDAIR], false, 0.8, Application::GetInstance().GetWindowWidth() * 0.283f, Application::GetInstance().GetWindowHeight() * 0.795f);
+
+	
+
+}
+
 void Scenebase::RenderMesh(Mesh *mesh, bool enableLight)
 {
     Mtx44 MVP, modelView, modelView_inverse_transpose;
@@ -337,7 +379,7 @@ void Scenebase::RenderText(Mesh* mesh, std::string text, Color color)
 	for (unsigned i = 0; i < text.length(); ++i)
 	{
 		Mtx44 characterSpacing;
-		characterSpacing.SetToTranslation(i * 1.0f, 0, 0); //1.0f is the spacing of each character, you may change this value
+		characterSpacing.SetToTranslation(i * 0.3f, 0, 0); //1.0f is the spacing of each character, you may change this value
 		Mtx44 MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top() * characterSpacing;
 		glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
@@ -414,7 +456,8 @@ void Scenebase::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, fl
 	for (unsigned i = 0; i < text.length(); ++i)
 	{
 		Mtx44 characterSpacing;
-		characterSpacing.SetToTranslation(i + 0.5f, 0.3f, 0); //1.0f is the spacing of each character, you may change this value
+		characterSpacing.SetToTranslation(i * 0.5f
+			, 0.3f, 0); //1.0f is the spacing of each character, you may change this value
 		Mtx44 MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top() * characterSpacing;
 		glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
@@ -437,7 +480,6 @@ void Scenebase::RenderMeshIn2D(Mesh *mesh, bool enableLight, float size, float x
 	viewStack.PushMatrix();
 	viewStack.LoadIdentity();
 	modelStack.PushMatrix();
-	modelStack.LoadIdentity();
 	modelStack.Translate(x, y, 0);
     modelStack.Rotate(rotateAngle, 0, 1, 0);
 	modelStack.Scale(size, size, size);

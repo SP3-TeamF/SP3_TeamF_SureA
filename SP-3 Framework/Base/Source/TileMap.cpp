@@ -169,6 +169,7 @@ int TileMap::GetTileSize(void)
     {
         return tileSize;
     }
+    return -1;
 }
 
 int TileMap::GetTileType(float xPosition, float yPosition)

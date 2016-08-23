@@ -36,10 +36,6 @@ private:
 	bool stop;
 	weapon* Weapon;
 	Vector3 controllermovement;
-    Pathfinding pathFinder;
-
-    Vector3 nextPosition;
-    Vector3 playerPosition;
 
     TileMap tutorialMap;
 };

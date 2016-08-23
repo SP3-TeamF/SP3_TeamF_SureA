@@ -2,11 +2,12 @@
 #define STRATEGY_H_
 
 #include <vector>
-#include "Player.h"
 #include "Character.h"
 #include <queue>
 using std::vector;
 using std::queue;
+
+class Enemy;
 
 class Strategy
 {
@@ -16,14 +17,11 @@ public:
 
     virtual void Update(double dt) = 0;
 
-    void ClearWaypoints();
-    void AddWaypoint(Vector3 pos);
-    void SetPosition(Vector3 pos);
+    //Setter
+    void SetCurrentEnemy(Enemy* currentEnemy);
     
-    
-protected:
-    Vector3 position;
-    queue<Vector3*> wayPoints;
+protected:    
+    Enemy* currentEnemy;
     
 };
 

@@ -3,6 +3,9 @@
 
 #include "Strategy.h"
 #include "Pathfinding.h"
+
+class Enemy;
+
 class Idle : public Strategy
 {
 public:
@@ -10,23 +13,20 @@ public:
     virtual ~Idle();
     virtual void Update(double dt);
 
-    //Sets the path for the pathfinder
-    void SetPath(Vector3 targetPosition);
-    void SetScanRadius(float scanRadius);
-
     //Find a new target
     bool ScanTarget();
 
     //Pathfinding functions
     void FindPath();
 
-private:
-    float scanRadius;
+    //Setters
+    void SetCurrentEnemy(Enemy& targetEnemy);
 
     Pathfinding pathFinder;
+private:
+    Enemy* currentEnemy;
+    
 
-    Vector3* startPosition;
-    Vector3* targetPosition; 
 };
 
 #endif IDLE_H

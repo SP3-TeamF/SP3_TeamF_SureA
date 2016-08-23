@@ -60,10 +60,6 @@ public:
     Scenebase();
     ~Scenebase();
 
-	void RenderSprites();
-	void RenderSprites_keyboard();
-	void UpdateSpritesAnimastion(double dt);
-
 	virtual void Init();
     virtual void Reset();
 	virtual void Update(double dt);
@@ -71,10 +67,20 @@ public:
 	virtual void Exit();
 
     //Init functions
+    void WispImagesInit();
+    void HUD_ImagesInit();
+    void EnemyImagesInit();
+    void PlayerImagesInit();
+    void BulletImagesInit();
 
+  
 	//Update Functions
-	
+    void UpdateSpritesAnimation(double dt);
+
 	//Render Function
+    void RenderHUD();
+    void RenderSprites();
+    void RenderSprites_keyboard();
 	void RenderMesh(Mesh *mesh, bool enableLight);
     void RenderText(Mesh* mesh, std::string text, Color color);
     void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
@@ -82,7 +88,7 @@ public:
     void RenderTileMap(TileMap* currentMap, float x_offSet = 0, float y_Offset = 0, float z_Offset = 0, float scrollSpeed = 1);
     void RenderMeshIn2D(Mesh *mesh, bool enableLight, float size = 1.0f, float x = 0.0f, float y = 0.0f, float rotateAngle = 0);
     void RenderTile(Mesh *mesh, int tileID, const float size = 1.0f, const float x = 0.0f, const float y = 0.0f, const float z = 0);
-	void RenderHUD();
+	
   
 protected:
     enum GEOMETRY_TYPE

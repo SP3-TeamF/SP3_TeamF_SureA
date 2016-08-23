@@ -1,11 +1,10 @@
 #include "Idle.h"
 #include "Player.h"
+#include"Enemy.h"
 
 Idle::Idle()
 {
-    this->scanRadius = 0;
-    this->startPosition = nullptr;
-    this->targetPosition = nullptr;
+    currentEnemy = nullptr;
 }
 
 Idle::~Idle()
@@ -14,51 +13,33 @@ Idle::~Idle()
 
 void Idle::Update(double dt)
 {
+    FindPath();
 }
 
 //Finds the path between the start and end point
 void Idle::FindPath()
 {
-    if (!pathFinder.m_FoundGoal && !pathFinder.m_PathUnable)
+    if (currentEnemy)
     {
-        if (this->startPosition && this->targetPosition)
+        if (!pathFinder.m_FoundGoal && !pathFinder.m_PathUnable)
         {
-            pathFinder.Findpath(*startPosition, *targetPosition);
+            pathFinder.Findpath(currentEnemy->GetPathStartPosition(), currentEnemy->GetPathEndPosition());
         }
     }
 }
 
-void Idle::SetPath(Vector3 targetPosition)
-{
-    if (this->targetPosition)
-    {
-        delete this->targetPosition;
-        Vector3* newPosition = new Vector3(targetPosition);
-        this->targetPosition = newPosition;
-    }
-
-    if (this->startPosition)
-    {
-        delete this->startPosition;
-        Vector3* newPosition = new Vector3(this->position);
-        this->startPosition = newPosition;
-    }
-
-    this->scanRadius = scanRadius;
-}
-
-void Idle::SetScanRadius(float scanRadius)
-{
-    this->scanRadius = scanRadius;
-}
-
 bool Idle::ScanTarget()
 {
-    float distanceSquared = (player->Get_cPosition() - position).LengthSquared();
+    float distanceSquared = (player->Get_cPosition() - this->currentEnemy->Get_cPosition()).LengthSquared();
 
-    if (distanceSquared < this->scanRadius)
+    if (distanceSquared < this->currentEnemy->GetScanRadius() * this->currentEnemy->GetScanRadius())
     {
         return true;
     }
     return false;
+}
+
+void Idle::SetCurrentEnemy(Enemy& targetEnemy)
+{
+    this->currentEnemy = &targetEnemy;
 }

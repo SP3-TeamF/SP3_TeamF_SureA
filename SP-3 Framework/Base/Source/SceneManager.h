@@ -3,6 +3,7 @@
 
 #include "test.h"
 #include "Scene.h"
+#include "ScenePathTest.h"
 #include "TutorialScene.h"
 #include "Collisiontest.h"
 #include "SceneMapEditor.h"
@@ -27,6 +28,7 @@ public:
 
 private:
     Scene* currentScene;
+    ScenePathTest* scenePathTest;
     TutorialScene* tutorialScene;
     Collisiontest* collisionTest;
     SceneMapEditor* sceneMapEditor;

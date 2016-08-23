@@ -34,11 +34,20 @@ void Pathfinding::ClearVisitedList()
 
 void Pathfinding::ClearShortestPath()
 {
-    for (int i = 0; i < shortestPath.size(); ++i)
+    while (!shortestPath.empty())
     {
-        delete shortestPath[i];
+        Vector3* temp = shortestPath.back();
+        shortestPath.pop_back();
+        delete temp;
     }
-    shortestPath.clear();
+}
+
+void Pathfinding::ClearWaypoints()
+{
+    while (!wayPoints.empty())
+    {
+        wayPoints.pop();
+    }
 }
 
 //Setters
@@ -76,15 +85,29 @@ Vector3 Pathfinding::NextPathPos(Vector3 position)
     return nextPos;
 }
 
+queue<Vector3*> Pathfinding::GetWayPoints()
+{
+    for (int i = shortestPath.size() - 1; i >= 0; --i)
+    {
+        wayPoints.push(shortestPath[i]);
+    }
+
+    return wayPoints;
+}
+
 //Others
 void Pathfinding::Findpath(Vector3 startPos, Vector3 endPos)
 {
+    startPos = Vector3((int)startPos.x, (int)startPos.y, (int)startPos.z);
+    endPos = Vector3((int)endPos.x, (int)endPos.y, (int)endPos.z);
+
     if (!m_PathUnable)
     {
         if (m_TileMap->GetTileType(endPos.x, endPos.y) != 237)
         {
             m_PathUnable = true;
         }
+
         else
         {
             if (m_TileMap->GetTileType(endPos.x + 1, endPos.y) != 237 &&
@@ -189,7 +212,7 @@ void Pathfinding::PathOpened(int x, int y, float newCost, Node* parent)
 
 void Pathfinding::ContinuePath()
 {
-    for (int repeat = 0; repeat < 100; ++repeat)
+    for (int repeat = 0; repeat < 200; ++repeat)
     {
         if (openList.empty())
         {
@@ -283,6 +306,7 @@ void Pathfinding::ResetSearch()
     ClearOpenList();
     ClearVisitedList();
     ClearShortestPath();
+    ClearWaypoints();
     m_InitialisedStartGoal = false;
     m_FoundGoal = false;
     m_PathUnable = false;

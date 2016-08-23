@@ -33,7 +33,7 @@ void TutorialScene::Init()
 	heartMove = 0.f;
 	stop = false;
 	netScale = 32.f;
-    playerPosition = Vector3((int)(player->Get_cPosition().x / m_TileMap->GetTileSize()), (int)(player->Get_cPosition().y / m_TileMap->GetTileSize()));
+
 }
 
 //Update functions
@@ -43,7 +43,7 @@ void TutorialScene::Update(double dt)
 	//cout << fps << endl;
     UpdateBullets(dt);
     Weapon->Update(dt);
-	Scenebase::UpdateSpritesAnimastion(dt);
+    Scenebase::UpdateSpritesAnimation(dt);
     UpdatePlayerInputUpdates(dt);
 	if (controls.isKeyboardButtonHeld(KEYBOARD_ADD))
 	{
@@ -111,8 +111,6 @@ void TutorialScene::UpdateBullets(double dt)
 	}
 		
 }
-
-
 
 void TutorialScene::UpdatePlayerInputUpdates(double dt)
 {
@@ -186,9 +184,24 @@ void TutorialScene::Exit()
 //Other Functions
 void TutorialScene::Reset()
 {
+    GlobalData.world_X_offset = 0;
+    GlobalData.world_Y_offset = 0;
+
+    player->SetPlayerBorder(128, 864, 128, 480);
+    player->Set_cMoveSpeed(100);
+    player->Set_cPosition(Vector3(800, 400, 0));
+
+    Weapon = new weapon();
+
+    tutorialMap.Init(1024, 800, 2048, 1600, 32);
+    tutorialMap.LoadMap("Image//CSV//Zentut.csv");
+
     m_TileMap = &tutorialMap;
+
     netHit = false;
+    heartScale = 5.f;
+    heartMove = 0.f;
     stop = false;
     netScale = 32.f;
-    playerPosition = Vector3((int)(player->Get_cPosition().x / m_TileMap->GetTileSize()), (int)(player->Get_cPosition().y / m_TileMap->GetTileSize()));
+
 }

@@ -13,7 +13,7 @@ SceneMapEditor::~SceneMapEditor()
 void SceneMapEditor::Init()
 {
     Scenebase::Init();
-
+     
     // Initialise and load the tile map
     EditorMap = nullptr;
     m_TileMap = nullptr;

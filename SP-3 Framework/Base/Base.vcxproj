@@ -13,6 +13,10 @@
   <ItemGroup>
     <ClCompile Include="Source\AABB.cpp" />
     <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\Attack.cpp" />
+    <ClCompile Include="Source\BasicEnemy.cpp" />
+    <ClCompile Include="Source\boss.cpp" />
+    <ClCompile Include="Source\Chase.cpp" />
     <ClCompile Include="Source\Collisiontest.cpp" />
     <ClCompile Include="Source\ControllerInput.cpp" />
     <ClCompile Include="Source\KeyboardButton.cpp" />
@@ -39,6 +43,7 @@
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\SceneMapEditor.cpp" />
+    <ClCompile Include="Source\ScenePathTest.cpp" />
     <ClCompile Include="Source\shader.cpp" />
     <ClCompile Include="Source\SpriteAnimation.cpp" />
     <ClCompile Include="Source\Strategy.cpp" />
@@ -51,6 +56,10 @@
   <ItemGroup>
     <ClInclude Include="Source\AABB.h" />
     <ClInclude Include="Source\Application.h" />
+    <ClInclude Include="Source\Attack.h" />
+    <ClInclude Include="Source\BasicEnemy.h" />
+    <ClInclude Include="Source\boss.h" />
+    <ClInclude Include="Source\Chase.h" />
     <ClInclude Include="Source\Collisiontest.h" />
     <ClInclude Include="Source\ControllerInput.h" />
     <ClInclude Include="Source\KeyboardButton.h" />
@@ -80,6 +89,7 @@
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\SceneMapEditor.h" />
+    <ClInclude Include="Source\ScenePathTest.h" />
     <ClInclude Include="Source\shader.hpp" />
     <ClInclude Include="Source\SpriteAnimation.h" />
     <ClInclude Include="Source\Strategy.h" />

@@ -4,6 +4,7 @@
 SceneManager::SceneManager()
 {
     this->currentScene = nullptr;
+    this->scenePathTest = new ScenePathTest();
     this->tutorialScene = new TutorialScene();
     this->collisionTest = new Collisiontest();
     this->sceneMapEditor = new SceneMapEditor();
@@ -15,10 +16,13 @@ SceneManager::~SceneManager()
 
 void SceneManager::Init()
 {
+    this->tutorialScene->Init();
+    this->scenePathTest->Init();
     this->collisionTest->Init();
     this->sceneMapEditor->Init();
-    this->tutorialScene->Init();
+    
     this->currentScene = tutorialScene;
+    this->currentScene->Reset();
 }
 
 void SceneManager::Render()
@@ -41,6 +45,11 @@ void SceneManager::Update(double dt)
     else if (controls.isKeyboardButtonPressed(KEYBOARD_3))
     {
         currentScene = collisionTest;
+        currentScene->Reset();
+    }
+    else if (controls.isKeyboardButtonPressed(KEYBOARD_4))
+    {
+        currentScene = scenePathTest;
         currentScene->Reset();
     }
 

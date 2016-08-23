@@ -10,7 +10,7 @@ Collisiontest::~Collisiontest()
 
 void Collisiontest::Init()
 {
-	Scenebase::Init();
+    Scenebase::Init();
 	player->SetPlayerBorder(64, 1024, 64, 736);
 	player->Set_cMoveSpeed(100);
 

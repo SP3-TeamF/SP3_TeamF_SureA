@@ -78,21 +78,21 @@ void weapon::fireWeapon(Vector3 view, Vector3 position)
 			}
 			case WT_FIRE:
 			{
-							bullet->Init(position, view, 150, 6, 20);
+							bullet->Init(position, view, 150, 6, 10);
 							bullet->SetBulletType(BT_FIRE);
 							bullet->SetScale(Vector3(1,1,0));
 							break;
 			}
 			case WT_WATER:
 			{
-							 bullet->Init(position, view, 1000, 6, 20);
+							 bullet->Init(position, view, 75, 6, 20);
 							 bullet->SetBulletType(BT_WATER);
 							 bullet->SetScale(Vector3(1, 1, 0));
 							 break;
 			}
 			case WT_AIR:
 			{
-						   bullet->Init(position, view, 500, 3, 10);
+						   bullet->Init(position, view, 350, 2, 5);
 						   bullet->SetBulletType(BT_AIR);
 						   bullet->SetScale(Vector3(1, 1, 0));
 						   break;

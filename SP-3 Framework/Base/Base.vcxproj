@@ -37,6 +37,7 @@
     <ClCompile Include="Source\MeshBuilder.cpp" />
     <ClCompile Include="Source\Minimap.cpp" />
     <ClCompile Include="Source\Player.cpp" />
+    <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\SceneMapEditor.cpp" />
     <ClCompile Include="Source\shader.cpp" />
     <ClCompile Include="Source\SpriteAnimation.cpp" />
@@ -52,7 +53,6 @@
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Collisiontest.h" />
     <ClInclude Include="Source\ControllerInput.h" />
-    <ClInclude Include="Source\Geometry.h" />
     <ClInclude Include="Source\KeyboardButton.h" />
     <ClInclude Include="Source\Node.h" />
     <ClInclude Include="Source\OBJMesh.h" />
@@ -78,6 +78,7 @@
     <ClInclude Include="Source\Minimap.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Scene.h" />
+    <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\SceneMapEditor.h" />
     <ClInclude Include="Source\shader.hpp" />
     <ClInclude Include="Source\SpriteAnimation.h" />

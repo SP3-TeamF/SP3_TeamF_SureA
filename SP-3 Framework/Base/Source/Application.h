@@ -5,6 +5,7 @@
 #include "MyMath.h"
 #include "GlobalDatas.h"
 #include "SceneManager.h"
+#include "Collisiontest.h"
 
 class Application
 {

@@ -117,9 +117,6 @@ void Scenebase::Init()
 
 	meshList[GEO_TILESHEET] = MeshBuilder::GenerateTileMesh("TileSheet", 21, 23);
 	meshList[GEO_TILESHEET]->textureID = LoadTGA("Image//TileSheet1.tga");
-
-	meshList[GEO_TEST] = MeshBuilder::Generate2DMesh("ds", Color(1,1,1),0,0,32,32);
-	meshList[GEO_TEST]->textureID= LoadTGA("Image//avatar.tga");
 	
 	meshList[GEO_MCDOWN] = MeshBuilder::GenerateSpriteAnimation("down", 1, 3);
 	meshList[GEO_MCDOWN]->textureID = LoadTGA("Image//MCdown.tga");
@@ -219,6 +216,12 @@ void Scenebase::Init()
 		sa11->m_anim = new Animation();
 		sa11->m_anim->Set(0,3 , 0, 1.f, true); //startframe, endframe, repeat, time, enable
 	}
+
+	meshList[GEO_BIGNET] = MeshBuilder::GenerateQuad("bigweb",Color(1,1,1),1);
+	meshList[GEO_BIGNET]->textureID = LoadTGA("Image//bigNet.tga");
+
+	meshList[GEO_SMALLNET] = MeshBuilder::GenerateQuad("bigweb", Color(1, 1, 1), 1);
+	meshList[GEO_SMALLNET]->textureID = LoadTGA("Image//volleyball.tga");
 
 
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units

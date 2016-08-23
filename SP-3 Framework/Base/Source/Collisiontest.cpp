@@ -90,7 +90,6 @@ void Collisiontest::Render()
 		}
 	}
 
-	Render2DMesh(meshList[GEO_TEST], false, 3.0f, player->Get_cPosition().x, player->Get_cPosition().y, 0);
 }
 
 void Collisiontest::Exit()

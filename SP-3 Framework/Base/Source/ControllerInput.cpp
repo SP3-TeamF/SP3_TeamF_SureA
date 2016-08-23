@@ -140,5 +140,9 @@ Vector3 ControllerInput::GetDirection(CONTROLLER_JOYSTICK JOYSTICK_TYPE)
 		}
 	}
 
+	if (dirX != 0 || dirY != 0)
+	{
+		return Vector3(dirX, dirY, 0).Normalized();
+	}
 	return Vector3(dirX, dirY, 0);
 }

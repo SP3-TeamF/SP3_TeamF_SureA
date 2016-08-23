@@ -99,6 +99,8 @@ protected:
 		GEO_AIR,
 		GEO_WATER,
 		GEO_NET,
+		GEO_BIGNET,
+		GEO_SMALLNET,
         NUM_GEOMETRY,
     };
 

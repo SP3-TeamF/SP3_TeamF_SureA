@@ -74,8 +74,11 @@ Vector3 CBulletInfo::GetPosition(void)
 // Set the direction of this CBulletInfo instance
 void CBulletInfo::SetDirection(const Vector3 direction)
 {
-    this->direction = direction;
-	direction.Normalized();
+	this->direction = direction;
+	if (this->direction.LengthSquared() > 0)
+	{
+		this->direction.Normalize();
+	}
 }
 
 // Get the direction of this CBulletInfo instance

@@ -120,6 +120,9 @@
     <ClCompile Include="Source\Pathfinding.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -212,9 +215,6 @@
     <ClInclude Include="Source\ControllerInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Geometry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\KeyboardButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -236,10 +236,13 @@
     <ClInclude Include="Source\Collisiontest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Pathfinding.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Pathfinding.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

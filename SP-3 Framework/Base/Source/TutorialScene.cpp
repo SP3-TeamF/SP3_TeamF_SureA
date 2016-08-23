@@ -18,12 +18,12 @@ void TutorialScene::Init()
 
 	player->SetPlayerBorder(128, 864, 128, 576);
     player->Set_cMoveSpeed(100);
-    player->Set_cPosition(Vector3(300, 200, 0));
+    player->Set_cPosition(Vector3(800, 400, 0));
 	
     Weapon = new weapon();
 
     tutorialMap.Init(1024, 800, 2048, 1600, 32);
-    tutorialMap.LoadMap("Image//CSV//Zentut.csv");
+    tutorialMap.LoadMap("Image//CSV//airLevel.csv");
 
     m_TileMap = &tutorialMap;
 
@@ -52,8 +52,8 @@ void TutorialScene::UpdateBullets(double dt)
 		if (bulletIt->GetStatus())
 		{
 			Vector3 updatedPos = bulletIt->GetPosition() + (bulletIt->GetDirection() * bulletIt->GetSpeed()) * dt;
-			updatedPos.x += m_TileMap->GetTileSize() * 0.5;
-			updatedPos.y += m_TileMap->GetTileSize() * 0.5;
+			//updatedPos.x += m_TileMap->GetTileSize() * 0.5;
+			//updatedPos.y += m_TileMap->GetTileSize() * 0.5;
 
 			int currentTile = 237;
 
@@ -64,13 +64,13 @@ void TutorialScene::UpdateBullets(double dt)
 
 			if (test != currentTile)
 			{
-				cout << bulletIt->GetPosition().x - GlobalData.world_X_offset << endl;
+				//cout << bulletIt->GetPosition().x - GlobalData.world_X_offset << endl;
 
 				if (bulletIt->GetBulletType() == BT_NET)
 				{
 					bulletIt->SetBulletType(BT_NETSPREAD);
 					bulletIt->SetSpeed(0);
-					bulletIt->SetScale(Vector3(100, 100, 0));
+					bulletIt->SetScale(Vector3(32, 32, 0));
 					bulletIt->SetLifetime(3);
 				}
 				else if (bulletIt->GetBulletType() != BT_NETSPREAD)
@@ -78,6 +78,20 @@ void TutorialScene::UpdateBullets(double dt)
 					bulletIt->SetStatus(false);
 				}
 			}
+
+			if (test == 244 && bulletIt->GetBulletType() == BT_FIRE)
+			{
+				m_TileMap->SetTile(237, tilePosX, tilePosY);
+			}
+
+			if (test == 86 && bulletIt->GetBulletType() == BT_AIR)
+			{
+				m_TileMap->SetTile(237, tilePosX, tilePosY);
+			}
+			/*if (test == 244 && bulletIt->GetBulletType() == BT_WATER)
+			{
+				m_TileMap->SetTile(237, tilePosX, tilePosY);
+			}*/
 		}
 	}
 		
@@ -257,19 +271,19 @@ void TutorialScene::RenderBullets()
         if (bulletIt->GetStatus())
         {
 			if (bulletIt->GetBulletType() == BT_FIRE)
-				Render2DMesh(meshList[GEO_FIRE], false, 32.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
+				Render2DMesh(meshList[GEO_FIRE], false, 16.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
 
 			if (bulletIt->GetBulletType() == BT_AIR)
-				Render2DMesh(meshList[GEO_AIR], false, 32.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
+				Render2DMesh(meshList[GEO_AIR], false, 16.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
 
 			if (bulletIt->GetBulletType() == BT_WATER)
-				Render2DMesh(meshList[GEO_WATER], false, 32.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
+				Render2DMesh(meshList[GEO_WATER], false, 16.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
 
 			if (bulletIt->GetBulletType() == BT_NET)
-				Render2DMesh(meshList[GEO_WATER], false, 32.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
+				Render2DMesh(meshList[GEO_SMALLNET], false, 8.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
 			
 			if (bulletIt->GetBulletType() == BT_NETSPREAD)
-				Render2DMesh(meshList[GEO_FIRE], false, bulletIt->GetScale().x, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
+				Render2DMesh(meshList[GEO_BIGNET], false, bulletIt->GetScale().x, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
 		}	
 	}
 }

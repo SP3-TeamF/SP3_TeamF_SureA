@@ -7,6 +7,7 @@
 #include "GlobalDatas.h"
 #include "Player.h"
 #include "controls.h"
+#include "Invent.h"
 using std::vector;
 
 

@@ -6,6 +6,7 @@
 #include <vector>
 #include "GlobalDatas.h"
 #include "controls.h"
+#include "Invent.h"
 using std::vector;
 
 

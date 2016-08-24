@@ -96,6 +96,7 @@ protected:
     enum GEOMETRY_TYPE
     {
         GEO_TEXT,
+		GEO_TEXT1,
         GEO_BACKGROUND,
 		GEO_HUD,
 		GEO_HEART,
@@ -145,6 +146,7 @@ protected:
 	Mesh* meshList[NUM_GEOMETRY];
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
+	CMinimap* m_cMinimap;
 
 	Camera3 camera;
 

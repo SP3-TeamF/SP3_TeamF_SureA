@@ -10,12 +10,17 @@
 
 static const float SKYBOXSIZE = 1000.f;
 
-Scenebase::Scenebase()
+Scenebase::Scenebase():m_cMinimap(NULL)
 {
 }
 
 Scenebase::~Scenebase()
 {
+	if (m_cMinimap)
+	{
+		delete m_cMinimap;
+		m_cMinimap = NULL;
+	}
     Exit();
 }
 
@@ -110,8 +115,12 @@ void Scenebase::Init()
 		meshList[i] = NULL;
 	}
 
+
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//Harrington.tga");
+
+	meshList[GEO_TEXT1] = MeshBuilder::GenerateText("text", 16, 16);
+	meshList[GEO_TEXT1]->textureID = LoadTGA("Image//Harrington1.tga");
 
     meshList[GEO_BACKGROUND] = MeshBuilder::Generate2DMesh("GEO_BACKGROUND", Color(1, 1, 1), 0.0f, 0.0f, 800.0f, 600.0f);
     meshList[GEO_BACKGROUND]->textureID = LoadTGA("Image//Night_Sky.tga");
@@ -125,6 +134,12 @@ void Scenebase::Init()
     PlayerImagesInit();
     BulletImagesInit();
 	
+	m_cMinimap = new CMinimap();
+	m_cMinimap->SetBackground(MeshBuilder::GenerateSquareMinimap("MINIMAP", Color(1, 1, 1), 1.f));
+	m_cMinimap->GetBackground()->textureID = LoadTGA("Image//Map1.tga");
+
+	m_cMinimap->SetBorder(MeshBuilder::GenerateQuad("MINIMAPBORDER", Color(1, 1, 0), 1.f));
+	m_cMinimap->SetAvatar(MeshBuilder::GenerateMinimapAvatar("MINIMAPAVATAR", Color(1, 0, 0), 0.5f));
 
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;
@@ -669,9 +684,32 @@ void Scenebase::RenderHUD(){
 	Render2DMesh(meshList[GEO_HUDNET], false, 1, Application::GetInstance().GetWindowWidth() * 0.28f, Application::GetInstance().GetWindowHeight() * 0.91f);
 	Render2DMesh(meshList[GEO_HUDFIRE], false, 1, Application::GetInstance().GetWindowWidth() * 0.28f, Application::GetInstance().GetWindowHeight() * 0.87f);
 	Render2DMesh(meshList[GEO_HUDWATER], false, 1, Application::GetInstance().GetWindowWidth() * 0.28f, Application::GetInstance().GetWindowHeight() * 0.83f);
-	Render2DMesh(meshList[GEO_HUDAIR], false, 0.8, Application::GetInstance().GetWindowWidth() * 0.283f, Application::GetInstance().GetWindowHeight() * 0.795f);
-
 	
+	Render2DMesh(meshList[GEO_HUDAIR], false, 0.8, Application::GetInstance().GetWindowWidth() * 0.283f, Application::GetInstance().GetWindowHeight() * 0.795f);
+	
+	std::ostringstream s;
+	s.precision(5);
+	s << "X" << Inventory.netbullet;
+	RenderTextOnScreen(meshList[GEO_TEXT1], s.str(), Color(1, 0, 0), 20, 280, 555);
+
+	std::ostringstream ss;
+	ss.precision(5);
+	ss << "X" << Inventory.firebullet;
+	RenderTextOnScreen(meshList[GEO_TEXT1], ss.str(), Color(1, 0, 0), 20, 280, 530);
+
+	std::ostringstream sss;
+	ss.precision(5);
+	sss << "X" << Inventory.waterbullet;
+	RenderTextOnScreen(meshList[GEO_TEXT1], sss.str(), Color(1, 0, 0), 20, 280, 505);
+
+	std::ostringstream ssss;
+	ssss.precision(5);
+	ssss << "X" << Inventory.airbullet;
+	RenderTextOnScreen(meshList[GEO_TEXT1], ssss.str(), Color(1, 0, 0), 20, 280, 480);
+
+	//RenderMeshIn2D(m_cMinimap->GetBorder(), false, 100, Application::GetInstance().GetWindowWidth() * 0.28f, Application::GetInstance().GetWindowHeight() * 0.83f);
+	RenderMeshIn2D(m_cMinimap->GetBackground(), false, 150, Application::GetInstance().GetWindowWidth() * 0.28f-150, Application::GetInstance().GetWindowHeight() * 0.83f+40);
+	//RenderMeshIn2D(m_cMinimap->GetAvatar(), false, 150, Application::GetInstance().GetWindowWidth() * 0.28f - 150, Application::GetInstance().GetWindowHeight() * 0.83f + 40);
 
 }
 

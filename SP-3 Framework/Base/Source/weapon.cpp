@@ -1,4 +1,5 @@
 #include "weapon.h"
+#include "player.h"
 
 weapon::weapon()
 {

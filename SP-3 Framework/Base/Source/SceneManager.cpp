@@ -21,7 +21,7 @@ void SceneManager::Init()
     this->collisionTest->Init();
     this->sceneMapEditor->Init();
     
-    this->currentScene = tutorialScene;
+	this->currentScene = scenePathTest;
     this->currentScene->Reset();
 }
 

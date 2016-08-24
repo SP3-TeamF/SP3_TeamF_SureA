@@ -1,4 +1,5 @@
 #include "BasicEnemy.h"
+#include "Player.h"
 
 #include <iostream>
 using std::cout;
@@ -17,15 +18,45 @@ BasicEnemy::BasicEnemy()
     CURRENT_STATE = IDLE_STATE;
 
     currentStrategy = idleStrategy;
+	enemyHitbox.Set(this->c_Position, 32, 32);
 }
 
 BasicEnemy::~BasicEnemy()
 {
 }
 
+void BasicEnemy::collisionCheck()
+{
+	if (enemyHitbox.AABBtoAABB(player->playerHitbox) == true)
+	{
+		player->Add_cHealth(-10);
+	}
+
+	vector<CBulletInfo*> temp = player->playerweapon->GetBulletList();
+	for (auto bulletIt : temp)
+	{
+		if (bulletIt->GetStatus())
+		{
+			if (enemyHitbox.PointToAABB(bulletIt->GetPosition()) == true)
+			{
+				Hitpoint -= 10;
+				bulletIt->SetStatus(false);
+				break;
+			}
+		}
+	}
+}
+
 void BasicEnemy::Update(double dt)
 {
     Enemy::Update(dt);
+
+	enemyHitbox.SetPosition(this->c_Position);
+
+	collisionCheck();
+	cout << Hitpoint << endl;
+	//cout << enemyHitbox.position << endl;
+
     switch (CURRENT_STATE)
     {
         case Enemy::IDLE_STATE:

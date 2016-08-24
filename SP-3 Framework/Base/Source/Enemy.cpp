@@ -14,6 +14,7 @@ Enemy::Enemy()
     pathStartPosition = Vector3(0, 0, 0);
 
     CURRENT_STATE = IDLE_STATE;
+	Hitpoint = 100;
 }
 
 Enemy::~Enemy()
@@ -26,6 +27,11 @@ void Enemy::Update(double dt)
     {
         currentStrategy->Update(dt);
     }
+
+	if (Hitpoint <= 0)
+	{
+		CURRENT_STATE = DEAD_STATE;
+	}
 }
 
 //Getters

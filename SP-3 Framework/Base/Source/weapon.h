@@ -5,7 +5,6 @@
 #include "Vector3.h"
 #include <vector>
 #include "GlobalDatas.h"
-#include "Player.h"
 #include "controls.h"
 using std::vector;
 

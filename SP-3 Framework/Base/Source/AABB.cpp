@@ -50,8 +50,10 @@ void AABB::Set(Vector3 pos, float width, float height)
     this->radius = 0;
     this->width = width;
     this->height = height;
-    HITBOX_TYPE = HB_BOX;
-    this->position.z = 0;
+	this->position.z = 0;
+
+	HITBOX_TYPE = HB_BOX;
+  
 }
 
 bool AABB::AABBtoAABB(const AABB& other)
@@ -102,7 +104,7 @@ bool AABB::BOXtoCIRCLE(const AABB& other)
         Dir.Normalize();
 
         Vector3 finalPos = this->position + Dir * this->radius;
-        return PointToAABB(finalPos);
+		return PointToAABB(finalPos);
     }
     else
     {
@@ -130,8 +132,8 @@ bool AABB::CIRCLEtoCIRCLE(const AABB& other)
 
 bool AABB::PointToAABB(Vector3 pos)
 {
-    Vector3 thisMIN = this->position - Vector3(width * 0.5f, height * 0.5f, width * 0.5f);
-    Vector3 thisMAX = this->position + Vector3(width * 0.5f, height * 0.5f, width * 0.5f);
+    Vector3 thisMIN = this->position - Vector3(width * 0.5f, height * 0.5f,0);
+    Vector3 thisMAX = this->position + Vector3(width * 0.5f, height * 0.5f,0);
 
 	if (
         pos.x >= thisMIN.x && pos.x <= thisMAX.x &&

@@ -4,6 +4,7 @@
 #include "Scenebase.h"
 #include "Pathfinding.h"
 #include "BasicEnemy.h"
+#include "TutorialScene.h"
 
 class ScenePathTest :public Scenebase
 {
@@ -16,7 +17,7 @@ public:
     virtual void Reset();
     virtual void Render();
     virtual void Exit();
-
+	void UpdateBullets(double dt);
 private:
     TileMap pathTestMap;
     Pathfinding pathFinder;

@@ -2,7 +2,6 @@
 #define TUTORIALSCENE_H
 
 #include "SceneMapEditor.h"
-#include "weapon.h"
 #include "Pathfinding.h"
 
 class TutorialScene : public Scenebase
@@ -19,12 +18,9 @@ public:
 	virtual void Exit();
 
     //Update function
-    void UpdateBullets(double dt);
-   
     void UpdatePlayerInputUpdates(double dt);
 
     //Render
-    void RenderBullets();
     void RenderMainCharacter();
 	Scenebase *renderthesprite;
 
@@ -34,7 +30,6 @@ private:
 	float netScale;
 	bool netHit;
 	bool stop;
-	weapon* Weapon;
 	Vector3 controllermovement;
 
     TileMap tutorialMap;

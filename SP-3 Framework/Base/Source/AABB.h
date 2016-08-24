@@ -38,8 +38,8 @@ public:
     bool CIRCLEtoCIRCLE(const AABB& other);
     bool CIRCLEtoPOINT(Vector3 point);
 
-    bool PointToAABB(Vector3 position);
-    bool PointToAABB(const AABB& other);
+	bool PointToAABB(Vector3 position);
+	bool PointToAABB(const AABB& other);
 	
 	
 

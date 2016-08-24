@@ -48,6 +48,8 @@ protected:
     Vector3 pathStartPosition;
 
     ENEMY_STATES CURRENT_STATE;
+
+	int Hitpoint;
 };
 
 #endif // !ENEMY_H_

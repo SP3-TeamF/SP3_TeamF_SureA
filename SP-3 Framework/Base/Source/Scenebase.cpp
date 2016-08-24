@@ -596,6 +596,21 @@ void Scenebase::UpdateSpritesAnimation(double dt)
 
 }
 
+//void Scenebase::renderHitbox(bool ShowHitbox)
+//{
+//	if (ShowHitbox)
+//	{
+//		modelStack.PushMatrix();
+//		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+//		modelStack.Translate(obj->Hitbox.pos.x, obj->Hitbox.pos.y + 100, obj->Hitbox.pos.z);
+//		modelStack.Scale(obj->Hitbox.size.x, obj->Hitbox.size.y, obj->Hitbox.size.z);
+//		RenderMesh(meshList[GEO_HITBOX], false);
+//		if (!mode)
+//		{
+//			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+//		}
+//		modelStack.PopMatrix();
+//}
 void Scenebase::Reset()
 {
 
@@ -990,6 +1005,41 @@ void Scenebase::RenderTileMap(TileMap* currentMap, float x_Offset, float y_Offse
                 );
 		}
 	}
+}
+
+void Scenebase::RenderBullet()
+{
+	vector<CBulletInfo*> temp = player->playerweapon->GetBulletList();
+
+	for (auto bulletIt : temp)
+	{
+		if (bulletIt->GetStatus())
+		{
+			if (bulletIt->GetBulletType() == BT_FIRE)
+				Render2DMesh(meshList[GEO_FIRE], false, 16.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
+
+			if (bulletIt->GetBulletType() == BT_AIR)
+				Render2DMesh(meshList[GEO_AIR], false, 16.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
+
+			if (bulletIt->GetBulletType() == BT_WATER)
+				Render2DMesh(meshList[GEO_WATER], false, 16.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
+
+			if (bulletIt->GetBulletType() == BT_NET)
+				Render2DMesh(meshList[GEO_SMALLNET], false, 8.0f, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
+
+			if (bulletIt->GetBulletType() == BT_NETSPREAD)
+				Render2DMesh(meshList[GEO_BIGNET], false, bulletIt->GetScale().x, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
+		}
+	}
+
+	//Enemy Bullets
+	/*vector<CBulletInfo*> tempEnemy = player->playerweapon->GetEnemyBulletList();
+
+	for (auto enemyBulletIt : tempEnemy)
+	{
+		if (enemyBulletIt->GetStatus())
+			Render2DMesh(meshList[GEO_FIRE], false, 32.0f, enemyBulletIt->GetPosition().x - GlobalData.world_X_offset, enemyBulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
+	}*/
 }
 
 //Other Functions

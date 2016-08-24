@@ -1,5 +1,7 @@
 #include "Vector3.h"
 #include "Character.h"
+#include "AABB.h"
+#include "weapon.h"
 
 #ifndef PLAYER_H_
 #define PLAYER_H_
@@ -28,6 +30,7 @@ public:
     void InAirUpdate(double dt);
     virtual void Update(double dt);
     void UpdateMovement(double dt);
+	void UpdateBullets(double dt);
 
     //Getters
     bool GetInAir();
@@ -44,6 +47,10 @@ public:
 
     bool canJump;
   
+	AABB playerHitbox;
+
+	weapon *playerweapon;
+
 protected:
     Player();
     ~Player();

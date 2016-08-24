@@ -1,4 +1,5 @@
 #include "BulletInfo.h"
+#include "Player.h"
 
 CBulletInfo::CBulletInfo(void)
 : m_bStatus(false)
@@ -156,20 +157,20 @@ void CBulletInfo::Update(const double dt)
     }
 }
 
-bool CBulletInfo::bulletHitboxCheck(AABB* hitbox)
-{
-    Vector3 currentPos = GetPosition();
-    int offsetDivisor = GetSpeed() / 10;
-    Vector3 offset = (nextPosition - currentPos) * (1 / offsetDivisor);
-    for (int i = 0; i < offsetDivisor; ++i)
-    {
-        if (hitbox->PointToAABB(currentPos))
-        {
-            return true;
-            break;
-        }
-        currentPos += offset;
-    }
-    return false;
-}
+//bool CBulletInfo::bulletHitboxCheck(AABB* hitbox)
+//{
+//    Vector3 currentPos = GetPosition();
+//    int offsetDivisor = GetSpeed() / 10;
+//    Vector3 offset = (nextPosition - currentPos) * (1 / offsetDivisor);
+//    for (int i = 0; i < offsetDivisor; ++i)
+//    {
+//        if (hitbox->PointToAABB(currentPos))
+//        {
+//            return true;
+//            break;
+//        }
+//        currentPos += offset;
+//    }
+//    return false;
+//}
 

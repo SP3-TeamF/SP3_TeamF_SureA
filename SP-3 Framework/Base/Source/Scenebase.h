@@ -88,6 +88,8 @@ public:
     void RenderTileMap(TileMap* currentMap, float x_offSet = 0, float y_Offset = 0, float z_Offset = 0, float scrollSpeed = 1);
     void RenderMeshIn2D(Mesh *mesh, bool enableLight, float size = 1.0f, float x = 0.0f, float y = 0.0f, float rotateAngle = 0);
     void RenderTile(Mesh *mesh, int tileID, const float size = 1.0f, const float x = 0.0f, const float y = 0.0f, const float z = 0);
+	void renderHitbox(bool ShowHitbox);
+	void RenderBullet();
 	
   
 protected:
@@ -156,6 +158,7 @@ protected:
 	bool bLightEnabled;
 	float heartScale;
 	float heartMove;
+	bool ShowHitbox;
 };
 
 #endif SCENEBASE_H

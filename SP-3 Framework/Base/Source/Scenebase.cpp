@@ -687,25 +687,35 @@ void Scenebase::RenderHUD(){
 	
 	Render2DMesh(meshList[GEO_HUDAIR], false, 0.8, Application::GetInstance().GetWindowWidth() * 0.283f, Application::GetInstance().GetWindowHeight() * 0.795f);
 	
+	//if (bullet->GetBulletType()==BT_AIR)
+	//Render2DMesh(meshList[GEO_AIR], false, 75, Application::GetInstance().GetWindowWidth() * 0.283f + 325, Application::GetInstance().GetWindowHeight() * 0.795f + 40);
+	//if (bullet->GetBulletType() == BT_WATER)
+	//Render2DMesh(meshList[GEO_WATER], false, 75, Application::GetInstance().GetWindowWidth() * 0.283f + 325, Application::GetInstance().GetWindowHeight() * 0.795f + 40);
+	//if(bullet->GetBulletType() == BT_FIRE)
+	//Render2DMesh(meshList[GEO_FIRE], false, 75, Application::GetInstance().GetWindowWidth() * 0.283f + 325, Application::GetInstance().GetWindowHeight() * 0.795f + 40);
+	//if(bullet->GetBulletType() == BT_NET)
+	//Render2DMesh(meshList[GEO_BIGNET], false, 75, Application::GetInstance().GetWindowWidth() * 0.283f + 325, Application::GetInstance().GetWindowHeight() * 0.795f + 38);
+
+
 	std::ostringstream s;
 	s.precision(5);
-	s << "X" << Inventory.netbullet;
-	RenderTextOnScreen(meshList[GEO_TEXT1], s.str(), Color(1, 0, 0), 20, 280, 555);
+	s << "x   " << Inventory.netbullet;
+	RenderTextOnScreen(meshList[GEO_TEXT1], s.str(), Color(1, 1, 1), 20, 280, 555);
 
 	std::ostringstream ss;
 	ss.precision(5);
-	ss << "X" << Inventory.firebullet;
-	RenderTextOnScreen(meshList[GEO_TEXT1], ss.str(), Color(1, 0, 0), 20, 280, 530);
+	ss << "x   " << Inventory.firebullet;
+	RenderTextOnScreen(meshList[GEO_TEXT1], ss.str(), Color(1, 1, 1), 20, 280, 530);
 
 	std::ostringstream sss;
 	ss.precision(5);
-	sss << "X" << Inventory.waterbullet;
-	RenderTextOnScreen(meshList[GEO_TEXT1], sss.str(), Color(1, 0, 0), 20, 280, 505);
+	sss << "x   " << Inventory.waterbullet;
+	RenderTextOnScreen(meshList[GEO_TEXT1], sss.str(), Color(1, 1, 1), 20, 280, 505);
 
 	std::ostringstream ssss;
 	ssss.precision(5);
-	ssss << "X" << Inventory.airbullet;
-	RenderTextOnScreen(meshList[GEO_TEXT1], ssss.str(), Color(1, 0, 0), 20, 280, 480);
+	ssss << "x   " << Inventory.airbullet;
+	RenderTextOnScreen(meshList[GEO_TEXT1], ssss.str(), Color(1, 1, 1), 20, 280, 480);
 
 	//RenderMeshIn2D(m_cMinimap->GetBorder(), false, 100, Application::GetInstance().GetWindowWidth() * 0.28f, Application::GetInstance().GetWindowHeight() * 0.83f);
 	RenderMeshIn2D(m_cMinimap->GetBackground(), false, 150, Application::GetInstance().GetWindowWidth() * 0.28f-150, Application::GetInstance().GetWindowHeight() * 0.83f+40);
@@ -1047,7 +1057,7 @@ void Scenebase::RenderTileMap(TileMap* currentMap, float x_Offset, float y_Offse
 
 void Scenebase::RenderBullet()
 {
-	vector<CBulletInfo*> temp = player->playerweapon->GetBulletList();
+	vector<CBulletInfo*> temp = BulletFactory->GetBulletList();
 
 	for (auto bulletIt : temp)
 	{
@@ -1069,15 +1079,6 @@ void Scenebase::RenderBullet()
 				Render2DMesh(meshList[GEO_BIGNET], false, bulletIt->GetScale().x, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
 		}
 	}
-
-	//Enemy Bullets
-	/*vector<CBulletInfo*> tempEnemy = player->playerweapon->GetEnemyBulletList();
-
-	for (auto enemyBulletIt : tempEnemy)
-	{
-		if (enemyBulletIt->GetStatus())
-			Render2DMesh(meshList[GEO_FIRE], false, 32.0f, enemyBulletIt->GetPosition().x - GlobalData.world_X_offset, enemyBulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
-	}*/
 }
 
 //Other Functions

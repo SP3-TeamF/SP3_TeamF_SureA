@@ -73,7 +73,7 @@ public:
     void PlayerImagesInit();
     void BulletImagesInit();
 
-  
+	CBulletInfo* bullet;
 	//Update Functions
     void UpdateSpritesAnimation(double dt);
 

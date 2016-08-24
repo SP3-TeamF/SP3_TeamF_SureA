@@ -30,7 +30,7 @@ public:
     void InAirUpdate(double dt);
     virtual void Update(double dt);
     void UpdateMovement(double dt);
-	void UpdateBullets(double dt);
+	void fireWeapon(Vector3 view, Vector3 position);
 
     //Getters
     bool GetInAir();

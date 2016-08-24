@@ -2,9 +2,6 @@
 #ifndef INVENT_H
 #define INVENT_H
 
-
-
-
 #define Inventory Invents::GetInstance()
 
 class Invents

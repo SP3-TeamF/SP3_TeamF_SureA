@@ -21,7 +21,7 @@ void TutorialScene::Init()
     player->Set_cPosition(Vector3(800, 400, 0));
 
     tutorialMap.Init(1024, 800, 2048, 1600, 32);
-    tutorialMap.LoadMap("Image//CSV//fireLevel.csv");
+    tutorialMap.LoadMap("Image//CSV//ZenTut.csv");
 
     m_TileMap = &tutorialMap;
 

@@ -2,8 +2,6 @@
 
 #include "vector3.h"
 #include "AABB.h"
-#include "GlobalDatas.h"
-
 enum BULLET_TYPE{
 	BT_NET = 0,
 	BT_FIRE,
@@ -35,7 +33,6 @@ protected:
 	// The scale of the bullet
 	Vector3 scale;
 	BULLET_TYPE BulletType;
-
     Vector3 nextPosition;
 public:
 	// Initialise the CBulletInfo instance

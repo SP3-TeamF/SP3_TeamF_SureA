@@ -32,7 +32,7 @@ void BasicEnemy::collisionCheck()
 		player->Add_cHealth(-10);
 	}
 
-	vector<CBulletInfo*> temp = player->playerweapon->GetBulletList();
+	vector<CBulletInfo*> temp = BulletFactory->GetBulletList();
 	for (auto bulletIt : temp)
 	{
 		if (bulletIt->GetStatus())
@@ -54,7 +54,7 @@ void BasicEnemy::Update(double dt)
 	enemyHitbox.SetPosition(this->c_Position);
 
 	collisionCheck();
-	cout << Hitpoint << endl;
+	//cout << Hitpoint << endl;
 	//cout << enemyHitbox.position << endl;
 
     switch (CURRENT_STATE)

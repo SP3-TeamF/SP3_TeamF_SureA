@@ -1,5 +1,6 @@
 #include "BulletInfo.h"
 #include "Player.h"
+#include "GlobalDatas.h"
 
 CBulletInfo::CBulletInfo(void)
 : m_bStatus(false)
@@ -140,21 +141,49 @@ float CBulletInfo::GetLifetime(void)
 void CBulletInfo::Update(const double dt)
 {
     // Check if the bullet is active
-    if (GetStatus() == true)
-    {
-		
-		float mapoffsetx= (m_TileMap->GetWorldWidth() + GlobalData.world_X_offset);
+	if (GetStatus() == true)
+	{
+
+		float mapoffsetx = (m_TileMap->GetWorldWidth() + GlobalData.world_X_offset);
 		float mapoffsety = (m_TileMap->GetWorldHeight() + GlobalData.world_Y_offset);
 
-        SetPosition(GetPosition() + GetDirection() * GetSpeed() * dt);
-        SetLifetime(GetLifetime() - dt);
+		SetPosition(GetPosition() + GetDirection() * GetSpeed() * dt);
+		SetLifetime(GetLifetime() - dt);
 
-        // Check if the lifetime is gone
-        if (GetLifetime() <= 0)
-        {
-            SetStatus(false);
-        }
-    }
+		// Check if the lifetime is gone
+		if (GetLifetime() <= 0)
+		{
+			SetStatus(false);
+		}
+
+
+		Vector3 updatedPos = GetPosition() + (GetDirection() * GetSpeed()) * dt;
+		//updatedPos.x += m_TileMap->GetTileSize() * 0.5;
+		//updatedPos.y += m_TileMap->GetTileSize() * 0.5;
+
+		int currentTile = 237;
+
+		int tilePosX = updatedPos.x / m_TileMap->GetTileSize();
+		int tilePosY = updatedPos.y / m_TileMap->GetTileSize();
+
+		int test = (m_TileMap->GetTileType(tilePosX, tilePosY));
+		if (test != currentTile)
+			{
+				//cout << bulletIt->GetPosition().x - GlobalData.world_X_offset << endl;
+			
+				if (GetBulletType() == BT_NET)
+				{
+					SetBulletType(BT_NETSPREAD);
+					SetSpeed(0);
+					SetScale(Vector3(32, 32, 0));
+					SetLifetime(3);
+				}
+				else if (GetBulletType() != BT_NETSPREAD)
+				{
+					SetStatus(false);
+				}
+			}
+	}
 }
 
 //bool CBulletInfo::bulletHitboxCheck(AABB* hitbox)

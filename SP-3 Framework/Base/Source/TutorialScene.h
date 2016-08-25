@@ -2,6 +2,7 @@
 #define TUTORIALSCENE_H
 
 #include "SceneMapEditor.h"
+#include "BasicEnemy.h"
 #include "Pathfinding.h"
 #include <vector>
 using std::vector;
@@ -38,6 +39,7 @@ private:
     TileMap tutorialMap;
 	PLAYER_STATES playerState;
 	string newLine;
+	BasicEnemy tempEnemy;
 };
 
 #endif

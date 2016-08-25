@@ -16,7 +16,13 @@ Scenebase::Scenebase()
 
 Scenebase::~Scenebase()
 {
-    Exit();
+
+	if (m_cMinimap)
+	{
+		delete m_cMinimap;
+		m_cMinimap = NULL;
+	}
+	Exit();
 }
 
 //Init Functions
@@ -128,6 +134,13 @@ void Scenebase::Init()
     PlayerImagesInit();
     BulletImagesInit();
 	MainMenuInit();
+
+	m_cMinimap = new CMinimap();
+	m_cMinimap->SetBackground(MeshBuilder::GenerateSquareMinimap("MINIMAP", Color(1, 1, 1), 1.f));
+	m_cMinimap->GetBackground()->textureID = LoadTGA("Image//Map1.tga");
+
+	m_cMinimap->SetBorder(MeshBuilder::GenerateQuad("MINIMAPBORDER", Color(1, 1, 0), 1.f));
+	m_cMinimap->SetAvatar(MeshBuilder::GenerateMinimapAvatar("MINIMAPAVATAR", Color(1, 0, 0), 0.5f));
 
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;
@@ -685,6 +698,29 @@ void Scenebase::RenderHUD(){
 	Render2DMesh(meshList[GEO_HUDFIRE], false, 1, Application::GetInstance().GetWindowWidth() * 0.28f, Application::GetInstance().GetWindowHeight() * 0.87f);
 	Render2DMesh(meshList[GEO_HUDWATER], false, 1, Application::GetInstance().GetWindowWidth() * 0.28f, Application::GetInstance().GetWindowHeight() * 0.83f);
 	Render2DMesh(meshList[GEO_HUDAIR], false, 0.8, Application::GetInstance().GetWindowWidth() * 0.283f, Application::GetInstance().GetWindowHeight() * 0.795f);
+	std::ostringstream s;
+	s.precision(5);
+	s << "x   " << Inventory.netbullet;
+	RenderTextOnScreen(meshList[GEO_TEXT], s.str(), Color(1, 1, 1), 20, 280, 555);
+
+	std::ostringstream ss;
+	ss.precision(5);
+	ss << "x   " << Inventory.firebullet;
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 1, 1), 20, 280, 530);
+
+	std::ostringstream sss;
+	ss.precision(5);
+	sss << "x   " << Inventory.waterbullet;
+	RenderTextOnScreen(meshList[GEO_TEXT], sss.str(), Color(1, 1, 1), 20, 280, 505);
+
+	std::ostringstream ssss;
+	ssss.precision(5);
+	ssss << "x   " << Inventory.airbullet;
+	RenderTextOnScreen(meshList[GEO_TEXT], ssss.str(), Color(1, 1, 1), 20, 280, 480);
+
+	//RenderMeshIn2D(m_cMinimap->GetBorder(), false, 100, Application::GetInstance().GetWindowWidth() * 0.28f, Application::GetInstance().GetWindowHeight() * 0.83f);
+	RenderMeshIn2D(m_cMinimap->GetBackground(), false, 150, Application::GetInstance().GetWindowWidth() * 0.28f - 150, Application::GetInstance().GetWindowHeight() * 0.83f + 40);
+	//RenderMeshIn2D(m_cMinimap->GetAvatar(), false, 150, Application::GetInstance().GetWindowWidth() * 0.28f - 150, Application::GetInstance().GetWindowHeight() * 0.83f + 40);
 }
 
 void Scenebase::RenderSprites()
@@ -1019,7 +1055,7 @@ void Scenebase::RenderTileMap(TileMap* currentMap, float x_Offset, float y_Offse
 
 void Scenebase::RenderBullet()
 {
-	vector<CBulletInfo*> temp = player->playerweapon->GetBulletList();
+	vector<CBulletInfo*> temp = BulletFactory->GetBulletList();
 
 	for (auto bulletIt : temp)
 	{
@@ -1041,15 +1077,6 @@ void Scenebase::RenderBullet()
 				Render2DMesh(meshList[GEO_BIGNET], false, bulletIt->GetScale().x, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
 		}
 	}
-
-	//Enemy Bullets
-	/*vector<CBulletInfo*> tempEnemy = player->playerweapon->GetEnemyBulletList();
-
-	for (auto enemyBulletIt : tempEnemy)
-	{
-		if (enemyBulletIt->GetStatus())
-			Render2DMesh(meshList[GEO_FIRE], false, 32.0f, enemyBulletIt->GetPosition().x - GlobalData.world_X_offset, enemyBulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
-	}*/
 }
 
 void Scenebase::RenderMainMenu()

@@ -29,12 +29,12 @@ void TutorialScene::Init()
 	heartMove = 0.f;
 	playerState = PS_INGAME;
 
-
 }
 
 //Update functions
 void TutorialScene::Update(double dt)
 {
+	tempEnemy.Update(dt);
 	//fps = 1 / dt;
 	//cout << fps << endl;
 	Scenebase::UpdateSpritesAnimation(dt);
@@ -49,8 +49,12 @@ void TutorialScene::Update(double dt)
 	int tilePosY = updatedPos.y / m_TileMap->GetTileSize();
 
 	int c_tile = m_TileMap->GetTileType(tilePosX, tilePosY);
-	if (c_tile == 282 && playerState == PS_INGAME){
-		playerState = PS_INTUT;
+	if (c_tile == 282){
+		if (playerState == PS_INGAME)
+			playerState = PS_INTUT;
+	}
+	else{
+		playerState = PS_INGAME;
 	}
 	if (controls.isKeyboardButtonPressed(KEYBOARD_G)){
 		playerState = PS_INTUT2;
@@ -97,11 +101,12 @@ void TutorialScene::Render()
 	if (playerState != PS_INGAME){
 		Render2DMesh(meshList[GEO_SCROLL], false, 1, Application::GetInstance().GetWindowWidth() * 0.1f, Application::GetInstance().GetWindowHeight()* 0.1f);
 		for (int i = 0; i < tutorialText.size(); i++){
-			RenderTextOnScreen(meshList[GEO_TEXT], tutorialText[i], Color(1, 1, 1), 20, Application::GetInstance().GetWindowWidth() * 0.3f, Application::GetInstance().GetWindowHeight() * 0.5f + i * -25);
+			RenderTextOnScreen(meshList[GEO_TEXT], tutorialText[i], Color(0,0, 0), 20, Application::GetInstance().GetWindowWidth() * 0.3f, Application::GetInstance().GetWindowHeight() * 0.5f + i * -25);
 		}
 		tutorialText.clear();
 
 	}
+	Render2DMesh(meshList[GEO_FIRE], false, 32, tempEnemy.Get_cPosition().x + m_TileMap->GetTileSize() * 0.5 - GlobalData.world_X_offset, tempEnemy.Get_cPosition().y + m_TileMap->GetTileSize() * 0.5 - GlobalData.world_Y_offset, 0);
 
 }
 
@@ -138,4 +143,9 @@ void TutorialScene::Reset()
     heartScale = 5.f;
     heartMove = 0.f;
 	playerState = PS_INGAME;
+
+	tempEnemy.SetAttackRadius(10);
+	tempEnemy.SetScanRadius(164);
+	tempEnemy.Set_cMoveSpeed(100);
+	tempEnemy.Set_cPosition(Vector3(800, 490));
 }

@@ -1,5 +1,7 @@
 #include "weapon.h"
 #include "player.h"
+#include "BulletFactory.h"
+#include "GlobalDatas.h"
 
 weapon::weapon()
 {
@@ -13,25 +15,6 @@ weapon::weapon()
     isReloading = false;
     weaponReloadTime = 0;
 	weaponDamage = 0;
-	CBulletInfo* bullet = FetchGO();
-	CBulletInfo* enemyBullet = FetchEnemyBullet();
-
-	for (std::vector<CBulletInfo *>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
-	{
-		CBulletInfo *bullet = (CBulletInfo *)*it;
-		bullet->SetDirection(Vector3(1, 0, 0));
-		bullet->SetPosition(Vector3(300, 200, 0));
-		bullet->SetSpeed(5.f);
-	}
-
-	for (std::vector<CBulletInfo *>::iterator it2 = enemyList.begin(); it2 != enemyList.end(); ++it2)
-	{
-		CBulletInfo *enemyBullet = (CBulletInfo *)*it2;
-		enemyBullet->SetDirection(Vector3(1, 0, 0));
-		enemyBullet->SetPosition(Vector3(300, 200, 0));
-		enemyBullet->SetSpeed(3.f);
-	}
-
 	WeaponType = WT_NET;
 
 }
@@ -51,8 +34,6 @@ weapon::weapon(float timeBetweenEachBullet, int maxClipSize, int maxAmmoCapacity
     this->isReloading = false;
     this->weaponReloadTime = reloadTime;
 	this->weaponDamage = weaponDamage;
-	bullet->SetStatus(false);
-	enemyBullet->SetStatus(false);
 	reloadTimer = 0;
 
 }
@@ -61,7 +42,7 @@ void weapon::fireWeapon(Vector3 view, Vector3 position)
 {
 	if (view != 0 && canFireBullet()){
 		view.Normalized();
-		CBulletInfo* bullet = FetchGO();
+		CBulletInfo* bullet = GlobalData.bulletFactory->FetchGO();
 		bullet->SetStatus(true);
 		currentLoadedAmmo--;
 		currentTime = 0;
@@ -69,50 +50,57 @@ void weapon::fireWeapon(Vector3 view, Vector3 position)
 		isReloading = true;
 		switch (WeaponType)
 		{
-			case WT_NET:
+		case WT_NET:
+		{
+			if (Inventory.netbullet > 0)
 			{
-						   bullet->Init(position, view, 100, 5, 1);
-						   bullet->SetBulletType(BT_NET);
-						   bullet->SetScale(Vector3(3,3,0));
-						   bullet->SetLifetime(5);
-						   break;
+				bullet->Init(position, view, 100, 5, 1);
+				bullet->SetBulletType(BT_NET);
+				bullet->SetScale(Vector3(3, 3, 0));
+				bullet->SetLifetime(5);
+				Inventory.netbullet--;
+				break;
 			}
-			case WT_FIRE:
+		}
+		case WT_FIRE:
+		{
+			if (Inventory.firebullet > 0)
 			{
-							bullet->Init(position, view, 150, 6, 10);
-							bullet->SetBulletType(BT_FIRE);
-							bullet->SetScale(Vector3(1,1,0));
-							break;
+				bullet->Init(position, view, 150, 6, 10);
+				bullet->SetBulletType(BT_FIRE);
+				bullet->SetScale(Vector3(1, 1, 0));
+				Inventory.firebullet--;
+				break;
 			}
-			case WT_WATER:
+			else break;
+		}
+		case WT_WATER:
+		{
+			if (Inventory.waterbullet > 0)
 			{
-							 bullet->Init(position, view, 75, 6, 20);
-							 bullet->SetBulletType(BT_WATER);
-							 bullet->SetScale(Vector3(1, 1, 0));
-							 break;
+				bullet->Init(position, view, 75, 6, 20);
+				bullet->SetBulletType(BT_WATER);
+				bullet->SetScale(Vector3(1, 1, 0));
+				Inventory.waterbullet--;
+				break;
 			}
-			case WT_AIR:
+			else break;
+		}
+		case WT_AIR:
+		{
+			if (Inventory.airbullet > 0)
 			{
-						   bullet->Init(position, view, 350, 2, 5);
-						   bullet->SetBulletType(BT_AIR);
-						   bullet->SetScale(Vector3(1, 1, 0));
-						   break;
+				bullet->Init(position, view, 350, 2, 5);
+				bullet->SetBulletType(BT_AIR);
+				bullet->SetScale(Vector3(1, 1, 0));
+				Inventory.airbullet--;
+				break;
 			}
+			else break;
+		}
 		}
 	}
 }
-
-void weapon::fireEnemyWeapon(Vector3 view, Vector3 position){
-	CBulletInfo* enemyBullet = FetchEnemyBullet();
-	enemyBullet->SetStatus(true);
-	enemyBullet->Init(position, view, 200, 10, 1);
-	enemyBullet->SetBulletType(BT_ENEMY);
-	enemyBullet->SetScale(Vector3(1, 1, 0));
-
-
-	
-}
-
 
 void weapon::Update(double dt)
 {
@@ -164,36 +152,24 @@ void weapon::Update(double dt)
 		isReloading = false;
 	}
 	
-	for (auto bulletIt : m_goList)
-	{
-		currentTime += dt;
-		if (bulletIt->GetStatus())
-		{
-			bulletIt->Update(dt);
-		}
-	}
-	for (auto enemyBulletIt : enemyList)
-	{
-		currentTime += dt;
-		if (enemyBulletIt->GetStatus())
-		{
-			enemyBulletIt->Update(dt);
-		}
-	}
-	bulletCollision(dt);
-}
-
-void weapon::bulletCollision(double dt)
-{
-	Vector3 updatedPos = bullet->GetPosition() + (bullet->GetDirection() * bullet->GetSpeed()) * dt;
-	updatedPos.x += m_TileMap->GetTileSize() * 0.5;
-	updatedPos.y += m_TileMap->GetTileSize() * 0.5;
-
-	int currentTile = 237;
-
-	int tilePosX = updatedPos.x / m_TileMap->GetTileSize();
-	int tilePosY = updatedPos.y / m_TileMap->GetTileSize();
-
+	currentTime += dt;
+	BulletFactory->Update(dt);
+	//for (auto bulletIt : m_goList)
+	//{
+	//	currentTime += dt;
+	//	if (bulletIt->GetStatus())
+	//	{
+	//		bulletIt->Update(dt);
+	//	}
+	//}
+	//for (auto enemyBulletIt : enemyList)
+	//{
+	//	if (enemyBulletIt->GetStatus())
+	//	{
+	//		enemyBulletIt->Update(dt);
+	//	}
+	//}
+	
 }
 
 bool weapon::canFireBullet()
@@ -245,54 +221,3 @@ void weapon::resetWeaponAmmo()
     this->currentHeldAmmo = maxAmmoCapacity;
 }
 
-CBulletInfo* weapon::FetchGO()
-{
-	for (std::vector<CBulletInfo *>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
-	{
-		CBulletInfo *bullet = (CBulletInfo *)*it;
-		if (bullet->GetStatus() == false)
-		{
-			bullet->SetStatus(true);
-			return bullet;
-		}
-	}
-	for (unsigned i = 0; i < 10; ++i)
-	{
-		bullet = new CBulletInfo();
-		m_goList.push_back(bullet);
-	}
-	
-	CBulletInfo* bullet = m_goList.back();
-	return bullet;
-}
-
-vector<CBulletInfo*> weapon::GetBulletList()
-{
-	return m_goList;
-}
-
-CBulletInfo* weapon::FetchEnemyBullet(){
-
-	for (std::vector<CBulletInfo *>::iterator it2 = enemyList.begin(); it2 != enemyList.end(); ++it2)
-	{
-		CBulletInfo *enemyBullet = (CBulletInfo *)*it2;
-		if (enemyBullet->GetStatus() == false)
-		{
-			enemyBullet->SetStatus(true);
-			return enemyBullet;
-		}
-	}
-	for (unsigned i = 0; i < 10; ++i)
-	{
-		enemyBullet = new CBulletInfo();
-		enemyList.push_back(enemyBullet);
-	}
-
-	CBulletInfo* enemyBullet = enemyList.back();
-	return enemyBullet;
-}
-
-vector<CBulletInfo*> weapon::GetEnemyBulletList()
-{
-	return enemyList;
-}

@@ -38,7 +38,6 @@ void Player::Update(double dt)
 		UpdateMovement(dt);
 	}
 	playerweapon->Update(dt);
-	UpdateBullets(dt);
 	playerHitbox.SetPosition(Vector3(player->Get_cPosition().x, player->Get_cPosition().y, 0));
 
 	if (controls.isKeyboardButtonPressed(KEYBOARD_ESCAPE))
@@ -416,57 +415,4 @@ int Player::GetCurrentTile()
 		return m_TileMap->GetTileType(posX, posY);
 	}
 	return -1;
-}
-
-void Player::UpdateBullets(double dt)
-{
-	vector<CBulletInfo*> temp = playerweapon->GetBulletList();
-	for (auto bulletIt : temp)
-	{
-		if (bulletIt->GetStatus())
-		{
-			Vector3 updatedPos = bulletIt->GetPosition() + (bulletIt->GetDirection() * bulletIt->GetSpeed()) * dt;
-			//updatedPos.x += m_TileMap->GetTileSize() * 0.5;
-			//updatedPos.y += m_TileMap->GetTileSize() * 0.5;
-
-			int currentTile = 237;
-
-			int tilePosX = updatedPos.x / m_TileMap->GetTileSize();
-			int tilePosY = updatedPos.y / m_TileMap->GetTileSize();
-
-			int test = (m_TileMap->GetTileType(tilePosX, tilePosY));
-
-			if (test != currentTile)
-			{
-				//cout << bulletIt->GetPosition().x - GlobalData.world_X_offset << endl;
-
-				if (bulletIt->GetBulletType() == BT_NET)
-				{
-					bulletIt->SetBulletType(BT_NETSPREAD);
-					bulletIt->SetSpeed(0);
-					bulletIt->SetScale(Vector3(32, 32, 0));
-					bulletIt->SetLifetime(3);
-				}
-				else if (bulletIt->GetBulletType() != BT_NETSPREAD)
-				{
-					bulletIt->SetStatus(false);
-				}
-			}
-
-			if (test == 244 && bulletIt->GetBulletType() == BT_FIRE)
-			{
-				m_TileMap->SetTile(237, tilePosX, tilePosY);
-			}
-
-			if (test == 86 && bulletIt->GetBulletType() == BT_AIR)
-			{
-				m_TileMap->SetTile(237, tilePosX, tilePosY);
-			}
-			/*if (test == 244 && bulletIt->GetBulletType() == BT_WATER)
-			{
-			m_TileMap->SetTile(237, tilePosX, tilePosY);
-			}*/
-		}
-	}
-
 }

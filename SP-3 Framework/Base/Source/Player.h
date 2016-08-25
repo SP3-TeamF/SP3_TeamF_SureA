@@ -30,7 +30,6 @@ public:
     void InAirUpdate(double dt);
     virtual void Update(double dt);
     void UpdateMovement(double dt);
-	void UpdateBullets(double dt);
 
     //Getters
     bool GetInAir();

@@ -21,7 +21,7 @@ void TutorialScene::Init()
     player->Set_cPosition(Vector3(800, 400, 0));
 
     tutorialMap.Init(1024, 800, 2048, 1600, 32);
-    tutorialMap.LoadMap("Image//CSV//ZenTut.csv");
+    tutorialMap.LoadMap("Image//CSV//fireLevel.csv");
 
     m_TileMap = &tutorialMap;
 
@@ -64,13 +64,12 @@ void TutorialScene::Render()
 {
 
 	Scenebase::Render();
-	Scenebase::RenderHUD();
+	//Scenebase::RenderHUD();
 	if (m_TileMap != nullptr)
 	{
 		RenderTileMap(m_TileMap, GlobalData.world_X_offset, GlobalData.world_Y_offset);
 	}
-	RenderHUD();
-	RenderMainCharacter();
+	Scenebase::RenderHUD();
 	Scenebase::RenderBullet();
 	Scenebase::RenderSprites();
 	//renderthesprite->RenderSprites();
@@ -98,7 +97,7 @@ void TutorialScene::Reset()
     player->Set_cPosition(Vector3(800, 400, 0));
 
     tutorialMap.Init(1024, 800, 2048, 1600, 32);
-    tutorialMap.LoadMap("Image//CSV//Zentut.csv");
+    tutorialMap.LoadMap("Image//CSV//fireLevel.csv");
 
     m_TileMap = &tutorialMap;
 

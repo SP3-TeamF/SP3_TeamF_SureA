@@ -1,5 +1,6 @@
 #include "Application.h"
-
+#include "SceneManager.h"
+#include "GlobalDatas.h"
 //Include GLEW
 #include <GL/glew.h>
 
@@ -145,17 +146,16 @@ void Application::Init()
 	//Time Taken for this frame(dt)
 	m_dElapsedTime = 0.0;
 
-    //Initialise the scene manager
-    currentScene = new SceneManager();
+
 }
 
 void Application::Run()
 {
     //Main loop
-    currentScene->Init();
+    sceneManager.currentScene->Init();
 
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
-	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
+	while (!glfwWindowShouldClose(m_window) && /*!IsKeyPressed(VK_ESCAPE) &&*/ !GlobalData.quitGame )
 	{
 		
 		m_dElapsedTime = m_timer.getElapsedTime();
@@ -164,14 +164,14 @@ void Application::Run()
 		if (m_dAccumulatedTime_ThreadOne > 0){
 			//GetMouseUpdate();
 			GetKeyboardUpdate();
-            currentScene->Update(m_dElapsedTime);
+			sceneManager.currentScene->Update(m_dElapsedTime);
 			m_dAccumulatedTime_ThreadOne = 0.0;
 		}
 		if (m_dAccumulatedTime_ThreadTwo > 1){
 			m_dAccumulatedTime_ThreadTwo = 0.0;
 			GlobalData.isControllerConnected = controls.isControllerPresent(CONTROLLER_1);
 		}
-        currentScene->Render();
+		sceneManager.currentScene->Render();
 		//Swap buffers
 		glfwSwapBuffers(m_window);
 		//Get and organize events, like keyboard and mouse input, window resizing, etc...
@@ -179,9 +179,9 @@ void Application::Run()
 		m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.   
 
 
-	} //Check if the ESC key had been pressed or if the window had been closed
-    currentScene->Exit();
-    delete currentScene;
+	} 
+	//Check if the ESC key had been pressed or if the window had been closed
+	sceneManager.Exit();
 }
 
 void Application::Exit()

@@ -4,9 +4,8 @@
 #include "BulletInfo.h"
 #include "Vector3.h"
 #include <vector>
+#include "GlobalDatas.h"
 #include "controls.h"
-#include "Invent.h"
-#include "BulletFactory.h"
 using std::vector;
 
 
@@ -29,10 +28,14 @@ public:
     void updateBullets(double dt);
     void resetWeaponAmmo();
     void fireWeapon(Vector3 view, Vector3 position);
+	void fireEnemyWeapon(Vector3 view, Vector3 position);
 	void renderGO();
 	Vector3 getBulletPosition();
     
     bool canFireBullet();
+
+	CBulletInfo* FetchGO();
+	CBulletInfo* FetchEnemyBullet();
 
 	double getWeaponReloadTime();
     int getCurrentHeldAmmo();
@@ -40,11 +43,18 @@ public:
     int getMaxClipSize();
     int getMaxAmmoCapacity();
 	int weaponDamage;
+
 	AABB test;
+
+
+	vector<CBulletInfo*> GetBulletList();
+	vector<CBulletInfo*> GetEnemyBulletList();
+
 	void bulletCollision(double dt);
 
 protected:
-
+	std::vector<CBulletInfo *> m_goList;
+	std::vector<CBulletInfo *> enemyList;
 
 private:
 	int maxClipSize;
@@ -58,9 +68,10 @@ private:
     double currentTime;
     double weaponReloadTime;
     double timeBetweenEachBullet;
+	CBulletInfo* bullet;
+	CBulletInfo* enemyBullet;
 
 	WEAPON_TYPE WeaponType;
-
 
 };
 

@@ -72,8 +72,8 @@ public:
     void EnemyImagesInit();
     void PlayerImagesInit();
     void BulletImagesInit();
-
-	CBulletInfo* bullet;
+	void MainMenuInit();
+  
 	//Update Functions
     void UpdateSpritesAnimation(double dt);
 
@@ -90,14 +90,13 @@ public:
     void RenderTile(Mesh *mesh, int tileID, const float size = 1.0f, const float x = 0.0f, const float y = 0.0f, const float z = 0);
 	void renderHitbox(bool ShowHitbox);
 	void RenderBullet();
-	
+	void RenderMainMenu();
   
 protected:
     enum GEOMETRY_TYPE
     {
-        GEO_TEXT,
-		GEO_TEXT1,
-        GEO_BACKGROUND,
+		GEO_TEXT,
+		GEO_BACKGROUND,
 		GEO_HUD,
 		GEO_HEART,
 		GEO_HPTEX,
@@ -105,7 +104,7 @@ protected:
 		GEO_HUDFIRE,
 		GEO_HUDWATER,
 		GEO_HUDAIR,
-        GEO_TILESHEET,
+		GEO_TILESHEET,
 		GEO_TEST,
 		GEO_MCUP,
 		GEO_MCDOWN,
@@ -139,6 +138,10 @@ protected:
 		GEO_AIRWISP,
 		GEO_WATERWISP,
 
+		GEO_MAINMENU,
+		GEO_ARROW,
+		GEO_MAINMENU_EXIT,
+
         NUM_GEOMETRY,
     };
 
@@ -146,7 +149,6 @@ protected:
 	Mesh* meshList[NUM_GEOMETRY];
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
-	CMinimap* m_cMinimap;
 
 	Camera3 camera;
 

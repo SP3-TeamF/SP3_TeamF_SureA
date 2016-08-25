@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "GlobalDatas.h"
 #include "Controls.h"
+#include "SceneManager.h"
 static Player* player_Instance = 0;
 int currentTile[5] = { 237, 2, 3, 4, 5 };
 
@@ -20,6 +21,7 @@ Player::Player()
 	playerHitbox.Set(Vector3(100,100,100), 1, 1);
 
 	playerweapon = new weapon();
+
 }
 
 Player::~Player()
@@ -35,7 +37,13 @@ void Player::Update(double dt)
 		UpdateMovement(dt);
 	}
 	playerweapon->Update(dt);
+	UpdateBullets(dt);
 	playerHitbox.SetPosition(Vector3(player->Get_cPosition().x, player->Get_cPosition().y, 0));
+
+	if (controls.isKeyboardButtonPressed(KEYBOARD_ESCAPE))
+	{
+		sceneManager.currentScene = sceneManager.mainMenu;
+	}
 }
 
 Player* Player::GetInstance()
@@ -152,144 +160,144 @@ void Player::UpdateMovement(double dt)
 	int extraCheckBottomLeft = m_TileMap->GetTileType((updatedPos.x - tbOffsetX_L) / m_TileMap->GetTileSize(), (updatedPos.y - extraOffsetY_t) / m_TileMap->GetTileSize());
 	int extraCheckBottomRight = m_TileMap->GetTileType((updatedPos.x - tbOffsetX_R) / m_TileMap->GetTileSize(), (updatedPos.y - extraOffsetY_t) / m_TileMap->GetTileSize());
 
-	if (c_Movement.x < 0)
-	{
-		if (extraCheckTopLeft != currentTile[0] || extraCheckBottomLeft != currentTile[0])
+		if (c_Movement.x < 0)
 		{
-			bool canWalk = false;
-			for (int i = 1; i < 5; i++)
+			if (extraCheckTopLeft != currentTile[0] || extraCheckBottomLeft != currentTile[0])
 			{
-				if (extraCheckTopLeft == currentTile[i] || extraCheckBottomLeft == currentTile[i])
-					canWalk = true;
-				else
-					continue;
+				bool canWalk = false;
+				for (int i = 1; i < 5; i++)
+				{
+					if (extraCheckTopLeft == currentTile[i] || extraCheckBottomLeft == currentTile[i])
+						canWalk = true;
+					else
+						continue;
+				}
+				if (!canWalk)
+				{
+					c_Movement.y = 0;
+				}
 			}
-			if (!canWalk)
+			if (leftHand != currentTile[0] || leftLeg != currentTile[0])
 			{
-				c_Movement.y = 0;
-			}
-		}
-		if (leftHand != currentTile[0] || leftLeg != currentTile[0])
-		{
-			bool canWalk = false;
-			for (int i = 1; i < 5; i++)
-			{
-				if (leftHand == currentTile[i] || leftLeg == currentTile[i])
-					canWalk = true;
-				else
-					continue;
-			}
-			if (!canWalk)
-			{
-				c_Movement.x = 0;
-			}
-		}
-	}
-
-	if (c_Movement.y > 0)
-	{
-		if (extraCheckTopLeft != currentTile[0] || extraCheckTopRight != currentTile[0])
-		{
-			bool canWalk = false;
-			for (int i = 1; i < 5; i++)
-			{
-				if (extraCheckTopLeft == currentTile[i] || extraCheckTopRight == currentTile[i])
-					canWalk = true;
-				else
-					continue;
-			}
-			if (!canWalk)
-			{
-				c_Movement.y = 0;
+				bool canWalk = false;
+				for (int i = 1; i < 5; i++)
+				{
+					if (leftHand == currentTile[i] || leftLeg == currentTile[i])
+						canWalk = true;
+					else
+						continue;
+				}
+				if (!canWalk)
+				{
+					c_Movement.x = 0;
+				}
 			}
 		}
 
-		if (leftHand != currentTile[0] || rightHand != currentTile[0])
+		if (c_Movement.y > 0)
 		{
-			bool canWalk = false;
-			for (int i = 1; i < 5; i++)
+			if (extraCheckTopLeft != currentTile[0] || extraCheckTopRight != currentTile[0])
 			{
-				if (leftHand == currentTile[i] || rightHand == currentTile[i])
-					canWalk = true;
-				else
-					continue;
+				bool canWalk = false;
+				for (int i = 1; i < 5; i++)
+				{
+					if (extraCheckTopLeft == currentTile[i] || extraCheckTopRight == currentTile[i])
+						canWalk = true;
+					else
+						continue;
+				}
+				if (!canWalk)
+				{
+					c_Movement.y = 0;
+				}
+			}
 
-			}
-			if (!canWalk)
+			if (leftHand != currentTile[0] || rightHand != currentTile[0])
 			{
-				c_Movement.x = 0;
-			}
-		}
-	}
+				bool canWalk = false;
+				for (int i = 1; i < 5; i++)
+				{
+					if (leftHand == currentTile[i] || rightHand == currentTile[i])
+						canWalk = true;
+					else
+						continue;
 
-	if (c_Movement.y < 0)
-	{
-		if (extraCheckBottomLeft != currentTile[0] || extraCheckBottomRight != currentTile[0])
-		{
-			bool canWalk = false;
-			for (int i = 1; i < 5; i++)
-			{
-				if (extraCheckBottomLeft == currentTile[i] || extraCheckBottomRight == currentTile[i])
-					canWalk = true;
-				else
-					continue;
-			}
-			if (!canWalk)
-			{
-				c_Movement.y = 0;
-			}
-		}
-		if (leftLeg != currentTile[0] || rightLeg != currentTile[0])
-		{
-			bool canWalk = false;
-			for (int i = 1; i < 5; i++)
-			{
-				if (leftLeg == currentTile[i] || rightLeg == currentTile[i])
-					canWalk = true;
-				else
-					continue;
-			}
-			if (!canWalk)
-			{
-				c_Movement.x = 0;
-			}
-		}
-	}
-
-	if (c_Movement.x > 0)
-	{
-		if (extraCheckTopRight != currentTile[0] || extraCheckBottomRight != currentTile[0])
-		{
-			bool canWalk = false;
-			for (int i = 1; i < 5; i++)
-			{
-				if (extraCheckTopRight == currentTile[i] || extraCheckBottomRight == currentTile[i])
-					canWalk = true;
-				else
-					continue;
-			}
-			if (!canWalk)
-			{
-				c_Movement.y = 0;
+				}
+				if (!canWalk)
+				{
+					c_Movement.x = 0;
+				}
 			}
 		}
 
-		if (rightHand != currentTile[0] || rightLeg != currentTile[0])
+		if (c_Movement.y < 0)
 		{
-			bool canWalk = false;
-			for (int i = 1; i < 5; i++)
+			if (extraCheckBottomLeft != currentTile[0] || extraCheckBottomRight != currentTile[0])
 			{
-				if (rightHand == currentTile[i] || rightLeg == currentTile[i])
-					canWalk = true;
-				else
-					continue;
+				bool canWalk = false;
+				for (int i = 1; i < 5; i++)
+				{
+					if (extraCheckBottomLeft == currentTile[i] || extraCheckBottomRight == currentTile[i])
+						canWalk = true;
+					else
+						continue;
+				}
+				if (!canWalk)
+				{
+					c_Movement.y = 0;
+				}
 			}
-			if (!canWalk)
+			if (leftLeg != currentTile[0] || rightLeg != currentTile[0])
 			{
-				c_Movement.x = 0;
+				bool canWalk = false;
+				for (int i = 1; i < 5; i++)
+				{
+					if (leftLeg == currentTile[i] || rightLeg == currentTile[i])
+						canWalk = true;
+					else
+						continue;
+				}
+				if (!canWalk)
+				{
+					c_Movement.x = 0;
+				}
 			}
 		}
-	}
+
+		if (c_Movement.x > 0)
+		{
+			if (extraCheckTopRight != currentTile[0] || extraCheckBottomRight != currentTile[0])
+			{
+				bool canWalk = false;
+				for (int i = 1; i < 5; i++)
+				{
+					if (extraCheckTopRight == currentTile[i] || extraCheckBottomRight == currentTile[i])
+						canWalk = true;
+					else
+						continue;
+				}
+				if (!canWalk)
+				{
+					c_Movement.y = 0;
+				}
+			}
+
+			if (rightHand != currentTile[0] || rightLeg != currentTile[0])
+			{
+				bool canWalk = false;
+				for (int i = 1; i < 5; i++)
+				{
+					if (rightHand == currentTile[i] || rightLeg == currentTile[i])
+						canWalk = true;
+					else
+						continue;
+				}
+				if (!canWalk)
+				{
+					c_Movement.x = 0;
+				}
+			}
+		}
 
 	this->c_Position = c_Position + (c_Movement * c_MoveSpeed) * dt;
 
@@ -409,4 +417,55 @@ int Player::GetCurrentTile()
 	return -1;
 }
 
+void Player::UpdateBullets(double dt)
+{
+	vector<CBulletInfo*> temp = playerweapon->GetBulletList();
+	for (auto bulletIt : temp)
+	{
+		if (bulletIt->GetStatus())
+		{
+			Vector3 updatedPos = bulletIt->GetPosition() + (bulletIt->GetDirection() * bulletIt->GetSpeed()) * dt;
+			//updatedPos.x += m_TileMap->GetTileSize() * 0.5;
+			//updatedPos.y += m_TileMap->GetTileSize() * 0.5;
 
+			int currentTile = 237;
+
+			int tilePosX = updatedPos.x / m_TileMap->GetTileSize();
+			int tilePosY = updatedPos.y / m_TileMap->GetTileSize();
+
+			int test = (m_TileMap->GetTileType(tilePosX, tilePosY));
+
+			if (test != currentTile)
+			{
+				//cout << bulletIt->GetPosition().x - GlobalData.world_X_offset << endl;
+
+				if (bulletIt->GetBulletType() == BT_NET)
+				{
+					bulletIt->SetBulletType(BT_NETSPREAD);
+					bulletIt->SetSpeed(0);
+					bulletIt->SetScale(Vector3(32, 32, 0));
+					bulletIt->SetLifetime(3);
+				}
+				else if (bulletIt->GetBulletType() != BT_NETSPREAD)
+				{
+					bulletIt->SetStatus(false);
+				}
+			}
+
+			if (test == 244 && bulletIt->GetBulletType() == BT_FIRE)
+			{
+				m_TileMap->SetTile(237, tilePosX, tilePosY);
+			}
+
+			if (test == 86 && bulletIt->GetBulletType() == BT_AIR)
+			{
+				m_TileMap->SetTile(237, tilePosX, tilePosY);
+			}
+			/*if (test == 244 && bulletIt->GetBulletType() == BT_WATER)
+			{
+			m_TileMap->SetTile(237, tilePosX, tilePosY);
+			}*/
+		}
+	}
+
+}

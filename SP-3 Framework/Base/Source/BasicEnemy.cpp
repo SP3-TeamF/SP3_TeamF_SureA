@@ -32,7 +32,7 @@ void BasicEnemy::collisionCheck()
 		player->Add_cHealth(-10);
 	}
 
-	vector<CBulletInfo*> temp = BulletFactory->GetBulletList();
+	vector<CBulletInfo*> temp = player->playerweapon->GetBulletList();
 	for (auto bulletIt : temp)
 	{
 		if (bulletIt->GetStatus())
@@ -51,7 +51,7 @@ void BasicEnemy::Update(double dt)
 {
     Enemy::Update(dt);
 
-	enemyHitbox.SetPosition(this->c_Position);
+	enemyHitbox.SetPosition(this->c_Position + Vector3(+m_TileMap->GetTileSize() * 0.5, +m_TileMap->GetTileSize() * 0.5, 0));
 
 	collisionCheck();
 	//cout << Hitpoint << endl;
@@ -64,8 +64,7 @@ void BasicEnemy::Update(double dt)
             if (idleStrategy->ScanTarget())
             {
                 this->pathStartPosition = this->c_Position / m_TileMap->GetTileSize();
-                this->pathEndPosition = player->Get_cPosition() / m_TileMap->GetTileSize();
-
+                this->pathEndPosition = (player->Get_cPosition() + Vector3(GlobalData.world_X_offset, GlobalData.world_Y_offset))/ m_TileMap->GetTileSize();
                 CURRENT_STATE = SCANNING_STATE;
             }
             break;

@@ -2,6 +2,7 @@
 #include "GlobalDatas.h"
 #include "Controls.h"
 static Player* player_Instance = 0;
+int currentTile[5] = { 237, 2, 3, 4, 5 };
 
 Player::Player()
 {
@@ -119,8 +120,6 @@ void Player::UpdateMovement(double dt)
 	updatedPos.x += m_TileMap->GetTileSize() * 0.5 + GlobalData.world_X_offset;
 	updatedPos.y += m_TileMap->GetTileSize() * 0.5 + GlobalData.world_Y_offset;
 
-	int currentTile = 237;
-
 	int tilePosX = updatedPos.x / m_TileMap->GetTileSize();
 	int tilePosY = updatedPos.y / m_TileMap->GetTileSize();
 
@@ -153,49 +152,142 @@ void Player::UpdateMovement(double dt)
 	int extraCheckBottomLeft = m_TileMap->GetTileType((updatedPos.x - tbOffsetX_L) / m_TileMap->GetTileSize(), (updatedPos.y - extraOffsetY_t) / m_TileMap->GetTileSize());
 	int extraCheckBottomRight = m_TileMap->GetTileType((updatedPos.x - tbOffsetX_R) / m_TileMap->GetTileSize(), (updatedPos.y - extraOffsetY_t) / m_TileMap->GetTileSize());
 
+	if (c_Movement.x < 0)
+	{
+		if (extraCheckTopLeft != currentTile[0] || extraCheckBottomLeft != currentTile[0])
+		{
+			bool canWalk = false;
+			for (int i = 1; i < 5; i++)
+			{
+				if (extraCheckTopLeft == currentTile[i] || extraCheckBottomLeft == currentTile[i])
+					canWalk = true;
+				else
+					continue;
+			}
+			if (!canWalk)
+			{
+				c_Movement.y = 0;
+			}
+		}
+		if (leftHand != currentTile[0] || leftLeg != currentTile[0])
+		{
+			bool canWalk = false;
+			for (int i = 1; i < 5; i++)
+			{
+				if (leftHand == currentTile[i] || leftLeg == currentTile[i])
+					canWalk = true;
+				else
+					continue;
+			}
+			if (!canWalk)
+			{
+				c_Movement.x = 0;
+			}
+		}
+	}
+
 	if (c_Movement.y > 0)
 	{
-		if (extraCheckTopLeft != currentTile || extraCheckTopRight != currentTile)
+		if (extraCheckTopLeft != currentTile[0] || extraCheckTopRight != currentTile[0])
 		{
-			c_Movement.y = 0;
-		}
-		if (leftHand != currentTile || rightHand != currentTile)
-		{
-			c_Movement.x = 0;
-		}
-	}
-	if (c_Movement.y < 0)
-	{
-		if (extraCheckBottomLeft != currentTile || extraCheckBottomRight != currentTile)
-		{
-			c_Movement.y = 0;
-		}
-		if (leftLeg != currentTile || rightLeg != currentTile)
-		{
-			c_Movement.x = 0;
-		}
-	}
-	if (c_Movement.x > 0)
-	{
-		if (extraCheckTopRight != currentTile || extraCheckBottomRight != currentTile)
-		{
-			c_Movement.y = 0;
+			bool canWalk = false;
+			for (int i = 1; i < 5; i++)
+			{
+				if (extraCheckTopLeft == currentTile[i] || extraCheckTopRight == currentTile[i])
+					canWalk = true;
+				else
+					continue;
+			}
+			if (!canWalk)
+			{
+				c_Movement.y = 0;
+			}
 		}
 
-		if (rightHand != currentTile || rightLeg != currentTile)
+		if (leftHand != currentTile[0] || rightHand != currentTile[0])
 		{
-			c_Movement.x = 0;
+			bool canWalk = false;
+			for (int i = 1; i < 5; i++)
+			{
+				if (leftHand == currentTile[i] || rightHand == currentTile[i])
+					canWalk = true;
+				else
+					continue;
+
+			}
+			if (!canWalk)
+			{
+				c_Movement.x = 0;
+			}
 		}
 	}
-	if (c_Movement.x <0)
+
+	if (c_Movement.y < 0)
 	{
-		if (extraCheckTopLeft != currentTile || extraCheckBottomLeft != currentTile)
+		if (extraCheckBottomLeft != currentTile[0] || extraCheckBottomRight != currentTile[0])
 		{
-			c_Movement.y = 0;
+			bool canWalk = false;
+			for (int i = 1; i < 5; i++)
+			{
+				if (extraCheckBottomLeft == currentTile[i] || extraCheckBottomRight == currentTile[i])
+					canWalk = true;
+				else
+					continue;
+			}
+			if (!canWalk)
+			{
+				c_Movement.y = 0;
+			}
 		}
-		if (leftHand != currentTile || leftLeg != currentTile)
+		if (leftLeg != currentTile[0] || rightLeg != currentTile[0])
 		{
-			c_Movement.x = 0;
+			bool canWalk = false;
+			for (int i = 1; i < 5; i++)
+			{
+				if (leftLeg == currentTile[i] || rightLeg == currentTile[i])
+					canWalk = true;
+				else
+					continue;
+			}
+			if (!canWalk)
+			{
+				c_Movement.x = 0;
+			}
+		}
+	}
+
+	if (c_Movement.x > 0)
+	{
+		if (extraCheckTopRight != currentTile[0] || extraCheckBottomRight != currentTile[0])
+		{
+			bool canWalk = false;
+			for (int i = 1; i < 5; i++)
+			{
+				if (extraCheckTopRight == currentTile[i] || extraCheckBottomRight == currentTile[i])
+					canWalk = true;
+				else
+					continue;
+			}
+			if (!canWalk)
+			{
+				c_Movement.y = 0;
+			}
+		}
+
+		if (rightHand != currentTile[0] || rightLeg != currentTile[0])
+		{
+			bool canWalk = false;
+			for (int i = 1; i < 5; i++)
+			{
+				if (rightHand == currentTile[i] || rightLeg == currentTile[i])
+					canWalk = true;
+				else
+					continue;
+			}
+			if (!canWalk)
+			{
+				c_Movement.x = 0;
+			}
 		}
 	}
 
@@ -317,56 +409,4 @@ int Player::GetCurrentTile()
 	return -1;
 }
 
-//void Player::UpdateBullets(double dt)
-//{
-//	vector<CBulletInfo*> temp = GlobalData.bulletFactory->GetBulletList();
-//	for (auto bulletIt : temp)
-//	{
-//		if (bulletIt->GetStatus())
-//		{
-//			Vector3 updatedPos = bulletIt->GetPosition() + (bulletIt->GetDirection() * bulletIt->GetSpeed()) * dt;
-//			//updatedPos.x += m_TileMap->GetTileSize() * 0.5;
-//			//updatedPos.y += m_TileMap->GetTileSize() * 0.5;
-//
-//			int currentTile = 237;
-//
-//			int tilePosX = updatedPos.x / m_TileMap->GetTileSize();
-//			int tilePosY = updatedPos.y / m_TileMap->GetTileSize();
-//
-//			int test = (m_TileMap->GetTileType(tilePosX, tilePosY));
-//
-//			if (test != currentTile)
-//			{
-//				//cout << bulletIt->GetPosition().x - GlobalData.world_X_offset << endl;
-//
-//				if (bulletIt->GetBulletType() == BT_NET)
-//				{
-//					bulletIt->SetBulletType(BT_NETSPREAD);
-//					bulletIt->SetSpeed(0);
-//					bulletIt->SetScale(Vector3(32, 32, 0));
-//					bulletIt->SetLifetime(3);
-//				}
-//				else if (bulletIt->GetBulletType() != BT_NETSPREAD)
-//				{
-//					bulletIt->SetStatus(false);
-//				}
-//			}
-//
-//			if (test == 244 && bulletIt->GetBulletType() == BT_FIRE)
-//			{
-//				m_TileMap->SetTile(237, tilePosX, tilePosY);
-//			}
-//
-//			if (test == 86 && bulletIt->GetBulletType() == BT_AIR)
-//			{
-//				m_TileMap->SetTile(237, tilePosX, tilePosY);
-//			}
-//			/*if (test == 244 && bulletIt->GetBulletType() == BT_WATER)
-//			{
-//			m_TileMap->SetTile(237, tilePosX, tilePosY);
-//			}*/
-//		}
-//	}
-//
-//}
 

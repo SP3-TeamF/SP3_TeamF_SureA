@@ -10,6 +10,7 @@
 #include "Collisiontest.h"
 #include "SceneMapEditor.h"
 #include "MainMenu.h"
+#include "MainMenuExit.h"
 
 enum SCENE_STATES
 {
@@ -43,7 +44,7 @@ public:
     Collisiontest* collisionTest;
     SceneMapEditor* sceneMapEditor;
 	MainMenu* mainMenu;
-
+	MainMenuExit * mainMenuExit;
 };
 
 #endif SCENEMANAGER_H_

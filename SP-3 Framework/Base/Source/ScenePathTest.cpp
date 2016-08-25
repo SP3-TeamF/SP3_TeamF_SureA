@@ -80,11 +80,7 @@ void ScenePathTest::Reset()
     testEnemy.SetScanRadius(1000);
     testEnemy.Set_cMoveSpeed(100);
     testEnemy.SetAttackRadius(20);
-<<<<<<< HEAD
-    testEnemy.Set_cPosition(Vector3(380, 600, 0));
 
-
-=======
 	testEnemy.Set_cPosition(Vector3(480, 696, 0));
->>>>>>> origin/master
+
 }

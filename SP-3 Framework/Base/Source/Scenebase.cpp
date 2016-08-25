@@ -1090,6 +1090,13 @@ void Scenebase::RenderMainMenu()
 
 }
 
+void Scenebase::RenderMainMenuExit()
+{
+	Render2DMesh(meshList[GEO_MAINMENU_EXIT], false, 1.0f);
+	RenderTextOnScreen(meshList[GEO_TEXT], "YES", Color(1, 1, 1), 50.f, Application::GetWindowWidth() *0.2f, Application::GetWindowHeight() *0.4f);
+	RenderTextOnScreen(meshList[GEO_TEXT], "NO", Color(1, 1, 1), 50.f, Application::GetWindowWidth() *0.6f, Application::GetWindowHeight() *0.4f);
+}
+
 //Other Functions
 void Scenebase::Exit()
 {

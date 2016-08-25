@@ -32,7 +32,7 @@ void BasicEnemy::collisionCheck()
 		player->Add_cHealth(-10);
 	}
 
-	vector<CBulletInfo*> temp = player->playerweapon->GetBulletList();
+	vector<CBulletInfo*> temp = BulletFactory->GetBulletList();
 	for (auto bulletIt : temp)
 	{
 		if (bulletIt->GetStatus())

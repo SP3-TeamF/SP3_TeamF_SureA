@@ -1,6 +1,5 @@
 #include "MainMenu.h"
 #include "SceneManager.h"
-#include "Scenebase.h"
 #include "GL\glew.h"
 
 MainMenu::MainMenu()
@@ -32,7 +31,7 @@ void MainMenu::Update(double dt)
 {
 	timeDelay -= dt;
 
-	if (controls.isKeyboardButtonPressed(KEYBOARD_D) || controls.isControllerButtonPressed(CONTROLLER_1,CONTROLLER_DPAD_RIGHT))
+	if (controls.isKeyboardButtonPressed(KEYBOARD_D) || controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_RIGHT))
 	{
 		if (timeDelay < 0)
 		{
@@ -66,16 +65,16 @@ void MainMenu::Update(double dt)
 
 	if (currently_selected == Play && (controls.isKeyboardButtonPressed(KEYBOARD_ENTER) || controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_A)))
 	{
-		sceneManager.currentScene = sceneManager.scenePathTest;
-		sceneManager.currentScene->Reset();
+		sceneManager.currentScene = sceneManager.tutorialScene;
+		//sceneManager.currentScene->Reset();
 	}
 	if (currently_selected == Load && (controls.isKeyboardButtonPressed(KEYBOARD_ENTER) || controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_A)))
 	{
 
-	} 
+	}
 	if (currently_selected == Exit_game && (controls.isKeyboardButtonPressed(KEYBOARD_ENTER) || controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_A)))
 	{
-		GlobalData.quitGame = true;
+		sceneManager.currentScene = sceneManager.mainMenuExit;
 	}
 
 	switch (currently_selected)

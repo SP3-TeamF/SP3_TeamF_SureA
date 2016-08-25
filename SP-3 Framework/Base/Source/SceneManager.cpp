@@ -9,7 +9,7 @@ SceneManager::SceneManager()
     this->collisionTest = new Collisiontest();
     this->sceneMapEditor = new SceneMapEditor();
 	this->mainMenu = new MainMenu();
-
+	this->mainMenuExit = new MainMenuExit();
 	Init();
 }
 
@@ -24,6 +24,7 @@ void SceneManager::Init()
     this->sceneMapEditor->Init();
 	this->tutorialScene->Init();
 	this->mainMenu->Init();
+	this->mainMenuExit->Init();
 
 	this->currentScene = mainMenu;
     this->currentScene->Reset();

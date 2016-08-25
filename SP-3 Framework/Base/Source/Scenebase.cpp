@@ -128,6 +128,9 @@ void Scenebase::Init()
 	meshList[GEO_TILESHEET] = MeshBuilder::GenerateTileMesh("TileSheet", 21, 23);
 	meshList[GEO_TILESHEET]->textureID = LoadTGA("Image//TileSheet1.tga");
 
+	meshList[GEO_SCROLL] = MeshBuilder::Generate2DMesh("GEO_SCROLL", Color(1, 1, 1), 0.0f, 0.0f, 800.0f, 600.0f);
+	meshList[GEO_SCROLL]->textureID = LoadTGA("Image//tutScroll.tga");
+
     WispImagesInit();
     HUD_ImagesInit();
     EnemyImagesInit();

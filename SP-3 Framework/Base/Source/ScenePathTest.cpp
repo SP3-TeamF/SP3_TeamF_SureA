@@ -84,4 +84,6 @@ void ScenePathTest::Reset()
     testEnemy.Set_cMoveSpeed(100);
     testEnemy.SetAttackRadius(20);
     testEnemy.Set_cPosition(Vector3(380, 600, 0));
+
+
 }

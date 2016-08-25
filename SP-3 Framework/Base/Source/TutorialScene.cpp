@@ -25,11 +25,10 @@ void TutorialScene::Init()
 
     m_TileMap = &tutorialMap;
 
-	netHit = false;
 	heartScale = 5.f;
 	heartMove = 0.f;
-	stop = false;
-	netScale = 32.f;
+	playerState = PS_INGAME;
+
 
 }
 
@@ -38,20 +37,44 @@ void TutorialScene::Update(double dt)
 {
 	//fps = 1 / dt;
 	//cout << fps << endl;
-    Scenebase::UpdateSpritesAnimation(dt);
-    UpdatePlayerInputUpdates(dt);
+	Scenebase::UpdateSpritesAnimation(dt);
+	UpdatePlayerInputUpdates(dt);
+
+	
+	Vector3 updatedPos = player->Get_cPosition() + (player->Get_cMovement() * player->Get_cMoveSpeed()) * dt;
+	updatedPos.x += GlobalData.world_X_offset;
+	updatedPos.y += GlobalData.world_Y_offset;
+
+	int tilePosX = updatedPos.x / m_TileMap->GetTileSize();
+	int tilePosY = updatedPos.y / m_TileMap->GetTileSize();
+
+	int c_tile = m_TileMap->GetTileType(tilePosX, tilePosY);
+	if (c_tile == 282 && playerState == PS_INGAME){
+		playerState = PS_INTUT;
+	}
+	if (controls.isKeyboardButtonPressed(KEYBOARD_G)){
+		playerState = PS_INTUT2;
+	}
+
 	if (controls.isKeyboardButtonHeld(KEYBOARD_ADD))
 	{
 		heartScale -= 0.1f;
 		heartMove += 1.5f;
 	}
-	
+
 	if (controls.isKeyboardButtonHeld(KEYBOARD_SUBTRACT))
 	{
 		heartScale += 0.1f;
 		heartMove -= 1.5f;
 		cout << heartScale << "      " << heartMove << endl;
 	}
+
+	if (playerState == PS_INTUT)
+		readTextFile("Text//test.txt");
+	if (playerState == PS_INGAME)
+		readTextFile("Text//tutorial2.txt");
+	if (playerState == PS_INTUT2)
+		readTextFile("Text//tutorial3.txt");
 }	
 
 void TutorialScene::UpdatePlayerInputUpdates(double dt)
@@ -64,24 +87,34 @@ void TutorialScene::Render()
 {
 
 	Scenebase::Render();
-	Scenebase::RenderHUD();
 	if (m_TileMap != nullptr)
 	{
 		RenderTileMap(m_TileMap, GlobalData.world_X_offset, GlobalData.world_Y_offset);
 	}
-	RenderHUD();
-	RenderMainCharacter();
+	Scenebase::RenderHUD();
 	Scenebase::RenderBullet();
 	Scenebase::RenderSprites();
-	//renderthesprite->RenderSprites();
+	if (playerState != PS_INGAME){
+		Render2DMesh(meshList[GEO_SCROLL], false, 1, Application::GetInstance().GetWindowWidth() * 0.1f, Application::GetInstance().GetWindowHeight()* 0.1f);
+		for (int i = 0; i < tutorialText.size(); i++){
+			RenderTextOnScreen(meshList[GEO_TEXT], tutorialText[i], Color(1, 1, 1), 20, Application::GetInstance().GetWindowWidth() * 0.3f, Application::GetInstance().GetWindowHeight() * 0.5f + i * -25);
+		}
+		tutorialText.clear();
+
+	}
 
 }
 
-
-void TutorialScene::RenderMainCharacter()
-{
+void TutorialScene::readTextFile(string filename){
+	ifstream file(filename.c_str());
+	string line;
+	while (std::getline(file, line)){
+		newLine = line + '\n';
+		tutorialText.push_back(newLine);
+	}
 	
 }
+
 
 void TutorialScene::Exit()
 {
@@ -98,14 +131,11 @@ void TutorialScene::Reset()
     player->Set_cPosition(Vector3(800, 400, 0));
 
     tutorialMap.Init(1024, 800, 2048, 1600, 32);
-    tutorialMap.LoadMap("Image//CSV//Zentut.csv");
+    tutorialMap.LoadMap("Image//CSV//ZenTut.csv");
 
     m_TileMap = &tutorialMap;
 
-    netHit = false;
     heartScale = 5.f;
     heartMove = 0.f;
-    stop = false;
-    netScale = 32.f;
-
+	playerState = PS_INGAME;
 }

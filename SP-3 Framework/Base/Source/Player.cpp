@@ -2,7 +2,7 @@
 #include "GlobalDatas.h"
 #include "Controls.h"
 static Player* player_Instance = 0;
-int currentTile[5] = { 237, 2, 3, 4, 5 };
+int currentTile[5] = { 237, 282, 3, 4, 5 };
 
 Player::Player()
 {
@@ -28,6 +28,7 @@ Player::~Player()
 }
 
 void Player::Update(double dt)
+
 {
 	if (m_TileMap != nullptr)
 	{
@@ -300,7 +301,7 @@ void Player::UpdateMovement(double dt)
 	{
 		if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_LSTICKER)))
 		{
-			player->Set_cMoveSpeed(300.f);
+			player->Set_cMoveSpeed(150.f);
 		}
 		else{
 			player->Set_cMoveSpeed(100.f);
@@ -311,7 +312,7 @@ void Player::UpdateMovement(double dt)
 	{
 		if (controls.isKeyboardButtonHeld(KEYBOARD_L_SHIFT))
 		{
-			player->Set_cMoveSpeed(300.f);
+			player->Set_cMoveSpeed(200.f);
 		}
 		else{
 			player->Set_cMoveSpeed(100.f);

@@ -3,7 +3,15 @@
 
 #include "SceneMapEditor.h"
 #include "Pathfinding.h"
+#include <vector>
+using std::vector;
 
+enum PLAYER_STATES{
+	PS_INGAME,
+	PS_INTUT,
+	PS_INTUT2,
+	PS_INTUT3
+};
 class TutorialScene : public Scenebase
 {
 
@@ -20,19 +28,16 @@ public:
     //Update function
     void UpdatePlayerInputUpdates(double dt);
 
-    //Render
-    void RenderMainCharacter();
-	Scenebase *renderthesprite;
+	//TextFile
+	void readTextFile(string filename);
+protected:
+	vector<string>tutorialText;
 
 private:
-	float Test_X_OFFSET;
-	float Test_Y_OFFSET;
-	float netScale;
-	bool netHit;
-	bool stop;
-	Vector3 controllermovement;
-
+	float netScale;;
     TileMap tutorialMap;
+	PLAYER_STATES playerState;
+	string newLine;
 };
 
 #endif

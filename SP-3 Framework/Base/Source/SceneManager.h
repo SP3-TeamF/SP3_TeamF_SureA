@@ -1,12 +1,15 @@
 #ifndef SCENEMANAGER_H_
 #define SCENEMANAGER_H_
 
+#define sceneManager SceneManager::GetInstance()
+
 #include "test.h"
 #include "Scene.h"
 #include "ScenePathTest.h"
 #include "TutorialScene.h"
 #include "Collisiontest.h"
 #include "SceneMapEditor.h"
+#include "MainMenu.h"
 
 enum SCENE_STATES
 {
@@ -18,6 +21,13 @@ enum SCENE_STATES
 class SceneManager
 {
 public:
+
+	static SceneManager& GetInstance()
+	{
+		static SceneManager scene_Manager;
+		return scene_Manager;
+	}
+
     SceneManager();
     virtual ~SceneManager();
 
@@ -26,12 +36,13 @@ public:
     virtual void Render();
     virtual void Update(double dt);
 
-private:
+
     Scene* currentScene;
     ScenePathTest* scenePathTest;
     TutorialScene* tutorialScene;
     Collisiontest* collisionTest;
     SceneMapEditor* sceneMapEditor;
+	MainMenu* mainMenu;
 
 };
 

@@ -8,6 +8,9 @@ SceneManager::SceneManager()
     this->tutorialScene = new TutorialScene();
     this->collisionTest = new Collisiontest();
     this->sceneMapEditor = new SceneMapEditor();
+	this->mainMenu = new MainMenu();
+
+	Init();
 }
 
 SceneManager::~SceneManager()
@@ -16,12 +19,13 @@ SceneManager::~SceneManager()
 
 void SceneManager::Init()
 {
-    this->tutorialScene->Init();
     this->scenePathTest->Init();
     this->collisionTest->Init();
     this->sceneMapEditor->Init();
-    
-	this->currentScene = scenePathTest;
+	this->tutorialScene->Init();
+	this->mainMenu->Init();
+
+	this->currentScene = mainMenu;
     this->currentScene->Reset();
 }
 
@@ -52,6 +56,11 @@ void SceneManager::Update(double dt)
         currentScene = scenePathTest;
         currentScene->Reset();
     }
+	else if (controls.isKeyboardButtonPressed(KEYBOARD_5))
+	{
+		currentScene = mainMenu;
+		mainMenu->Reset();
+	}
 
     currentScene->Update(dt);
 }

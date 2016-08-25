@@ -30,7 +30,7 @@ public:
     void InAirUpdate(double dt);
     virtual void Update(double dt);
     void UpdateMovement(double dt);
-	void fireWeapon(Vector3 view, Vector3 position);
+	void UpdateBullets(double dt);
 
     //Getters
     bool GetInAir();
@@ -64,6 +64,7 @@ private:
     int rightBorder;
 
     PLAYER_STATE current_Player_State;
+
 };
 
 #endif PLAYER_H_

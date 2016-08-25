@@ -160,7 +160,23 @@ Node* Pathfinding::GetNextNode()
     if (nodeIndex >= 0)
     {
         nextNode = openList[nodeIndex];
-        visitedList.push_back(nextNode);
+		bool shouldPush = true;
+		for (auto test : visitedList)
+		{
+			if (test->nodeID == nextNode->nodeID)
+			{
+				shouldPush = false;
+				break;
+			}
+		}
+		if (shouldPush)
+		{
+			visitedList.push_back(nextNode);
+		}
+		else
+		{
+			delete nextNode;
+		}
         openList.erase(openList.begin() + nodeIndex);
     }
 
@@ -212,7 +228,7 @@ void Pathfinding::PathOpened(int x, int y, float newCost, Node* parent)
 
 void Pathfinding::ContinuePath()
 {
-    for (int repeat = 0; repeat < 200; ++repeat)
+    for (int repeat = 0; repeat < 10; ++repeat)
     {
         if (openList.empty())
         {

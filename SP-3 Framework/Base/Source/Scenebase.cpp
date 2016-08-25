@@ -10,17 +10,12 @@
 
 static const float SKYBOXSIZE = 1000.f;
 
-Scenebase::Scenebase():m_cMinimap(NULL)
+Scenebase::Scenebase()
 {
 }
 
 Scenebase::~Scenebase()
 {
-	if (m_cMinimap)
-	{
-		delete m_cMinimap;
-		m_cMinimap = NULL;
-	}
     Exit();
 }
 
@@ -115,12 +110,8 @@ void Scenebase::Init()
 		meshList[i] = NULL;
 	}
 
-
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
-	meshList[GEO_TEXT]->textureID = LoadTGA("Image//Harrington.tga");
-
-	meshList[GEO_TEXT1] = MeshBuilder::GenerateText("text", 16, 16);
-	meshList[GEO_TEXT1]->textureID = LoadTGA("Image//Harrington1.tga");
+	meshList[GEO_TEXT]->textureID = LoadTGA("Image//Harrington1.tga");
 
     meshList[GEO_BACKGROUND] = MeshBuilder::Generate2DMesh("GEO_BACKGROUND", Color(1, 1, 1), 0.0f, 0.0f, 800.0f, 600.0f);
     meshList[GEO_BACKGROUND]->textureID = LoadTGA("Image//Night_Sky.tga");
@@ -136,13 +127,7 @@ void Scenebase::Init()
     EnemyImagesInit();
     PlayerImagesInit();
     BulletImagesInit();
-	
-	m_cMinimap = new CMinimap();
-	m_cMinimap->SetBackground(MeshBuilder::GenerateSquareMinimap("MINIMAP", Color(1, 1, 1), 1.f));
-	m_cMinimap->GetBackground()->textureID = LoadTGA("Image//Map1.tga");
-
-	m_cMinimap->SetBorder(MeshBuilder::GenerateQuad("MINIMAPBORDER", Color(1, 1, 0), 1.f));
-	m_cMinimap->SetAvatar(MeshBuilder::GenerateMinimapAvatar("MINIMAPAVATAR", Color(1, 0, 0), 0.5f));
+	MainMenuInit();
 
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 1000 units
 	Mtx44 perspective;
@@ -427,6 +412,18 @@ void Scenebase::HUD_ImagesInit()
     meshList[GEO_HUDAIR]->textureID = LoadTGA("Image//HUD IMAGES//HUDAir.tga");
 }
 
+void Scenebase::MainMenuInit()
+{
+	meshList[GEO_MAINMENU] = MeshBuilder::Generate2DMesh("GEO_MAINMENU", Color(1, 1, 1), 0.0f, 0.0f, 1024, 800.0f);
+	meshList[GEO_MAINMENU]->textureID = LoadTGA("Image//MAINMENU IMAGES//MainMenu.tga");
+
+	meshList[GEO_ARROW] = MeshBuilder::GenerateQuad("GEO_ARROW", Color(1, 1, 1), 50.f);
+	meshList[GEO_ARROW]->textureID = LoadTGA("Image//MAINMENU IMAGES//Arrow.tga");
+
+	meshList[GEO_MAINMENU_EXIT] = MeshBuilder::Generate2DMesh("GEO_ARROW", Color(1, 1, 1), 0.0f, 0.0f, 1024, 800.0f);
+	meshList[GEO_MAINMENU_EXIT]->textureID = LoadTGA("Image//MAINMENU IMAGES//MainMenu_Exit.tga");
+}
+
 void Scenebase::UpdateSpritesAnimation(double dt)
 {
 	SpriteAnimation *sa1 = dynamic_cast<SpriteAnimation*>(meshList[GEO_MCDOWN]);
@@ -687,43 +684,7 @@ void Scenebase::RenderHUD(){
 	Render2DMesh(meshList[GEO_HUDNET], false, 1, Application::GetInstance().GetWindowWidth() * 0.28f, Application::GetInstance().GetWindowHeight() * 0.91f);
 	Render2DMesh(meshList[GEO_HUDFIRE], false, 1, Application::GetInstance().GetWindowWidth() * 0.28f, Application::GetInstance().GetWindowHeight() * 0.87f);
 	Render2DMesh(meshList[GEO_HUDWATER], false, 1, Application::GetInstance().GetWindowWidth() * 0.28f, Application::GetInstance().GetWindowHeight() * 0.83f);
-	
 	Render2DMesh(meshList[GEO_HUDAIR], false, 0.8, Application::GetInstance().GetWindowWidth() * 0.283f, Application::GetInstance().GetWindowHeight() * 0.795f);
-	
-	//if (bullet->GetBulletType()==BT_AIR)
-	//Render2DMesh(meshList[GEO_AIR], false, 75, Application::GetInstance().GetWindowWidth() * 0.283f + 325, Application::GetInstance().GetWindowHeight() * 0.795f + 40);
-	//if (bullet->GetBulletType() == BT_WATER)
-	//Render2DMesh(meshList[GEO_WATER], false, 75, Application::GetInstance().GetWindowWidth() * 0.283f + 325, Application::GetInstance().GetWindowHeight() * 0.795f + 40);
-	//if(bullet->GetBulletType() == BT_FIRE)
-	//Render2DMesh(meshList[GEO_FIRE], false, 75, Application::GetInstance().GetWindowWidth() * 0.283f + 325, Application::GetInstance().GetWindowHeight() * 0.795f + 40);
-	//if(bullet->GetBulletType() == BT_NET)
-	//Render2DMesh(meshList[GEO_BIGNET], false, 75, Application::GetInstance().GetWindowWidth() * 0.283f + 325, Application::GetInstance().GetWindowHeight() * 0.795f + 38);
-
-
-	std::ostringstream s;
-	s.precision(5);
-	s << "x   " << Inventory.netbullet;
-	RenderTextOnScreen(meshList[GEO_TEXT1], s.str(), Color(1, 1, 1), 20, 280, 555);
-
-	std::ostringstream ss;
-	ss.precision(5);
-	ss << "x   " << Inventory.firebullet;
-	RenderTextOnScreen(meshList[GEO_TEXT1], ss.str(), Color(1, 1, 1), 20, 280, 530);
-
-	std::ostringstream sss;
-	ss.precision(5);
-	sss << "x   " << Inventory.waterbullet;
-	RenderTextOnScreen(meshList[GEO_TEXT1], sss.str(), Color(1, 1, 1), 20, 280, 505);
-
-	std::ostringstream ssss;
-	ssss.precision(5);
-	ssss << "x   " << Inventory.airbullet;
-	RenderTextOnScreen(meshList[GEO_TEXT1], ssss.str(), Color(1, 1, 1), 20, 280, 480);
-
-	//RenderMeshIn2D(m_cMinimap->GetBorder(), false, 100, Application::GetInstance().GetWindowWidth() * 0.28f, Application::GetInstance().GetWindowHeight() * 0.83f);
-	RenderMeshIn2D(m_cMinimap->GetBackground(), false, 150, Application::GetInstance().GetWindowWidth() * 0.28f-150, Application::GetInstance().GetWindowHeight() * 0.83f+40);
-	//RenderMeshIn2D(m_cMinimap->GetAvatar(), false, 150, Application::GetInstance().GetWindowWidth() * 0.28f - 150, Application::GetInstance().GetWindowHeight() * 0.83f + 40);
-
 }
 
 void Scenebase::RenderSprites()
@@ -939,8 +900,7 @@ void Scenebase::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, fl
 	for (unsigned i = 0; i < text.length(); ++i)
 	{
 		Mtx44 characterSpacing;
-		characterSpacing.SetToTranslation(i * 0.5f
-			, 0.3f, 0); //1.0f is the spacing of each character, you may change this value
+		characterSpacing.SetToTranslation(i * 0.5f, 0.3f, 0); //1.0f is the spacing of each character, you may change this value
 		Mtx44 MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top() * characterSpacing;
 		glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
 
@@ -1033,11 +993,10 @@ void Scenebase::RenderTileMap(TileMap* currentMap, float x_Offset, float y_Offse
 	int tileOffSetX = x_Offset / currentMap->GetTileSize();
     int tileOffSetY = y_Offset / currentMap->GetTileSize();
 
-    for (int y = tileOffSetY; y < tileOffSetY + currentMap->GetNumScreenTile_Height() + 1; ++y)
+    for (int y = tileOffSetY; y < tileOffSetY + currentMap->GetNumScreenTile_Height() +1; ++y)
 	{
         if (y >= currentMap->GetNumWorldTile_Height())
             break;
-
         for (int x = tileOffSetX; x < tileOffSetX + currentMap->GetNumScreenTile_Width()+1; ++x)
 		{
 			if (x >= currentMap->GetNumWorldTile_Width())
@@ -1060,7 +1019,7 @@ void Scenebase::RenderTileMap(TileMap* currentMap, float x_Offset, float y_Offse
 
 void Scenebase::RenderBullet()
 {
-	vector<CBulletInfo*> temp = BulletFactory->GetBulletList();
+	vector<CBulletInfo*> temp = player->playerweapon->GetBulletList();
 
 	for (auto bulletIt : temp)
 	{
@@ -1082,6 +1041,26 @@ void Scenebase::RenderBullet()
 				Render2DMesh(meshList[GEO_BIGNET], false, bulletIt->GetScale().x, bulletIt->GetPosition().x - GlobalData.world_X_offset, bulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
 		}
 	}
+
+	//Enemy Bullets
+	/*vector<CBulletInfo*> tempEnemy = player->playerweapon->GetEnemyBulletList();
+
+	for (auto enemyBulletIt : tempEnemy)
+	{
+		if (enemyBulletIt->GetStatus())
+			Render2DMesh(meshList[GEO_FIRE], false, 32.0f, enemyBulletIt->GetPosition().x - GlobalData.world_X_offset, enemyBulletIt->GetPosition().y - GlobalData.world_Y_offset, 0);
+	}*/
+}
+
+void Scenebase::RenderMainMenu()
+{
+	Render2DMesh(meshList[GEO_MAINMENU], false, 1.0f);
+	RenderTextOnScreen(meshList[GEO_TEXT], "PLAY", Color(1, 1, 1), 50.f, Application::GetWindowWidth() *0.1f, Application::GetWindowHeight() *0.4f);
+	RenderTextOnScreen(meshList[GEO_TEXT], "LOAD", Color(1, 1, 1), 50.f, Application::GetWindowWidth() *0.25f, Application::GetWindowHeight() *0.4f);
+	RenderTextOnScreen(meshList[GEO_TEXT], "CREDIT", Color(1, 1, 1), 50.f, Application::GetWindowWidth() *0.4f, Application::GetWindowHeight() *0.4f);
+	RenderTextOnScreen(meshList[GEO_TEXT], "EXIT", Color(1, 1, 1), 50.f, Application::GetWindowWidth() *0.6f, Application::GetWindowHeight() *0.4f);
+
+
 }
 
 //Other Functions

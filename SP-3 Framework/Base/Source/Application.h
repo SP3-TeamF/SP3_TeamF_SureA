@@ -4,7 +4,6 @@
 #include "timer.h"
 #include "MyMath.h"
 #include "GlobalDatas.h"
-#include "SceneManager.h"
 #include "Collisiontest.h"
 
 class Application
@@ -34,7 +33,6 @@ public:
 	static bool IsMousePressed(unsigned short key);
 	static void GetCursorPos(double *xpos, double *ypos);
 
-
 private:
 	Application();
 	~Application();
@@ -49,9 +47,6 @@ private:
 	double m_dElapsedTime;
 	double m_dAccumulatedTime_ThreadOne;
 	double m_dAccumulatedTime_ThreadTwo;
-
-	//handler for scene
-    SceneManager* currentScene;
 };
 
 #endif

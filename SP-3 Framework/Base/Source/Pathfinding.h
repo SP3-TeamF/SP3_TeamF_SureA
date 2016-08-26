@@ -26,7 +26,7 @@ public:
     void ClearShortestPath();
 
     //Getters
-    queue<Vector3*> GetWayPoints();
+    queue<Vector3> GetWayPoints();
     Vector3 NextPathPos(Vector3 position);
     
     //Reset function
@@ -45,7 +45,7 @@ public:
     bool m_PathUnable;
 
     //queue of waypoint locations
-    queue<Vector3*> wayPoints;
+    queue<Vector3> wayPoints;
 
 private:
     //Starting Node
@@ -61,7 +61,7 @@ private:
     vector<Node*> visitedList;
 
     //Current shortest path
-    vector<Vector3*> shortestPath;
+    vector<Vector3> shortestPath;
 
     //Set the next start and end
     void SetStartAndEnd(Node* startNode, Node* lastNode);

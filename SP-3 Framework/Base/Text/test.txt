@@ -1,2 +1,9 @@
 Hi! Welcome!
-Test
+In The Last Wisperer, your objective
+is to capture wisps, and
+use the wisps to shoot at enemies.
+Use WASD or the left stick to 
+move around. Use the
+arrow keys or right stick
+to aim. Space or right
+trigger to shoot!

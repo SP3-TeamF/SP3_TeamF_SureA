@@ -40,6 +40,9 @@ private:
 	PLAYER_STATES playerState;
 	string newLine;
 	BasicEnemy tempEnemy;
+	bool fireDone;
+	bool waterDone;
+	bool airDone;
 };
 
 #endif

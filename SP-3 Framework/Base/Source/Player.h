@@ -2,6 +2,8 @@
 #include "Character.h"
 #include "AABB.h"
 #include "weapon.h"
+#include "PlayerWeapon.h"
+
 
 #ifndef PLAYER_H_
 #define PLAYER_H_
@@ -50,6 +52,8 @@ public:
 
 	weapon *playerweapon;
 
+	PlayerWeapon* p_Weapon;
+
 protected:
     Player();
     ~Player();
@@ -63,7 +67,6 @@ private:
     int rightBorder;
 
     PLAYER_STATE current_Player_State;
-
 };
 
 #endif PLAYER_H_

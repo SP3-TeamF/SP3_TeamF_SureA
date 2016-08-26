@@ -54,8 +54,6 @@ void BasicEnemy::Update(double dt)
 	enemyHitbox.SetPosition(this->c_Position + Vector3(+m_TileMap->GetTileSize() * 0.5, +m_TileMap->GetTileSize() * 0.5, 0));
 
 	collisionCheck();
-	//cout << Hitpoint << endl;
-	//cout << enemyHitbox.position << endl;
 
     switch (CURRENT_STATE)
     {

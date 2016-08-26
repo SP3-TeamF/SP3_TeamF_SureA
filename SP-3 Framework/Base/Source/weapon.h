@@ -25,28 +25,26 @@ public:
 	~weapon();
 
     void Update(double dt);
-    void reloadWeapon();
     void updateBullets(double dt);
     void resetWeaponAmmo();
-    void fireWeapon(Vector3 view, Vector3 position);
-	void renderGO();
+    virtual void fireWeapon(Vector3 view, Vector3 position);
+
+
+	//Getters
+	int getCurrentHeldAmmo();
+	int getCurrentLoadedBullet();
+	int getMaxClipSize();
 	Vector3 getBulletPosition();
-    
+	double getWeaponReloadTime();
+
+
     bool canFireBullet();
 
-	double getWeaponReloadTime();
-    int getCurrentHeldAmmo();
-    int getCurrentLoadedBullet();
-    int getMaxClipSize();
-    int getMaxAmmoCapacity();
 	int weaponDamage;
-	AABB test;
-	void bulletCollision(double dt);
+
+	WEAPON_TYPE WeaponType;
 
 protected:
-
-
-private:
 	int maxClipSize;
 	int currentHeldAmmo;
 	int maxAmmoCapacity;
@@ -55,12 +53,9 @@ private:
 	bool isReloading;
 
 	double reloadTimer;
-    double currentTime;
-    double weaponReloadTime;
-    double timeBetweenEachBullet;
-
-	WEAPON_TYPE WeaponType;
-
+	double currentTime;
+	double weaponReloadTime;
+	double timeBetweenEachBullet;
 
 };
 

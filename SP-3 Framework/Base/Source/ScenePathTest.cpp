@@ -55,7 +55,7 @@ void ScenePathTest::Render()
     }
 	Scenebase::RenderBullet();
     Render2DMesh(meshList[GEO_MCDOWN], false, 32, player->Get_cPosition().x, player->Get_cPosition().y, 0);
-	Render2DMesh(meshList[GEO_FIRE], false, 32, testEnemy.Get_cPosition().x + m_TileMap->GetTileSize() * 0.5, testEnemy.Get_cPosition().y + m_TileMap->GetTileSize() * 0.5, 0);
+	Render2DMesh(meshList[GEO_FIRE], false, 32, testEnemy.Get_cPosition().x + m_TileMap->GetTileSize() * 0.5 - GlobalData.world_X_offset, testEnemy.Get_cPosition().y + m_TileMap->GetTileSize() * 0.5 - GlobalData.world_Y_offset, 0);
 }
 
 //Other Functions
@@ -80,7 +80,6 @@ void ScenePathTest::Reset()
     testEnemy.SetScanRadius(1000);
     testEnemy.Set_cMoveSpeed(100);
     testEnemy.SetAttackRadius(20);
-
+    testEnemy.Set_cPosition(Vector3(380, 600, 0));
 	testEnemy.Set_cPosition(Vector3(480, 696, 0));
-
 }

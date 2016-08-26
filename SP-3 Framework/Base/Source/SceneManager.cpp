@@ -9,7 +9,7 @@ SceneManager::SceneManager()
     this->collisionTest = new Collisiontest();
     this->sceneMapEditor = new SceneMapEditor();
 	this->mainMenu = new MainMenu();
-	this->mainMenuExit = new MainMenuExit();
+
 	Init();
 }
 
@@ -24,7 +24,6 @@ void SceneManager::Init()
     this->sceneMapEditor->Init();
 	this->tutorialScene->Init();
 	this->mainMenu->Init();
-	this->mainMenuExit->Init();
 
 	this->currentScene = mainMenu;
     this->currentScene->Reset();
@@ -40,6 +39,7 @@ void SceneManager::Update(double dt)
     if (controls.isKeyboardButtonPressed(KEYBOARD_1))
     {
         currentScene = sceneMapEditor;
+		cout << "Kapo" << std::endl;
         currentScene->Reset();
     }
     else if (controls.isKeyboardButtonPressed(KEYBOARD_2))
@@ -47,11 +47,11 @@ void SceneManager::Update(double dt)
         currentScene = tutorialScene;
         currentScene->Reset();
     }
-    else if (controls.isKeyboardButtonPressed(KEYBOARD_3))
-    {
-        currentScene = collisionTest;
-        currentScene->Reset();
-    }
+    //else if (controls.isKeyboardButtonPressed(KEYBOARD_3))
+    //{
+    //    currentScene = collisionTest;
+    //    currentScene->Reset();
+    //}
     else if (controls.isKeyboardButtonPressed(KEYBOARD_4))
     {
         currentScene = scenePathTest;
@@ -62,7 +62,6 @@ void SceneManager::Update(double dt)
 		currentScene = mainMenu;
 		mainMenu->Reset();
 	}
-
     currentScene->Update(dt);
 }
 

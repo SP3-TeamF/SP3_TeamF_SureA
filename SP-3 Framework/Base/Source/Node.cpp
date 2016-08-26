@@ -24,7 +24,8 @@ int Node::GetF()
 int Node::GetManhattanDistance(Vector3 endPos)
 {
     return (
-        abs(endPos.x - this->position.x) +
-        abs(endPos.y - this->position.y)
+        (abs(endPos.x - this->position.x) +
+        abs(endPos.y - this->position.y))
+		* 10
         );
 }

@@ -36,9 +36,7 @@ void Pathfinding::ClearShortestPath()
 {
     while (!shortestPath.empty())
     {
-        Vector3* temp = shortestPath.back();
         shortestPath.pop_back();
-        delete temp;
     }
 }
 
@@ -69,8 +67,8 @@ Vector3 Pathfinding::NextPathPos(Vector3 position)
     int nodeIndex = 1;
 
     Vector3 nextPos;
-    nextPos.x = shortestPath[shortestPath.size() - nodeIndex]->x;
-    nextPos.y = shortestPath[shortestPath.size() - nodeIndex]->y;
+    nextPos.x = shortestPath[shortestPath.size() - nodeIndex].x;
+    nextPos.y = shortestPath[shortestPath.size() - nodeIndex].y;
 
     Vector3 distance = nextPos - position;
 
@@ -85,7 +83,7 @@ Vector3 Pathfinding::NextPathPos(Vector3 position)
     return nextPos;
 }
 
-queue<Vector3*> Pathfinding::GetWayPoints()
+queue<Vector3> Pathfinding::GetWayPoints()
 {
     for (int i = shortestPath.size() - 1; i >= 0; --i)
     {
@@ -172,12 +170,12 @@ Node* Pathfinding::GetNextNode()
 		if (shouldPush)
 		{
 			visitedList.push_back(nextNode);
+			openList.erase(openList.begin() + nodeIndex);
 		}
 		else
 		{
 			delete nextNode;
 		}
-        openList.erase(openList.begin() + nodeIndex);
     }
 
     return nextNode;
@@ -202,7 +200,7 @@ void Pathfinding::PathOpened(int x, int y, float newCost, Node* parent)
 
     Node* newNode = new Node(Vector3(x, y), parent);
     newNode->gValue = newCost;
-    newNode->heuristic = parent->GetManhattanDistance(endNode->position);
+	newNode->heuristic = newNode->GetManhattanDistance(endNode->position);
 
     for (int i = 0; i < openList.size(); ++i)
     {
@@ -212,7 +210,7 @@ void Pathfinding::PathOpened(int x, int y, float newCost, Node* parent)
 
             if (openList[i]->GetF() > newF)
             {
-                openList[i]->gValue = newNode->gValue;
+                openList[i]->gValue = newNode->gValue + newCost;
                 openList[i]->parentNode = newNode;
             }
             else
@@ -246,7 +244,7 @@ void Pathfinding::ContinuePath()
 
             for (getPath = endNode; getPath != nullptr; getPath = getPath->parentNode)
             {
-                shortestPath.push_back(new Vector3(getPath->position.x, getPath->position.y));
+                shortestPath.push_back(Vector3(getPath->position.x, getPath->position.y));
                 m_FoundGoal = true;
             }
             return;

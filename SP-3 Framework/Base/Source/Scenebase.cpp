@@ -718,6 +718,20 @@ void Scenebase::RenderHUD(){
 	ssss << "x   " << Inventory.airbullet;
 	RenderTextOnScreen(meshList[GEO_TEXT], ssss.str(), Color(1, 1, 1), 20, 280, 480);
 
+	//HUD Selected
+	if (player->playerweapon->WeaponType == WT_NET){
+		Render2DMesh(meshList[GEO_HUDNET], false, 2, Application::GetInstance().GetWindowWidth() * 0.565f, Application::GetInstance().GetWindowHeight() * 0.825f);
+	}
+	if (player->playerweapon->WeaponType == WT_AIR){
+		Render2DMesh(meshList[GEO_HUDAIR], false, 2, Application::GetInstance().GetWindowWidth() * 0.565f, Application::GetInstance().GetWindowHeight() * 0.825f);
+	}
+	if (player->playerweapon->WeaponType == WT_WATER){
+		Render2DMesh(meshList[GEO_HUDWATER], false, 2, Application::GetInstance().GetWindowWidth() * 0.565f, Application::GetInstance().GetWindowHeight() * 0.825f);
+	}
+	if (player->playerweapon->WeaponType == WT_FIRE){
+		Render2DMesh(meshList[GEO_HUDFIRE], false, 2, Application::GetInstance().GetWindowWidth() * 0.565f, Application::GetInstance().GetWindowHeight() * 0.825f);
+	}
+
 	//RenderMeshIn2D(m_cMinimap->GetBorder(), false, 100, Application::GetInstance().GetWindowWidth() * 0.28f, Application::GetInstance().GetWindowHeight() * 0.83f);
 	RenderMeshIn2D(m_cMinimap->GetBackground(), false, 150, Application::GetInstance().GetWindowWidth() * 0.28f - 150, Application::GetInstance().GetWindowHeight() * 0.83f + 40);
 	//RenderMeshIn2D(m_cMinimap->GetAvatar(), false, 150, Application::GetInstance().GetWindowWidth() * 0.28f - 150, Application::GetInstance().GetWindowHeight() * 0.83f + 40);
@@ -1088,13 +1102,6 @@ void Scenebase::RenderMainMenu()
 	RenderTextOnScreen(meshList[GEO_TEXT], "EXIT", Color(1, 1, 1), 50.f, Application::GetWindowWidth() *0.6f, Application::GetWindowHeight() *0.4f);
 
 
-}
-
-void Scenebase::RenderMainMenuExit()
-{
-	Render2DMesh(meshList[GEO_MAINMENU_EXIT], false, 1.0f);
-	RenderTextOnScreen(meshList[GEO_TEXT], "YES", Color(1, 1, 1), 50.f, Application::GetWindowWidth() *0.2f, Application::GetWindowHeight() *0.4f);
-	RenderTextOnScreen(meshList[GEO_TEXT], "NO", Color(1, 1, 1), 50.f, Application::GetWindowWidth() *0.6f, Application::GetWindowHeight() *0.4f);
 }
 
 //Other Functions

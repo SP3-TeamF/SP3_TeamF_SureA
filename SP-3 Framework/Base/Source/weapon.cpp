@@ -35,7 +35,6 @@ weapon::weapon(float timeBetweenEachBullet, int maxClipSize, int maxAmmoCapacity
     this->weaponReloadTime = reloadTime;
 	this->weaponDamage = weaponDamage;
 	reloadTimer = 0;
-
 }
 
 void weapon::fireWeapon(Vector3 view, Vector3 position)
@@ -104,45 +103,6 @@ void weapon::fireWeapon(Vector3 view, Vector3 position)
 
 void weapon::Update(double dt)
 {
-	if (GlobalData.isControllerConnected)
-	{
-		if ((controls.GetIsControllerTriggerPressed(CONTROLLER_1, R_TRIGGER)))
-		{
-			fireWeapon((controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK)), player->Get_cPosition()+Vector3(GlobalData.world_X_offset,GlobalData.world_Y_offset,0));
-		}
-		if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_UP))){
-			WeaponType = WT_NET;
-		}
-		if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_DOWN))){
-			WeaponType = WT_WATER;
-		}
-		if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_RIGHT))){
-			WeaponType = WT_AIR;
-		}
-		if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_LEFT))){
-			WeaponType = WT_FIRE;
-		}
-	}
-	else
-	{
-		if ( controls.isKeyboardButtonPressed(KEYBOARD_1)){
-			WeaponType = WT_NET;
-		}
-		if (controls.isKeyboardButtonPressed(KEYBOARD_2)){
-			WeaponType = WT_WATER;
-		}
-		if (controls.isKeyboardButtonPressed(KEYBOARD_3)){
-			WeaponType = WT_AIR;
-		}
-		if (controls.isKeyboardButtonPressed(KEYBOARD_4)){
-			WeaponType = WT_FIRE;
-		}
-		if (controls.isKeyboardButtonPressed(KEYBOARD_SPACE))
-		{
-			fireWeapon(Vector3(1, 0, 0), player->Get_cPosition());
-		}
-	}
-
 	if (isReloading == true && reloadTimer <=1){
 		reloadTimer += dt;
 		currentLoadedAmmo = 1;
@@ -151,25 +111,8 @@ void weapon::Update(double dt)
 		reloadTimer = 0;
 		isReloading = false;
 	}
-	
 	currentTime += dt;
 	BulletFactory->Update(dt);
-	//for (auto bulletIt : m_goList)
-	//{
-	//	currentTime += dt;
-	//	if (bulletIt->GetStatus())
-	//	{
-	//		bulletIt->Update(dt);
-	//	}
-	//}
-	//for (auto enemyBulletIt : enemyList)
-	//{
-	//	if (enemyBulletIt->GetStatus())
-	//	{
-	//		enemyBulletIt->Update(dt);
-	//	}
-	//}
-	
 }
 
 bool weapon::canFireBullet()
@@ -180,14 +123,6 @@ bool weapon::canFireBullet()
     }
 
     return false;
-}
-
-void weapon::reloadWeapon()
-{
-	if (currentHeldAmmo > 0 && currentLoadedAmmo < maxClipSize)
-	{
-		currentLoadedAmmo = 1;
-	}
 }
 
 double weapon::getWeaponReloadTime()
@@ -210,10 +145,6 @@ int weapon::getMaxClipSize()
     return maxClipSize;
 }
 
-int weapon::getMaxAmmoCapacity()
-{
-    return maxAmmoCapacity;
-}
 
 void weapon::resetWeaponAmmo()
 {

@@ -2,6 +2,7 @@
 #include "GlobalDatas.h"
 #include "Controls.h"
 #include "SceneManager.h"
+#include "Application.h"
 static Player* player_Instance = 0;
 int currentTile[5] = { 237, 282, 3, 4, 5 };
 
@@ -304,7 +305,7 @@ void Player::UpdateMovement(double dt)
 	//To Let Player stay exactly on ground
 	c_Movement.SetZero();
 
-	if (GlobalData.isControllerConnected)
+	//if (GlobalData.isControllerConnected)
 	{
 		if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_LSTICKER)))
 		{
@@ -315,7 +316,7 @@ void Player::UpdateMovement(double dt)
 		}
 		player->Add_cMovement(controls.GetControllerDirection(CONTROLLER_1, L_JOYSTICK));
 	}
-	else
+	//else
 	{
 		if (controls.isKeyboardButtonHeld(KEYBOARD_L_SHIFT))
 		{
@@ -378,6 +379,61 @@ void Player::UpdateMovement(double dt)
 			player->Add_cMovement(Vector3(-1, 0, 0));
 		}
 	}
+
+	//Fire Weapon
+	//if (GlobalData.isControllerConnected)
+	{
+		if ((controls.GetIsControllerTriggerPressed(CONTROLLER_1, R_TRIGGER)))
+		{
+			playerweapon->fireWeapon((controls.GetControllerDirection(CONTROLLER_1, R_JOYSTICK)), player->Get_cPosition() + Vector3(GlobalData.world_X_offset, GlobalData.world_Y_offset, 0));
+		}
+		if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_UP))){
+			playerweapon->WeaponType = WT_NET;
+		}
+		if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_DOWN))){
+			playerweapon->WeaponType = WT_WATER;
+		}
+		if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_RIGHT))){
+			playerweapon->WeaponType = WT_AIR;
+		}
+		if ((controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_DPAD_LEFT))){
+			playerweapon->WeaponType = WT_FIRE;
+		}
+	}
+	//else
+	{
+		if (controls.isKeyboardButtonPressed(KEYBOARD_1)){
+			playerweapon->WeaponType = WT_NET;
+		}
+		if (controls.isKeyboardButtonPressed(KEYBOARD_2)){
+			playerweapon->WeaponType = WT_WATER;
+		}
+		if (controls.isKeyboardButtonPressed(KEYBOARD_3)){
+			playerweapon->WeaponType = WT_AIR;
+		}
+		if (controls.isKeyboardButtonPressed(KEYBOARD_4)){
+			playerweapon->WeaponType = WT_FIRE;
+		}
+		if (controls.isKeyboardButtonPressed(KEYBOARD_SPACE))
+		{
+			double x, y;
+			Application::GetCursorPos(&x, &y);
+			int w = Application::GetWindowWidth();
+			int h = Application::GetWindowHeight();
+
+			x = m_TileMap->GetScreenWidth() * (x / w);
+			y = m_TileMap->GetScreenHeight() * ((h - y) / h);
+		/*	playerweapon->fireWeapon(Vector3(x - (player->Get_cPosition().x - GlobalData.world_X_offset), y - (player->Get_cPosition().y - GlobalData.world_Y_offset), 0),
+									player->Get_cPosition() + Vector3(GlobalData.world_X_offset, GlobalData.world_Y_offset, 0));*/
+
+			float playerupdatedpos_X = player->Get_cPosition().x;
+			float playerupdatedpos_Y = player->Get_cPosition().y;
+
+			playerweapon->fireWeapon(Vector3(x - playerupdatedpos_X, y - playerupdatedpos_Y, 0).Normalized(), player->Get_cPosition() + Vector3(GlobalData.world_X_offset, GlobalData.world_Y_offset));
+		}
+	}
+
+
 }
 
 bool Player::GetInAir()

@@ -1,5 +1,6 @@
 #include "TutorialScene.h"
 #include "Application.h"
+#include "SceneManager.h"
 
 
 TutorialScene::TutorialScene()
@@ -49,6 +50,26 @@ void TutorialScene::Update(double dt)
 	int tilePosY = updatedPos.y / m_TileMap->GetTileSize();
 
 	int c_tile = m_TileMap->GetTileType(tilePosX, tilePosY);
+
+	//Fire
+	if (c_tile == 107){
+		sceneManager.currentScene = sceneManager.scenePathTest;
+		sceneManager.currentScene->Reset();
+		fireDone = true;
+	}
+	//Water
+	if (c_tile == 180){
+		sceneManager.currentScene = sceneManager.scenePathTest;
+		sceneManager.currentScene->Reset();
+		waterDone = true;
+	}
+	//Air
+	if (c_tile == 436){
+		sceneManager.currentScene = sceneManager.scenePathTest;
+		sceneManager.currentScene->Reset();
+		airDone = true;
+	}
+	//Tutorial Tile
 	if (c_tile == 282){
 		if (playerState == PS_INGAME)
 			playerState = PS_INTUT;
@@ -56,10 +77,10 @@ void TutorialScene::Update(double dt)
 	else{
 		playerState = PS_INGAME;
 	}
-	if (controls.isKeyboardButtonPressed(KEYBOARD_G)){
+
+	if (controls.isKeyboardButtonPressed(KEYBOARD_G) && playerState == PS_INTUT){
 		playerState = PS_INTUT2;
 	}
-
 	if (controls.isKeyboardButtonHeld(KEYBOARD_ADD))
 	{
 		heartScale -= 0.1f;
@@ -101,7 +122,7 @@ void TutorialScene::Render()
 	if (playerState != PS_INGAME){
 		Render2DMesh(meshList[GEO_SCROLL], false, 1, Application::GetInstance().GetWindowWidth() * 0.1f, Application::GetInstance().GetWindowHeight()* 0.1f);
 		for (int i = 0; i < tutorialText.size(); i++){
-			RenderTextOnScreen(meshList[GEO_TEXT], tutorialText[i], Color(0,0, 0), 20, Application::GetInstance().GetWindowWidth() * 0.3f, Application::GetInstance().GetWindowHeight() * 0.5f + i * -25);
+			RenderTextOnScreen(meshList[GEO_TEXT], tutorialText[i], Color(0,0, 0), 20, Application::GetInstance().GetWindowWidth() * 0.23f, Application::GetInstance().GetWindowHeight() * 0.5f + i * -25);
 		}
 		tutorialText.clear();
 
@@ -117,7 +138,6 @@ void TutorialScene::readTextFile(string filename){
 		newLine = line + '\n';
 		tutorialText.push_back(newLine);
 	}
-	
 }
 
 
@@ -145,7 +165,7 @@ void TutorialScene::Reset()
 	playerState = PS_INGAME;
 
 	tempEnemy.SetAttackRadius(10);
-	tempEnemy.SetScanRadius(164);
+	tempEnemy.SetScanRadius(100);
 	tempEnemy.Set_cMoveSpeed(100);
 	tempEnemy.Set_cPosition(Vector3(800, 490));
 }

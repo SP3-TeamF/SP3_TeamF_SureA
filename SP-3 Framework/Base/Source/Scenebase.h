@@ -91,7 +91,6 @@ public:
 	void renderHitbox(bool ShowHitbox);
 	void RenderBullet();
 	void RenderMainMenu();
-	void RenderMainMenuExit();
   
 protected:
     enum GEOMETRY_TYPE

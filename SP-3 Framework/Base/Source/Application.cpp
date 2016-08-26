@@ -164,14 +164,14 @@ void Application::Run()
 		if (m_dAccumulatedTime_ThreadOne > 0){
 			//GetMouseUpdate();
 			GetKeyboardUpdate();
-			sceneManager.currentScene->Update(m_dElapsedTime);
+			sceneManager.Update(m_dElapsedTime);
 			m_dAccumulatedTime_ThreadOne = 0.0;
 		}
 		if (m_dAccumulatedTime_ThreadTwo > 1){
 			m_dAccumulatedTime_ThreadTwo = 0.0;
 			GlobalData.isControllerConnected = controls.isControllerPresent(CONTROLLER_1);
 		}
-		sceneManager.currentScene->Render();
+		sceneManager.Render();
 		//Swap buffers
 		glfwSwapBuffers(m_window);
 		//Get and organize events, like keyboard and mouse input, window resizing, etc...

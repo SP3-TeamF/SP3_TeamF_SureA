@@ -121,12 +121,22 @@ void Scenebase::Init()
 
     meshList[GEO_BACKGROUND] = MeshBuilder::Generate2DMesh("GEO_BACKGROUND", Color(1, 1, 1), 0.0f, 0.0f, 800.0f, 600.0f);
     meshList[GEO_BACKGROUND]->textureID = LoadTGA("Image//Night_Sky.tga");
+
+	meshList[GEO_SKYBACK] = MeshBuilder::Generate2DMesh("GEO_BACKGROUND", Color(1, 1, 1), 0.0f, 0.0f, 800.0f, 600.0f);
+	meshList[GEO_SKYBACK]->textureID = LoadTGA("Image//skyback.tga");
 	
 	meshList[GEO_TILESHEET] = MeshBuilder::GenerateTileMesh("TileSheet", 21, 23);
 	meshList[GEO_TILESHEET]->textureID = LoadTGA("Image//TileSheet1.tga");
 
 	meshList[GEO_SCROLL] = MeshBuilder::Generate2DMesh("GEO_SCROLL", Color(1, 1, 1), 0.0f, 0.0f, 800.0f, 600.0f);
 	meshList[GEO_SCROLL]->textureID = LoadTGA("Image//tutScroll.tga");
+
+	meshList[GEO_DOT] = MeshBuilder::GenerateSphere("me", Color(0, 1, 0),10,10, 0.4f);
+
+
+
+	meshList[GEO_ENEMYDOT] = MeshBuilder::GenerateSphere("enemmy", Color(1, 0, 0), 10,10,0.4f);
+
 
     WispImagesInit();
     HUD_ImagesInit();
@@ -146,7 +156,11 @@ void Scenebase::Init()
 	Mtx44 perspective;
 	perspective.SetToPerspective(45.0f, 4.0f / 3.0f, 0.1f, 10000.0f);
 	projectionStack.LoadMatrix(perspective);
-
+	backspeed = 0;
+	offset1 = 0;
+	multi = 1;
+	multi2 = 1;
+	offset2 = 0;
 	bLightEnabled = true;
 
     glDisable(GL_CULL_FACE);
@@ -256,6 +270,23 @@ void Scenebase::EnemyImagesInit()
         sa26->m_anim = new Animation();
         sa26->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
     }
+	meshList[GEO_WATERBACK] = MeshBuilder::GenerateSpriteAnimation("windwisp", 1, 3);
+	meshList[GEO_WATERBACK]->textureID = LoadTGA("Image//waterbackwave.tga");
+	SpriteAnimation *sa27 = dynamic_cast<SpriteAnimation*>(meshList[GEO_WATERBACK]);
+	if (sa27)
+	{
+		sa27->m_anim = new Animation();
+		sa27->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+
+	meshList[GEO_LAVABACK] = MeshBuilder::GenerateSpriteAnimation("windwisp", 1, 4);
+	meshList[GEO_LAVABACK]->textureID = LoadTGA("Image//lavaback.tga");
+	SpriteAnimation *sa28 = dynamic_cast<SpriteAnimation*>(meshList[GEO_LAVABACK]);
+	if (sa28)
+	{
+		sa28->m_anim = new Animation();
+		sa28->m_anim->Set(0, 3, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
 
 }
 
@@ -622,6 +653,20 @@ void Scenebase::UpdateSpritesAnimation(double dt)
 		sa26->m_anim->animActive = true;
 	}
 
+
+	SpriteAnimation *sa27 = dynamic_cast<SpriteAnimation*>(meshList[GEO_WATERBACK]);
+	if (sa27)
+	{
+		sa27->Update(dt);
+		sa27->m_anim->animActive = true;
+	}
+	SpriteAnimation *sa28 = dynamic_cast<SpriteAnimation*>(meshList[GEO_LAVABACK]);
+	if (sa28)
+	{
+		sa28->Update(dt);
+		sa28->m_anim->animActive = true;
+	}
+
 }
 
 //void Scenebase::renderHitbox(bool ShowHitbox)
@@ -681,6 +726,29 @@ void Scenebase::Render()
 	// Model matrix : an identity matrix (model will be at the origin)
 	modelStack.LoadIdentity();
 
+	//Render2DMesh(meshList[GEO_BACKGROUND], false, 2.0f);
+
+
+
+	/*0 to 1600 to 3200
+	start at  1600 3200  */
+	//if (backspeed <-1600 - 1600 * multi)
+	//	multi++;
+	//if (backspeed < -1600 - 1600 * multi2)
+	//	multi2++;
+
+	//Render2DMesh(meshList[GEO_SKYBACK], false, 2, backspeed, 0);
+	////end at 1600
+	//Render2DMesh(meshList[GEO_SKYBACK], false, 2, 1600 * multi + backspeed, 0);
+
+	//Render2DMesh(meshList[GEO_SKYBACK], false, 2, 1600 + 1600 * multi2 + backspeed, 0);
+
+
+	//Render2DMesh(meshList[GEO_WATERBACK], false, 2000,500 ,0, 0);
+	//Render2DMesh(meshList[GEO_LAVABACK], false, 2000, 500, 0, 0);
+	//watermap background
+
+
 	
 }
 
@@ -717,10 +785,23 @@ void Scenebase::RenderHUD(){
 	ssss.precision(5);
 	ssss << "x   " << Inventory.airbullet;
 	RenderTextOnScreen(meshList[GEO_TEXT], ssss.str(), Color(1, 1, 1), 20, 280, 480);
-
 	//RenderMeshIn2D(m_cMinimap->GetBorder(), false, 100, Application::GetInstance().GetWindowWidth() * 0.28f, Application::GetInstance().GetWindowHeight() * 0.83f);
 	RenderMeshIn2D(m_cMinimap->GetBackground(), false, 150, Application::GetInstance().GetWindowWidth() * 0.28f - 150, Application::GetInstance().GetWindowHeight() * 0.83f + 40);
-	//RenderMeshIn2D(m_cMinimap->GetAvatar(), false, 150, Application::GetInstance().GetWindowWidth() * 0.28f - 150, Application::GetInstance().GetWindowHeight() * 0.83f + 40);
+	//RenderMeshIn2D(m_cMinimap->GetAvatar(), false, 300, player->Get_cPosition().x,player->Get_cPosition().y);
+	
+	Render2DMesh(meshList[GEO_DOT], false, 10, ((player->Get_cPosition().x + GlobalData.world_X_offset) / 10 + 60), ((player->Get_cPosition().y + GlobalData.world_Y_offset) / 5.5 + 625));
+	////
+
+	//for (auto enemyIt : Enemy_list)
+	//{
+	//	if (enemyIt.Get_cActive() == true)
+	//	{
+	//		Render2DMesh(meshList[GEO_ENEMYDOT], false, 10, ((enemyIt.Get_cPosition().x + GlobalData.world_X_offset) / 10 + 60), ((enemyIt.Get_cPosition().y + GlobalData.world_Y_offset) / 5.5 + 625));
+	//	}
+	//}
+
+
+
 }
 
 void Scenebase::RenderSprites()

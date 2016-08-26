@@ -13,6 +13,7 @@
 #include "GlobalDatas.h"
 #include "controls.h"
 #include "SpriteAnimation.h"
+#include "BasicEnemy.h"
 
 class Scenebase : public Scene
 {
@@ -92,12 +93,19 @@ public:
 	void RenderBullet();
 	void RenderMainMenu();
 	void RenderMainMenuExit();
-  
+	std::vector<BasicEnemy > Enemy_list;
+
+	float offset1;
+	float offset2;
+	float backspeed;
+	float multi;
+	float multi2;
 protected:
     enum GEOMETRY_TYPE
     {
 		GEO_TEXT,
 		GEO_BACKGROUND,
+		GEO_SKYBACK,
 		GEO_HUD,
 		GEO_HEART,
 		GEO_HPTEX,
@@ -107,6 +115,8 @@ protected:
 		GEO_HUDAIR,
 		GEO_SCROLL,
         GEO_TILESHEET,
+		GEO_DOT,
+		GEO_ENEMYDOT,
 		GEO_TEST,
 		GEO_MCUP,
 		GEO_MCDOWN,
@@ -143,7 +153,8 @@ protected:
 		GEO_MAINMENU,
 		GEO_ARROW,
 		GEO_MAINMENU_EXIT,
-
+		GEO_WATERBACK,
+		GEO_LAVABACK,
         NUM_GEOMETRY,
     };
 

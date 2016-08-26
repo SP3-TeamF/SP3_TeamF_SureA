@@ -12,50 +12,24 @@ BasicEnemy::BasicEnemy()
     attackStrategy = new Attack();
 
     idleStrategy->SetCurrentEnemy(dynamic_cast<Enemy*>(this));
-	chaseStrategy->SetCurrentEnemy(dynamic_cast<Enemy*>(this));
-	attackStrategy->SetCurrentEnemy(dynamic_cast<Enemy*>(this));
+    chaseStrategy->SetCurrentEnemy(dynamic_cast<Enemy*>(this));
+    attackStrategy->SetCurrentEnemy(dynamic_cast<Enemy*>(this));
 
     CURRENT_STATE = IDLE_STATE;
 
     currentStrategy = idleStrategy;
-	enemyHitbox.Set(this->c_Position, 32, 32);
-	Hitpoint = 100;
 }
 
 BasicEnemy::~BasicEnemy()
 {
-}
-
-void BasicEnemy::collisionCheck()
-{
-	if (enemyHitbox.AABBtoAABB(player->playerHitbox) == true)
-	{
-		player->Add_cHealth(-10);
-	}
-
-	vector<CBulletInfo*> temp = BulletFactory->GetBulletList();
-	for (auto bulletIt : temp)
-	{
-		if (bulletIt->GetStatus())
-		{
-			if (enemyHitbox.PointToAABB(bulletIt->GetPosition()) == true)
-			{
-				Hitpoint -= 10;
-				bulletIt->SetStatus(false);
-				break;
-			}
-		}
-	}
+    delete this->idleStrategy;
+    delete this->chaseStrategy;
+    delete this->attackStrategy;
 }
 
 void BasicEnemy::Update(double dt)
 {
     Enemy::Update(dt);
-
-	enemyHitbox.SetPosition(this->c_Position + Vector3(+m_TileMap->GetTileSize() * 0.5, +m_TileMap->GetTileSize() * 0.5, 0));
-
-	collisionCheck();
-
     switch (CURRENT_STATE)
     {
         case Enemy::IDLE_STATE:
@@ -64,6 +38,7 @@ void BasicEnemy::Update(double dt)
             {
                 this->pathStartPosition = this->c_Position / m_TileMap->GetTileSize();
                 this->pathEndPosition = (player->Get_cPosition() + Vector3(GlobalData.world_X_offset, GlobalData.world_Y_offset))/ m_TileMap->GetTileSize();
+                
                 CURRENT_STATE = SCANNING_STATE;
             }
             break;
@@ -78,13 +53,14 @@ void BasicEnemy::Update(double dt)
             }
             else
             {
-                idleStrategy->FindPath();
+                idleStrategy->FindPath();          
             }
+            
             break;
         }
         case Enemy::CHASE_STATE:
         {
-            if (wayPoints.empty())
+            if (wayPoints.empty() || idleStrategy->pathFinder.m_PathUnable)
             {
                 idleStrategy->pathFinder.ResetSearch();
                 CURRENT_STATE = IDLE_STATE;
@@ -106,6 +82,22 @@ void BasicEnemy::Update(double dt)
     }
 }
 
-void BasicEnemy::Reset(){
+void BasicEnemy::Reset()
+{
+    CURRENT_STATE = IDLE_STATE;
+    currentStrategy = idleStrategy;
 
+    while (!wayPoints.empty())
+    {
+        wayPoints.pop();
+    }
+    
+    while (!patrolPoints.empty())
+    {
+        patrolPoints.pop();
+    }
+
+    idleStrategy->pathFinder.ResetSearch();
+    pathStartPosition = Vector3(0, 0, 0);
+    pathEndPosition = Vector3(0, 0, 0);
 }

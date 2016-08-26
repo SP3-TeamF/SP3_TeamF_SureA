@@ -21,7 +21,7 @@ void MainMenuExit::Init()
 void MainMenuExit::Render()
 {
 	Scenebase::Render();
-	Scenebase::RenderMainMenuExit();
+	//Scenebase::RenderMainMenuExit();
 
 	Render2DMesh(meshList[GEO_ARROW], false, 1.0f, m_TileMap->GetScreenWidth() * arrow_posx, m_TileMap->GetScreenHeight() * 0.55625);
 }

@@ -11,14 +11,15 @@ BasicEnemy::BasicEnemy()
     chaseStrategy = new Chase();
     attackStrategy = new Attack();
 
-    idleStrategy->SetCurrentEnemy(*this);
-    chaseStrategy->SetCurrentEnemy(*this);
-    attackStrategy->SetCurrentEnemy(*this);
+    idleStrategy->SetCurrentEnemy(dynamic_cast<Enemy*>(this));
+	chaseStrategy->SetCurrentEnemy(dynamic_cast<Enemy*>(this));
+	attackStrategy->SetCurrentEnemy(dynamic_cast<Enemy*>(this));
 
     CURRENT_STATE = IDLE_STATE;
 
     currentStrategy = idleStrategy;
 	enemyHitbox.Set(this->c_Position, 32, 32);
+	Hitpoint = 100;
 }
 
 BasicEnemy::~BasicEnemy()
@@ -103,4 +104,8 @@ void BasicEnemy::Update(double dt)
             break;
         }
     }
+}
+
+void BasicEnemy::Reset(){
+
 }

@@ -15,13 +15,12 @@ public:
 
     //Setters
     void AttackPlayer();
-    void SetCurrentEnemy(Enemy& targetEnemy);
 
     //Other
     bool InAttackRadius();
 
 private:
-    Enemy* currentEnemy;
+
 
 };
 

@@ -28,12 +28,19 @@ public:
     void SetWaypoints(queue<Vector3> queueWaypoints);
     void SetWaypoints(queue<Vector3*> queueWaypoints);
 
+    void AddPatrolpoints(Vector3 position);
+
     queue<Vector3> wayPoints;
+    queue<Vector3> patrolPoints;
+
+    virtual void Reset() = 0;
+
 protected:
     virtual enum ENEMY_STATES
     {
         IDLE_STATE = 0,
         SCANNING_STATE,
+        PATROL_STATE,
         ATTACK_STATE,
         CHASE_STATE,
         DEAD_STATE,
@@ -48,8 +55,6 @@ protected:
     Vector3 pathStartPosition;
 
     ENEMY_STATES CURRENT_STATE;
-
-	int Hitpoint;
 };
 
 #endif // !ENEMY_H_

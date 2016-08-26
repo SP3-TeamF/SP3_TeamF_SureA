@@ -14,7 +14,6 @@ Enemy::Enemy()
     pathStartPosition = Vector3(0, 0, 0);
 
     CURRENT_STATE = IDLE_STATE;
-	Hitpoint = 100;
 }
 
 Enemy::~Enemy()
@@ -27,11 +26,6 @@ void Enemy::Update(double dt)
     {
         currentStrategy->Update(dt);
     }
-
-	if (Hitpoint <= 0)
-	{
-		CURRENT_STATE = DEAD_STATE;
-	}
 }
 
 //Getters
@@ -78,4 +72,9 @@ void Enemy::SetWaypoints(queue<Vector3*> queueWaypoints)
         wayPoints.push(Vector3(*queueWaypoints.front()));
         queueWaypoints.pop();
     }
+}
+
+void Enemy::AddPatrolpoints(Vector3 position)
+{
+    this->patrolPoints.push(position);
 }

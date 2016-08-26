@@ -5,7 +5,7 @@
 
 Chase::Chase()
 {
-    currentEnemy = nullptr;
+
 }
 
 Chase::~Chase()
@@ -30,12 +30,8 @@ void Chase::Update(double dt)
             dir.Normalize();
 
             Vector3 nextPosition = currentEnemy->Get_cPosition() + (dir * currentEnemy->Get_cMoveSpeed() * dt);
+
             currentEnemy->Set_cPosition(nextPosition);
         }
     }
-}
-
-void Chase::SetCurrentEnemy(Enemy& targetEnemy)
-{
-    this->currentEnemy = &targetEnemy;
 }

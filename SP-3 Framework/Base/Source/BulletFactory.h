@@ -16,9 +16,9 @@ public:
 
 	vector<CBulletInfo*> GetBulletList();
 
-	
 protected:
 	std::vector<CBulletInfo*> m_goList;
+
 private:
 
 };

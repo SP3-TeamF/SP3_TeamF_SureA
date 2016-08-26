@@ -5,7 +5,6 @@
 
 Attack::Attack()
 {
-    currentEnemy = nullptr;
 }
 
 Attack::~Attack()
@@ -32,9 +31,4 @@ bool Attack::InAttackRadius()
 void Attack::AttackPlayer()
 {
 
-}
-
-void Attack::SetCurrentEnemy(Enemy& targetEnemy)
-{
-    this->currentEnemy = &targetEnemy;
 }

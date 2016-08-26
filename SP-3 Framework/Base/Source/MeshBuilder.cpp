@@ -605,9 +605,9 @@ Mesh* MeshBuilder::GenerateTerrain(const std::string &meshName, const std::strin
 	unsigned terrainSize = (unsigned)sqrt((double)heightMap.size());
 
 	//GET OUR VERTICES!~
-	for (int z = 0; z < terrainSize; z++)
+    for (size_t z = 0; z < terrainSize; z++)
 	{
-		for (int x = 0; x < terrainSize; x++)
+        for (size_t x = 0; x < terrainSize; x++)
 		{
 			float scaledHeight = (float)heightMap[z * terrainSize + x] / SCALE_FACTOR;
 

@@ -20,7 +20,7 @@ public:
     //Setter
     void SetCurrentEnemy(Enemy* currentEnemy);
     
-protected:    
+protected:
     Enemy* currentEnemy;
     
 };

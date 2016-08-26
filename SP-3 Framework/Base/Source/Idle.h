@@ -19,12 +19,8 @@ public:
     //Pathfinding functions
     void FindPath();
 
-    //Setters
-    void SetCurrentEnemy(Enemy& targetEnemy);
-
     Pathfinding pathFinder;
 private:
-    Enemy* currentEnemy;
     
 
 };

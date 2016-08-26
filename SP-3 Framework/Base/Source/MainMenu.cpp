@@ -66,7 +66,7 @@ void MainMenu::Update(double dt)
 	if (currently_selected == Play && (controls.isKeyboardButtonPressed(KEYBOARD_ENTER) || controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_A)))
 	{
 		sceneManager.currentScene = sceneManager.tutorialScene;
-		//sceneManager.currentScene->Reset();
+		sceneManager.currentScene->Reset();
 	}
 	if (currently_selected == Load && (controls.isKeyboardButtonPressed(KEYBOARD_ENTER) || controls.isControllerButtonPressed(CONTROLLER_1, CONTROLLER_A)))
 	{

@@ -29,12 +29,25 @@ void TutorialScene::Init()
 	heartMove = 0.f;
 	playerState = PS_INGAME;
 
+    tempEnemy.SetAttackRadius(10);
+    tempEnemy.SetScanRadius(164);
+    tempEnemy.Set_cMoveSpeed(100);
+    tempEnemy.Set_cPosition(Vector3(400, 520));
+
+    tempEnemy2.SetAttackRadius(10);
+    tempEnemy2.SetScanRadius(164);
+    tempEnemy2.Set_cMoveSpeed(100);
+    tempEnemy2.Set_cPosition(Vector3(800, 490));
 }
 
 //Update functions
 void TutorialScene::Update(double dt)
 {
 	tempEnemy.Update(dt);
+    tempEnemy2.Update(dt);
+
+    wispFactory.Update(dt);
+
 	//fps = 1 / dt;
 	//cout << fps << endl;
 	Scenebase::UpdateSpritesAnimation(dt);
@@ -89,7 +102,6 @@ void TutorialScene::UpdatePlayerInputUpdates(double dt)
 //Render functions
 void TutorialScene::Render()
 {
-
 	Scenebase::Render();
 	if (m_TileMap != nullptr)
 	{
@@ -100,26 +112,34 @@ void TutorialScene::Render()
 	Scenebase::RenderSprites();
 	if (playerState != PS_INGAME){
 		Render2DMesh(meshList[GEO_SCROLL], false, 1, Application::GetInstance().GetWindowWidth() * 0.1f, Application::GetInstance().GetWindowHeight()* 0.1f);
-		for (int i = 0; i < tutorialText.size(); i++){
+		for (size_t i = 0; i < tutorialText.size(); i++){
 			RenderTextOnScreen(meshList[GEO_TEXT], tutorialText[i], Color(0,0, 0), 20, Application::GetInstance().GetWindowWidth() * 0.3f, Application::GetInstance().GetWindowHeight() * 0.5f + i * -25);
 		}
 		tutorialText.clear();
 
 	}
 	Render2DMesh(meshList[GEO_FIRE], false, 32, tempEnemy.Get_cPosition().x + m_TileMap->GetTileSize() * 0.5 - GlobalData.world_X_offset, tempEnemy.Get_cPosition().y + m_TileMap->GetTileSize() * 0.5 - GlobalData.world_Y_offset, 0);
+    Render2DMesh(meshList[GEO_FIRE], false, 32, tempEnemy2.Get_cPosition().x + m_TileMap->GetTileSize() * 0.5 - GlobalData.world_X_offset, tempEnemy2.Get_cPosition().y + m_TileMap->GetTileSize() * 0.5 - GlobalData.world_Y_offset, 0);
+    
+    vector<Wisp*> tempWispList = wispFactory.GetWispList();
 
+    for (auto wispIt : tempWispList)
+    {
+        if (wispIt->Get_cActive())
+        {
+            Render2DMesh(meshList[GEO_WATER], false, 32, wispIt->Get_cPosition().x + m_TileMap->GetTileSize() * 0.5 - GlobalData.world_X_offset, wispIt->Get_cPosition().y + m_TileMap->GetTileSize() * 0.5 - GlobalData.world_Y_offset, 0);
+        }
+    }
 }
 
 void TutorialScene::readTextFile(string filename){
 	ifstream file(filename.c_str());
 	string line;
-	while (std::getline(file, line)){
-		newLine = line + '\n';
-		tutorialText.push_back(newLine);
-	}
-	
+    while (std::getline(file, line)){
+        newLine = line + '\n';
+        tutorialText.push_back(newLine);
+    }
 }
-
 
 void TutorialScene::Exit()
 {
@@ -143,9 +163,19 @@ void TutorialScene::Reset()
     heartScale = 5.f;
     heartMove = 0.f;
 	playerState = PS_INGAME;
+    
+    tempEnemy.Reset();
+    tempEnemy2.Reset();
+    
+    tempEnemy.SetAttackRadius(10);
+    tempEnemy.SetScanRadius(164);
+    tempEnemy.Set_cMoveSpeed(100);
+    tempEnemy.Set_cPosition(Vector3(400, 520));
 
-	tempEnemy.SetAttackRadius(10);
-	tempEnemy.SetScanRadius(164);
-	tempEnemy.Set_cMoveSpeed(100);
-	tempEnemy.Set_cPosition(Vector3(800, 490));
+    tempEnemy2.SetAttackRadius(10);
+    tempEnemy2.SetScanRadius(164);
+    tempEnemy2.Set_cMoveSpeed(100);
+    tempEnemy2.Set_cPosition(Vector3(800, 490));
+
+    wispFactory.Reset();
 }

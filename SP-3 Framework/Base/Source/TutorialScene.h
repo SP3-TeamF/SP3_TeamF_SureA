@@ -4,6 +4,7 @@
 #include "SceneMapEditor.h"
 #include "BasicEnemy.h"
 #include "Pathfinding.h"
+#include "WispFactory.h"
 #include <vector>
 using std::vector;
 
@@ -40,6 +41,8 @@ private:
 	PLAYER_STATES playerState;
 	string newLine;
 	BasicEnemy tempEnemy;
+    BasicEnemy tempEnemy2;
+    WispFactory wispFactory;
 };
 
 #endif

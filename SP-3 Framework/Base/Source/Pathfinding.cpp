@@ -228,7 +228,7 @@ void Pathfinding::PathOpened(int x, int y, float newCost, Node* parent)
 
 void Pathfinding::ContinuePath()
 {
-    for (int repeat = 0; repeat < 10; ++repeat)
+    for (int repeat = 0; repeat < 100; ++repeat)
     {
         if (openList.empty())
         {

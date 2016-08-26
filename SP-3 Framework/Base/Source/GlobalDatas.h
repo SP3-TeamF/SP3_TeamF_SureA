@@ -22,6 +22,11 @@ public:
         {
             theSoundEngine->drop();
         }
+        if (tileMap)
+        {
+            delete tileMap;
+        }
+        bulletFactory;
     };
    
 	static GlobalDatas& GetInstance()

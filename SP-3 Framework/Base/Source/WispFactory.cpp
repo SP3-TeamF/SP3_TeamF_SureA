@@ -7,7 +7,10 @@ WispFactory::WispFactory()
 
 WispFactory::~WispFactory()
 {
-
+    for (auto wispIt : wispList)
+    {
+        delete wispIt;
+    }
 }
 
 Wisp* WispFactory::FetchWisp()

@@ -9,7 +9,7 @@ class WispFactory
 {
 public:
     WispFactory();
-    ~WispFactory();
+    virtual ~WispFactory();
     
     Wisp* FetchWisp();
 

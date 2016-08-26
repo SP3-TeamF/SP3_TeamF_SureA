@@ -40,8 +40,6 @@ public:
 
 	bool PointToAABB(Vector3 position);
 	bool PointToAABB(const AABB& other);
-	
-	
 
 };
 

@@ -16,12 +16,6 @@ Scenebase::Scenebase()
 
 Scenebase::~Scenebase()
 {
-
-	if (m_cMinimap)
-	{
-		delete m_cMinimap;
-		m_cMinimap = NULL;
-	}
 	Exit();
 }
 
@@ -1181,4 +1175,14 @@ void Scenebase::RenderMainMenuExit()
 //Other Functions
 void Scenebase::Exit()
 {
+    if (m_cMinimap)
+    {
+        delete m_cMinimap;
+        m_cMinimap = NULL;
+    }
+
+    for (auto meshIt : meshList)
+    {
+        delete meshIt;
+    }
 }

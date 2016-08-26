@@ -59,7 +59,7 @@ class Scenebase : public Scene
 	};
 public:
     Scenebase();
-    ~Scenebase();
+    virtual ~Scenebase();
 
 	virtual void Init();
     virtual void Reset();

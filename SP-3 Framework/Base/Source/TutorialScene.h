@@ -17,10 +17,9 @@ enum PLAYER_STATES{
 class TutorialScene : public Scenebase
 {
 
-
 public:
 	TutorialScene();
-	~TutorialScene();
+	virtual ~TutorialScene();
 	virtual void Init();
 	virtual void Update(double dt);
     virtual void Reset();

@@ -22,6 +22,9 @@ BasicEnemy::BasicEnemy()
 
 BasicEnemy::~BasicEnemy()
 {
+    delete this->idleStrategy;
+    delete this->chaseStrategy;
+    delete this->attackStrategy;
 }
 
 void BasicEnemy::Update(double dt)

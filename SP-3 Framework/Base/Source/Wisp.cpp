@@ -10,6 +10,7 @@ Wisp::Wisp()
 
 Wisp::~Wisp()
 {
+    delete patrolStrategy;
 }
 
 void Wisp::Update(double dt)

@@ -71,4 +71,11 @@ void SceneManager::Exit()
    this->tutorialScene->Exit();
    this->collisionTest->Exit();
    this->sceneMapEditor->Exit();
+
+   delete this->scenePathTest;
+   delete this->tutorialScene;
+   delete this->collisionTest;
+   delete this->sceneMapEditor;
+   delete this->mainMenu;
+   delete this->mainMenuExit;
 }

@@ -7,12 +7,8 @@
 #include <vector>
 using std::vector;
 
-enum PLAYER_STATES{
-	PS_INGAME,
-	PS_INTUT,
-	PS_INTUT2,
-	PS_INTUT3
-};
+
+
 class WaterScene : public Scenebase
 {
 
@@ -31,23 +27,20 @@ public:
 
 	//TextFile
 	bool watermapclear;
-	void readTextFile(string filename);
+
 protected:
-	vector<string>tutorialText;
+
 
 private:
 	float netScale;;
-	TileMap tutorialMap;
-	PLAYER_STATES playerState;
+	TileMap waterscene;
+	
 	string newLine;
 	BasicEnemy tempEnemy;
 	BasicEnemy tempEnemy2;
 	BasicEnemy tempEnemy3;
 	BasicEnemy tempEnemy4;
 	BasicEnemy tempEnemy5;
-	BasicEnemy tempEnemy6;
-	BasicEnemy tempEnemy7;
-	BasicEnemy tempEnemy8;
 
 
 };

@@ -128,6 +128,13 @@ void Scenebase::Init()
 	meshList[GEO_SCROLL] = MeshBuilder::Generate2DMesh("GEO_SCROLL", Color(1, 1, 1), 0.0f, 0.0f, 800.0f, 600.0f);
 	meshList[GEO_SCROLL]->textureID = LoadTGA("Image//tutScroll.tga");
 
+	meshList[GEO_DOT] = MeshBuilder::GenerateSphere("me", Color(0, 1, 0), 10, 10, 0.4f);
+
+
+
+	meshList[GEO_ENEMYDOT] = MeshBuilder::GenerateSphere("enemmy", Color(1, 0, 0), 10, 10, 0.4f);
+
+
     WispImagesInit();
     HUD_ImagesInit();
     EnemyImagesInit();
@@ -137,7 +144,7 @@ void Scenebase::Init()
 
 	m_cMinimap = new CMinimap();
 	m_cMinimap->SetBackground(MeshBuilder::GenerateSquareMinimap("MINIMAP", Color(1, 1, 1), 1.f));
-	m_cMinimap->GetBackground()->textureID = LoadTGA("Image//Map1.tga");
+	m_cMinimap->GetBackground()->textureID = LoadTGA("Image//minimap//minimap1.tga");
 
 	m_cMinimap->SetBorder(MeshBuilder::GenerateQuad("MINIMAPBORDER", Color(1, 1, 0), 1.f));
 	m_cMinimap->SetAvatar(MeshBuilder::GenerateMinimapAvatar("MINIMAPAVATAR", Color(1, 0, 0), 0.5f));
@@ -256,6 +263,25 @@ void Scenebase::EnemyImagesInit()
         sa26->m_anim = new Animation();
         sa26->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
     }
+
+	meshList[GEO_WATERBACK] = MeshBuilder::GenerateSpriteAnimation("windwisp", 1, 3);
+	meshList[GEO_WATERBACK]->textureID = LoadTGA("Image//waterbackwave.tga");
+	SpriteAnimation *sa27 = dynamic_cast<SpriteAnimation*>(meshList[GEO_WATERBACK]);
+	if (sa27)
+	{
+		sa27->m_anim = new Animation();
+		sa27->m_anim->Set(0, 2, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+
+	meshList[GEO_LAVABACK] = MeshBuilder::GenerateSpriteAnimation("windwisp", 1, 4);
+	meshList[GEO_LAVABACK]->textureID = LoadTGA("Image//lavaback.tga");
+	SpriteAnimation *sa28 = dynamic_cast<SpriteAnimation*>(meshList[GEO_LAVABACK]);
+	if (sa28)
+	{
+		sa28->m_anim = new Animation();
+		sa28->m_anim->Set(0, 3, 0, 1.f, true); //startframe, endframe, repeat, time, enable
+	}
+
 
 }
 
@@ -622,6 +648,18 @@ void Scenebase::UpdateSpritesAnimation(double dt)
 		sa26->m_anim->animActive = true;
 	}
 
+	SpriteAnimation *sa27 = dynamic_cast<SpriteAnimation*>(meshList[GEO_WATERBACK]);
+	if (sa27)
+	{
+		sa27->Update(dt);
+		sa27->m_anim->animActive = true;
+	}
+	SpriteAnimation *sa28 = dynamic_cast<SpriteAnimation*>(meshList[GEO_LAVABACK]);
+	if (sa28)
+	{
+		sa28->Update(dt);
+		sa28->m_anim->animActive = true;
+	}
 }
 
 //void Scenebase::renderHitbox(bool ShowHitbox)

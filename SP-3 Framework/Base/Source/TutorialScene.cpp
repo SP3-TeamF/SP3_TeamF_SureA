@@ -128,7 +128,21 @@ void TutorialScene::Render()
 
 	}
 	Render2DMesh(meshList[GEO_FIRE], false, 32, tempEnemy.Get_cPosition().x + m_TileMap->GetTileSize() * 0.5 - GlobalData.world_X_offset, tempEnemy.Get_cPosition().y + m_TileMap->GetTileSize() * 0.5 - GlobalData.world_Y_offset, 0);
+	Render2DMesh(meshList[GEO_DOT], false, 10, ((player->Get_cPosition().x + GlobalData.world_X_offset) /13+60 ), 
+		((player->Get_cPosition().y + GlobalData.world_Y_offset) / 7.2 + 625));
 
+	//Render2DMesh(meshList[GEO_ENEMYDOT], false, 10, ((tempEnemy.Get_cPosition().x + GlobalData.world_X_offset) / 14.5 + 60), 
+		//((tempEnemy.Get_cPosition().y + GlobalData.world_Y_offset) / 10.1 + 635));
+	Render2DMesh(meshList[GEO_ENEMYDOT], false, 10, ((tempEnemy.Get_cPosition().x) / 12.6 + 60),
+		((tempEnemy.Get_cPosition().y ) / 8 + 635));
+	
+	//for (auto enemyIt : Enemy_list)
+	//{
+	//	if (enemyIt.Get_cActive() == true)
+	//	{
+	//		Render2DMesh(meshList[GEO_ENEMYDOT], false, 10, ((enemyIt.Get_cPosition().x + GlobalData.world_X_offset) / 10 + 60), ((enemyIt.Get_cPosition().y + GlobalData.world_Y_offset) / 5.5 + 625));
+	//	}
+	//}
 }
 
 void TutorialScene::readTextFile(string filename){

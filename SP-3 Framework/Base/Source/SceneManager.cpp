@@ -9,6 +9,7 @@ SceneManager::SceneManager()
     this->collisionTest = new Collisiontest();
     this->sceneMapEditor = new SceneMapEditor();
 	this->mainMenu = new MainMenu();
+	this->waterscene = new WaterScene();
 
 	Init();
 }
@@ -24,7 +25,7 @@ void SceneManager::Init()
     this->sceneMapEditor->Init();
 	this->tutorialScene->Init();
 	this->mainMenu->Init();
-
+	this->waterscene->Init();
 	this->currentScene = mainMenu;
     this->currentScene->Reset();
 }
@@ -62,6 +63,11 @@ void SceneManager::Update(double dt)
 		currentScene = mainMenu;
 		mainMenu->Reset();
 	}
+	else if (controls.isKeyboardButtonPressed(KEYBOARD_6))
+	{
+		currentScene = waterscene;
+		currentScene->Reset();
+	}
     currentScene->Update(dt);
 }
 
@@ -70,11 +76,13 @@ void SceneManager::Exit()
    this->tutorialScene->Exit();
    this->collisionTest->Exit();
    this->sceneMapEditor->Exit();
+   this->waterscene->Exit();
 
    delete this->scenePathTest;
    delete this->tutorialScene;
    delete this->collisionTest;
    delete this->sceneMapEditor;
    delete this->mainMenu;
+   delete this->waterscene;
  //  delete this->mainMenuExit;
 }

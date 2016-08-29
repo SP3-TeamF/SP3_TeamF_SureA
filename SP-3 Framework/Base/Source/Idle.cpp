@@ -32,7 +32,7 @@ bool Idle::ScanTarget()
     Vector3 playerPos = player->Get_cPosition() + Vector3(GlobalData.world_X_offset, GlobalData.world_Y_offset);
 
     float distanceSquared = (playerPos - this->currentEnemy->Get_cPosition()).LengthSquared();
-    cout << distanceSquared - this->currentEnemy->GetScanRadius() * this->currentEnemy->GetScanRadius() << endl;
+    //cout << distanceSquared - this->currentEnemy->GetScanRadius() * this->currentEnemy->GetScanRadius() << endl;
 
     if (distanceSquared < this->currentEnemy->GetScanRadius() * this->currentEnemy->GetScanRadius())
     {
